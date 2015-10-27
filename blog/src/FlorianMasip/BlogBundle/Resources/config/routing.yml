@@ -1,6 +1,14 @@
 blog_homepage:
-    path:     /blog
+    path:     /
     defaults: { _controller: BlogBundle:Blog:index }
+
+blog_new:
+    path:     /register
+    defaults: { _controller: BlogBundle:Blog:register }
+
+blog_view:
+    path:     /{id}
+    defaults: { _controller: BlogBundle:Blog:blog }
 
 blog_view_post:
     path:     /post/{id}

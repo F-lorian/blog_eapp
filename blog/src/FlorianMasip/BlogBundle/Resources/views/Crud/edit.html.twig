@@ -1,0 +1,17 @@
+    	
+{# src/FlorianMasip/BlogBundle/Resources/views/Blog/post.html.twig #}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Edition</title>
+    </head>
+    <body>
+    	
+    	{% if id is defined %}
+        	modifier id : {{ id }}
+        {% else %}
+        	Nouvel article
+        {% endif %}
+    </body>
+</html>

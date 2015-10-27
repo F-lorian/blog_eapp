@@ -1,0 +1,19 @@
+blog_homepage:
+    path:     /blog
+    defaults: { _controller: BlogBundle:Blog:index }
+
+blog_view_post:
+    path:     /post/{id}
+    defaults: { _controller: BlogBundle:Blog:post }
+
+blog_new_post:
+    path:     /new
+    defaults: { _controller: BlogBundle:Crud:new }
+
+blog_edit_post:
+    path:     /edit/{id}
+    defaults: { _controller: BlogBundle:Crud:edit }
+
+blog_delete_post:
+    path:     /delete/{id}
+    defaults: { _controller: BlogBundle:Crud:delete }

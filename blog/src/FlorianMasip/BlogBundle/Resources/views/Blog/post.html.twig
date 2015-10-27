@@ -1,15 +1,9 @@
 {# src/FlorianMasip/BlogBundle/Resources/views/Blog/post.html.twig #}
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>post - {{ id }} </title>
-    </head>
-    <body>
-    	{% include "BlogBundle:Default:header.html.twig" %}
+{% extends '::base.html.twig' %}
 
-        Post : {{ id }}
-        
-        {% include "BlogBundle:Default:footer.html.twig" %}
-    </body>
-</html>
+{% block title %} Post {% endblock %}
+
+{% block content %}
+Post : {{ id }}
+{% endblock %}

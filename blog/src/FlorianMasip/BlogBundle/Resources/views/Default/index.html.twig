@@ -1,15 +1,9 @@
 {# src/FlorianMasip/BlogBundle/Resources/views/Default/index.html.twig #}
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Index</title>
-    </head>
-    <body>
-		{% include "BlogBundle:Default:header.html.twig" %}
+{% extends '::base.html.twig' %}
 
-        Accueil
+{% block title %} Index {% endblock %}
 
-        {% include "BlogBundle:Default:footer.html.twig" %}
-    </body>
-</html>
+{% block content %}
+Accueil
+{% endblock %}

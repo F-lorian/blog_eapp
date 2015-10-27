@@ -1,19 +1,13 @@
 {# src/FlorianMasip/BlogBundle/Resources/views/Crud/edit.html.twig #}
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Edition</title>
-    </head>
-    <body>
-    	{% include "BlogBundle:Default:header.html.twig" %}
+{% extends '::base.html.twig' %}
 
-    	{% if id is defined %}
-        	modifier id : {{ id }}
-        {% else %}
-        	Nouvel article
-        {% endif %}
+{% block title %} Edition {% endblock %}
 
-        {% include "BlogBundle:Default:footer.html.twig" %}
-    </body>
-</html>
+{% block content %}
+    {% if id is defined %}
+        modifier id : {{ id }}
+    {% else %}
+        Nouvel article
+    {% endif %}
+{% endblock %}

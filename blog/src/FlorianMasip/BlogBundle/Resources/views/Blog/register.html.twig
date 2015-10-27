@@ -1,15 +1,12 @@
-{# src/FlorianMasip/BlogBundle/Resources/views/Blog/new_blog.html.twig #}
+{# src/FlorianMasip/BlogBundle/Resources/views/Blog/register.html.twig #}
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>new blog</title>
-    </head>
-    <body>
-		{% include "BlogBundle:Default:header.html.twig" %}
+{% extends '::base.html.twig' %}
 
-        register form
+{% block title %} Inscription {% endblock %}
 
-        {% include "BlogBundle:Default:footer.html.twig" %}
-    </body>
-</html>
+{% block content %}
+register form
+{% endblock %}
+
+
+

@@ -3,19 +3,28 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %}
+            {% stylesheets filter='cssrewrite' '@BlogBundle/resources/public/css/*' %}
+              <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+            {% endstylesheets %}
+        {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
         {% block header %}
-        {% include "BlogBundle:Default:header.html.twig" %}
+            {% include "BlogBundle:Default:header.html.twig" %}
         {% endblock %}
 
         {% block content %}{% endblock %}
         
         {% block footer %}
-        {% include "BlogBundle:Default:footer.html.twig" %}
+            {% include "BlogBundle:Default:footer.html.twig" %}
         {% endblock %}
-        {% block javascripts %}{% endblock %}
+
+        {% block javascripts %}
+            {% javascripts '@BlogBundle/resources/public/js/jquery-2.1.1.min.js' '@BlogBundle/resources/public/js/*' %}
+              <script type="text/javascript" src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+        {% endblock %}
     </body>
 </html>

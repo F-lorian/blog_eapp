@@ -1,5 +1,24 @@
 <header>
 
-TITRE <a href="{{ path('blog_homepage') }}">Accueil</a>
+<div id="blog-panel" class="panel panel-default ">
+	<div class="panel-heading">
+	  	<span class="pull-left" > kikoo blog </span>
+	  	<a class="glyphicon glyphicon glyphicon-log-out pull-right" href="#"></a>
+	  	<a class="glyphicon glyphicon glyphicon-home pull-right" href="{{ path('blog_homepage') }}" ></a>
+	  	<br/>
+	</div>
+</div><!--/panel-body-->
+
+
+<div id="user-panel" class="panel panel-default ">
+	<div class="panel-heading">
+	  	<span id="user_panel_pseudo" class="label label-primary pull-left" > Pseudo </span>
+	  	<i class="glyphicon glyphicon glyphicon-cog pull-right" data-toggle="collapse" data-target="#config_panel" aria-expanded="true" aria-controls="config_panel"></i>
+	  	<br/>
+	  	</div>
+	    <div class="panel-body">
+	    	<img class="panel_pic pull-right"  src="{{ asset('resources/public/img/user.png') }}"/>       	        
+	</div>
+</div><!--/panel-body-->
 
 </header>

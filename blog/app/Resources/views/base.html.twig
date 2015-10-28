@@ -11,11 +11,18 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        {% block header %}
-            {% include "BlogBundle:Default:header.html.twig" %}
-        {% endblock %}
 
-        {% block content %}{% endblock %}
+        <div id="global-container" class="row ">
+            <div id="left-panel" class="col-sm-1">
+                {% block header %}
+                    {% include "BlogBundle:Default:header.html.twig" %}
+                {% endblock %}
+            </div>
+
+            <div id="container" class="col-sm-11">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
         
         {% block footer %}
             {% include "BlogBundle:Default:footer.html.twig" %}

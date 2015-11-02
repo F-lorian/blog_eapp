@@ -9,7 +9,7 @@ blog_new:
 blog_new_post:
     path:     /new
     defaults: { _controller: BlogBundle:Crud:new }
-    
+
 blog_view:
     path:     /{id}
     defaults: { _controller: BlogBundle:Blog:blog }

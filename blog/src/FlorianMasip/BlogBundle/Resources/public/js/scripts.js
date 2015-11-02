@@ -12,3 +12,10 @@ function removeClass(obj,_class){
 
 	$(obj).removeClass(_class);
 }
+
+
+$(document).ready(function(){
+
+	$('#post').elastic();
+
+});

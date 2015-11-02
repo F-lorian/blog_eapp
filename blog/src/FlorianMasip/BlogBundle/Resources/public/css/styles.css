@@ -117,19 +117,17 @@ a#new-post{
 
 .blog-post{
 	float: left;
-	height: 200px;
+	/*height: 180px;*/
 	width:500px;
 	margin-right: 20px;
 	margin-bottom: 20px;
 	/*background-color: #eaeaea;*/
 	background-color: rgba(24, 46, 51, 1);
 	padding: 10px;
+	padding-bottom: 20px;
 	border: none;
 }
 
-#blog-post{
-	width: 100%;
-}
 
 #last-posts .blog-post,#last-blogs .blog-post{
 	float: none;
@@ -141,6 +139,7 @@ a#new-post{
 	padding-bottom: 1px;
 	border : none;
 	border-radius: 5px;
+	margin-bottom: 15px;
 }
 
 .blog-post .panel-body{
@@ -148,10 +147,20 @@ a#new-post{
 	border-radius: 5px 5px 0px 5px;
 	background-color: #eaeaea;
 	padding: 20px;
-	height: 130px;
+	height: 128px;
 	box-shadow: 0px 0px 15px #000000;
 	color: black;
-	margin-top: 15px;
+	border-bottom:solid 20px #d1d1d1;
+}
+
+#blog-post{
+	width: 100%;
+	height: auto;
+
+}
+
+#blog-post .panel-body{
+	height: auto;
 }
 
 .blog-post h5{
@@ -169,7 +178,7 @@ a#new-post{
 }
 
 #last-blog-post {
-	height: 420px;
+	/*height: 400px;*/
 }
 
 #last-blog-post .panel-body{
@@ -292,20 +301,28 @@ li.search-result .search-result-title{
 
 
 
-input{
+
+select, input{
 	margin-bottom: 4px !important;
 	background-color: #4F4F4F !important;
 	border : none !important;
 	color : #e0e0e0 !important;
 }
 
-input:hover{
+textarea{
+	background-color: inherit !important;
+	color : black !important;
+	min-height: 500px !important;
+}
+
+
+textarea:hover, select:hover,input:hover{
 	background-color: #b7b7b7 !important;
 	color: black !important;
 
 }
 
-input:focus{
+textarea:focus ,select:focus,input:focus{
 	background-color: #dbdbdb !important;
 	color: black !important;
 }
@@ -350,6 +367,6 @@ button i:hover,a i:hover{
 	color : inherit !important;
 }
 
-button.connection{
+button.wide{
 	width: 100%;
 }

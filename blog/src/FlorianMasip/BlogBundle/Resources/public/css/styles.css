@@ -110,6 +110,11 @@ h4.page-title{
 	padding-left: 12px;
 }
 
+
+a#new-post{
+	margin-bottom: 20px;
+}
+
 .blog-post{
 	float: left;
 	height: 200px;
@@ -120,6 +125,10 @@ h4.page-title{
 	background-color: rgba(24, 46, 51, 1);
 	padding: 10px;
 	border: none;
+}
+
+#blog-post{
+	width: 100%;
 }
 
 #last-posts .blog-post,#last-blogs .blog-post{
@@ -321,7 +330,7 @@ button#search-blog-button{
 	text-align: center;
 }
 
-button.go-to-post{
+a.go-to-post{
 	position: absolute;
 	margin-top : 80px;
 	margin-left : 344px;
@@ -333,11 +342,14 @@ button.go-to-post{
 	border-radius: 5px 5px 0px 5px;
 }
 
-#last-blog-post button.go-to-post{
+#last-blog-post a.go-to-post{
 	margin-top : 300px;
 }
 
-button i:hover{
+button i:hover,a i:hover{
 	color : inherit !important;
 }
 
+button.connection{
+	width: 100%;
+}

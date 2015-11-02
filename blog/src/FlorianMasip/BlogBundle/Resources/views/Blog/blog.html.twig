@@ -10,13 +10,16 @@
 </div>
 
 <div id="blog-content">
+
+	<a id="new-post" class="btn btn-success" href="{{ path('blog_new_post') }}">Nouvel article <i class="glyphicon glyphicon-plus"></i></a><br/>
+
 	<div id="last-blog-post" class="panel panel-default blog-post">
 		<div class="panel-heading">
 		  	<span class="label label-primary pull-left blog-post-type" > Dernier article </span> <h5 class="blog-post-title">Titre</h5>
 		  	<br/>
 		</div>
 		<div class="panel-body blog-post-preview">
-		    	<button class="btn btn-primary go-to-post">voir l'article <i class="glyphicon glyphicon-plus"></i></button>
+		    	<a class="btn btn-primary go-to-post" href="{{ path('blog_view_post', {'id': '10' }) }}">voir l'article <i class="glyphicon glyphicon-plus"></i></a>
 		    	aperçu de l'article...    
 		</div>
 	</div><!--/panel-body-->
@@ -27,7 +30,7 @@
 		  	<br/>
 		</div>
 		<div class="panel-body">
-		    <button class="btn btn-primary go-to-post">voir l'article <i class="glyphicon glyphicon-plus"></i></button>
+		    <a class="btn btn-primary go-to-post">voir l'article <i class="glyphicon glyphicon-plus"></i></a>
 		    aperçu de l'article...             
 		</div>
 	</div><!--/panel-body-->
@@ -38,7 +41,7 @@
 		  	<br/>
 		</div>
 		<div class="panel-body">
-		    <button class="btn btn-primary go-to-post">voir l'article <i class="glyphicon glyphicon-plus"></i></button>
+		    <a class="btn btn-primary go-to-post">voir l'article <i class="glyphicon glyphicon-plus"></i></a>
 		    aperçu de l'article...    	        
 		</div>
 	</div><!--/panel-body-->
@@ -49,7 +52,7 @@
 		  	<br/>
 		</div>
 		<div class="panel-body">
-		    <button class="btn btn-primary go-to-post">voir l'article <i class="glyphicon glyphicon-plus"></i></button>
+		    <a class="btn btn-primary go-to-post">voir l'article <i class="glyphicon glyphicon-plus"></i></a>
 		    aperçu de l'article...    	        
 		</div>
 	</div><!--/panel-body-->
@@ -60,7 +63,7 @@
 		  	<br/>
 		</div>
 		<div class="panel-body">
-		    <button class="btn btn-primary go-to-post">voir l'article <i class="glyphicon glyphicon-plus"></i></button>
+		    <a class="btn btn-primary go-to-post">voir l'article <i class="glyphicon glyphicon-plus"></i></a>
 		    aperçu de l'article...    	        
 		</div>
 	</div><!--/panel-body-->
@@ -71,7 +74,7 @@
 		  	<br/>
 		</div>
 		<div class="panel-body">
-		    <button class="btn btn-primary go-to-post">voir l'article <i class="glyphicon glyphicon-plus"></i></button>
+		    <a class="btn btn-primary go-to-post">voir l'article <i class="glyphicon glyphicon-plus"></i></a>
 		    aperçu de l'article...    	        
 		</div>
 	</div><!--/panel-body-->
@@ -82,7 +85,7 @@
 		  	<br/>
 		</div>
 		<div class="panel-body">
-		    <button class="btn btn-primary go-to-post">voir l'article <i class="glyphicon glyphicon-plus"></i></button>
+		    <a class="btn btn-primary go-to-post">voir l'article <i class="glyphicon glyphicon-plus"></i></a>
 		    aperçu de l'article...    	        
 		</div>
 	</div><!--/panel-body-->
@@ -93,7 +96,7 @@
 		  	<br/>
 		</div>
 		<div class="panel-body">
-		    <button class="btn btn-primary go-to-post">voir l'article <i class="glyphicon glyphicon-plus"></i></button>
+		    <a class="btn btn-primary go-to-post">voir l'article <i class="glyphicon glyphicon-plus"></i></a>
 		    aperçu de l'article...    	        
 		</div>
 	</div><!--/panel-body-->

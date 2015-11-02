@@ -5,5 +5,16 @@
 {% block title %} Post {% endblock %}
 
 {% block content %}
-Post : {{ id }}
+
+<div id="blog-content">
+	<div id="blog-post" class="panel panel-default blog-post">
+		<div class="panel-heading">
+		  	<span class="label label-warning pull-left blog-post-type" > News </span> <h5 class="">Titre Post : {{ id }}</h5>
+		  	<br/>
+		</div>
+		<div class="panel-body">
+		    article         
+		</div>
+	</div><!--/panel-body-->
+</div>
 {% endblock %}

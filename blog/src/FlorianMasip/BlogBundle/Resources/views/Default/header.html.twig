@@ -2,14 +2,12 @@
 	<div id="blog-panel" class="panel panel-default ">
 		<div class="panel-heading">
 		  	<h4> kikoo blog </h4>  	
-		  	<!--i class="glyphicon glyphicon-log-in pull-right" onclick="removeClass('#connection-panel','closed')"></i-->
 		  	<a class="glyphicon glyphicon-home pull-right" href="{{ path('blog_homepage') }}" ></a>
 		  	<button id="search-blog-button" class="btn btn-primary" onclick="removeClass('#search-results-panel','closed')"><i class="glyphicon glyphicon glyphicon-search"></i></button>
 		  	<input type="text" class="form-control" id="search-blog" placeholder="chercher un blog" name="search-blog"/><br/>
 		</div>
-	</div><!--/panel-body-->
 
-	<div id="user-panel" class="panel panel-default ">
+		<!--si connecté -->
 		<div class="panel-heading">
 		  	<span id="user_panel_pseudo" class="label label-primary pull-left" ><i class="glyphicon glyphicon-user pull-left"></i>Pseudo </span>
 		  	<a class="glyphicon glyphicon-log-out pull-right" href="#"></a>
@@ -19,15 +17,13 @@
 		<div class="panel-body">
 		    	<img id="user-panel-pic"  src="{{ asset('resources/public/img/user.png') }}"/>       	        
 		</div>
-	</div><!--/panel-body-->
 
-	<div id="connection-panel" class="panel panel-default">
+		<!--sinon -->
 		<div class="panel-body">
 		    <a id="new-blog" class="btn btn-primary wide" href="{{ path('blog_new') }}">Inscription <i class="glyphicon glyphicon-book"></i></a>
 		</div>
 		<div class="panel-heading">
 		  	<span class="label label-default pull-left" ><i class="glyphicon glyphicon-user pull-left"></i>Connexion </span>
-		  	<i class="glyphicon glyphicon-remove pull-right" onclick="addClass('#connection-panel','closed')"></i>
 		  	<br/>
 		</div>
 		<div class="panel-body">
@@ -37,7 +33,8 @@
 		    	<button id="connection-button" class="btn btn-primary wide">valider <i class="glyphicon glyphicon-log-in"></i></button>
 		    </form>
 		</div>
-		
+
+		<!------------>
 	</div><!--/panel-body-->
 
 	<div id="search-results-panel" class="panel panel-default closed">

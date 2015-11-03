@@ -294,6 +294,9 @@ li.search-result .search-result-title{
 
 #blog-panel .panel-heading{
 	color: #eaeaea !important;
+}
+
+#blog-panel .panel-heading:nth-child(2){
 	border-top: solid 1px #3F3F3F !important;
 }
 
@@ -312,9 +315,21 @@ li.search-result .search-result-title{
 	margin-right: auto;
 }
 
+#user_panel_name_label{
+	display: inline-block !important;
+	white-space: normal;
+	text-align: left;
+	width: 100%;
+	margin-bottom: 20px;
+	border-radius: 0;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
 
-
-
+#user_panel{
+	padding:0;
+	padding-bottom: 10px;
+}
 
 select, input{
 	margin-bottom: 4px !important;

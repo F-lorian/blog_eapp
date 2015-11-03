@@ -9,13 +9,13 @@
 
 		<!--si connecté -->
 		<div class="panel-heading">
-		  	<span id="user_panel_pseudo" class="label label-primary pull-left" ><i class="glyphicon glyphicon-user pull-left"></i>Pseudo </span>
+		  	<a class="glyphicon glyphicon-user pull-left" href="{{ path('blog_view', {'id_blog': '10' }) }}"></a>
 		  	<a class="glyphicon glyphicon-log-out pull-right" href="#"></a>
-		  	<i class="glyphicon glyphicon-cog pull-right" data-toggle="collapse" data-target="#config_panel" aria-expanded="true" aria-controls="config_panel"></i>
-		  	<br/>
+			<a class="glyphicon glyphicon-cog pull-right" href="{{ path('blog_edit', {'id_blog': '10' }) }}"></a><br/>
 		</div>
-		<div class="panel-body">
-		    	<img id="user-panel-pic"  src="{{ asset('resources/public/img/user.png') }}"/>       	        
+		<div id="user_panel" class="panel-body">
+			<span id="user_panel_name_label" class="label label-primary" >Nom du Blog</span>
+		    <img id="user-panel-pic"  src="{{ asset('resources/public/img/user.png') }}"/>    	        
 		</div>
 
 		<!--sinon -->

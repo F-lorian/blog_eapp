@@ -6,17 +6,21 @@ blog_new:
     path:     /register
     defaults: { _controller: BlogBundle:Blog:register }
 
+blog_edit:
+    path:     /edit/{id_blog}
+    defaults: { _controller: BlogBundle:Blog:edit }
+
 blog_view:
     path:     /{id_blog}
     defaults: { _controller: BlogBundle:Blog:blog }
 
+blog_view_post:
+    path:     /{id_blog}/{id_post}
+    defaults: { _controller: BlogBundle:Blog:post }
+
 blog_new_post:
     path:     /{id_blog}/new
     defaults: { _controller: BlogBundle:Crud:new }
-
-blog_view_post:
-    path:     /{id_blog}/post/{id_post}
-    defaults: { _controller: BlogBundle:Blog:post }
 
 blog_edit_post:
     path:     /{id_blog}/edit/{id_post}

@@ -14,10 +14,6 @@ blog_view:
     path:     /{id_blog}
     defaults: { _controller: BlogBundle:Blog:blog }
 
-blog_view_post:
-    path:     /{id_blog}/{id_post}
-    defaults: { _controller: BlogBundle:Blog:post }
-
 blog_new_post:
     path:     /{id_blog}/new
     defaults: { _controller: BlogBundle:Crud:new }
@@ -29,3 +25,7 @@ blog_edit_post:
 blog_delete_post:
     path:     /{id_blog}/delete/{id_post}
     defaults: { _controller: BlogBundle:Crud:delete }
+
+blog_view_post:
+    path:     /{id_blog}/{id_post}
+    defaults: { _controller: BlogBundle:Blog:post }

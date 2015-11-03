@@ -2,14 +2,20 @@
 
 {% extends '::base.html.twig' %}
 
-{% block title %} Edition {% endblock %}
+{% block title %}
+	{% if id_post is defined %}
+        Edition
+    {% else %}
+        Nouvel article
+    {% endif %}
+{% endblock %}
 
 {% block content %}
 
 <div id="blog-content">
 
-	{% if id is defined %}
-        <h4 class="page-title">modifier article : {{ id }}</h4>
+	{% if id_post is defined %}
+        <h4 class="page-title">modifier article : {{ id_post }}</h4>
         <form id="edit-form" method="post" target="" >
     {% else %}
         <h4 class="page-title">Nouvel article</h4>
@@ -20,10 +26,10 @@
 			<div class="panel-heading">
 				<div class="row">
 					<div class="col-sm-2">
-						<select class="form-control">
-							<option>News</option>
-							<option>Test</option>
-							<option>Article</option>
+						<select id="type" class="form-control">
+							<option value="news">News</option>
+							<option value="test">Test</option>
+							<option value="article">Article</option>
 						</select>
 					</div>
 					<div class="col-sm-10">
@@ -35,8 +41,9 @@
 			    <textarea class="form-control" placeholder="Article..." id="post" name="post"></textarea>     
 			</div>
 			<br/>
-			<button class="btn btn-primary wide">valider</button>
+			<button class="btn btn-primary wide">valider <i class="glyphicon glyphicon-ok"></i></button>
 		</div><!--/panel-body-->
 	</form>
+
 </div>
 {% endblock %}

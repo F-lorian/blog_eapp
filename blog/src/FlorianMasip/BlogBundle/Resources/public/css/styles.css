@@ -20,7 +20,6 @@ a:focus{
 	color: #6ab7f2;
 }
 
-
 .panel{
 	background-color: #3f3f3f;
     border-color: #222222;
@@ -52,10 +51,20 @@ a:focus{
 	margin-right: 10px;
 }
 
-
-
 .panel-heading a:hover,.panel-heading i:hover{
 	color: white;
+}
+
+.panel-heading .separator{
+	cursor: default;
+	margin: 0;
+	padding: 0;
+	margin-top: -2px;
+	color: #777777;
+}
+
+.panel-heading .separator:hover{
+	color: #777777 !important;
 }
 
 a.glyphicon-log-out{
@@ -156,7 +165,7 @@ a#new-post{
 #blog-post{
 	width: 100%;
 	height: auto;
-
+	
 }
 
 #blog-post .panel-body{
@@ -171,6 +180,10 @@ a#new-post{
 	padding-left: 15px;
 	padding-right: 15px;
 	margin: 0px;
+}
+
+#blog-post h5, #blog-post .blog-post-type{
+	/*font-size: 25px;*/
 }
 
 .blog-post-type{
@@ -203,6 +216,11 @@ a#new-post{
 	border-top: solid 2px #2b2b2b;
 	background-color: #2b2b2b;
 }
+
+/*
+#user-panel, #connection-panel{
+	top:180px;
+}*/
 
 #search-results-panel{
 	position: fixed;
@@ -315,6 +333,10 @@ textarea{
 	min-height: 500px !important;
 }
 
+textarea#description{
+	min-height: 200px !important;
+}
+
 
 textarea:hover, select:hover,input:hover{
 	background-color: #b7b7b7 !important;
@@ -367,6 +389,6 @@ button i:hover,a i:hover{
 	color : inherit !important;
 }
 
-button.wide{
+.wide{
 	width: 100%;
 }

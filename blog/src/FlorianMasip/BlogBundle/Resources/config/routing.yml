@@ -6,22 +6,22 @@ blog_new:
     path:     /register
     defaults: { _controller: BlogBundle:Blog:register }
 
-blog_new_post:
-    path:     /new
-    defaults: { _controller: BlogBundle:Crud:new }
-
 blog_view:
-    path:     /{id}
+    path:     /{id_blog}
     defaults: { _controller: BlogBundle:Blog:blog }
 
+blog_new_post:
+    path:     /{id_blog}/new
+    defaults: { _controller: BlogBundle:Crud:new }
+
 blog_view_post:
-    path:     /post/{id}
+    path:     /{id_blog}/post/{id_post}
     defaults: { _controller: BlogBundle:Blog:post }
 
 blog_edit_post:
-    path:     /edit/{id}
+    path:     /{id_blog}/edit/{id_post}
     defaults: { _controller: BlogBundle:Crud:edit }
 
 blog_delete_post:
-    path:     /delete/{id}
+    path:     /{id_blog}/delete/{id_post}
     defaults: { _controller: BlogBundle:Crud:delete }

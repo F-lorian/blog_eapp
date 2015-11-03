@@ -8,7 +8,14 @@
 <div id="blog-content">
 	<div id="blog-post" class="panel panel-default blog-post">
 		<div class="panel-heading">
-		  	<span class="label label-warning pull-left blog-post-type" > News </span> <h5 class="">Titre Post : {{ id }}</h5>
+		  	<span class="label label-warning pull-left blog-post-type" > News </span> 
+		  	<h5 class="">
+		  		Blog : {{ id_blog }} 
+		  		<i class="glyphicon glyphicon-chevron-right separator"></i> 
+		  		Titre Post : {{ id_post }}
+		  	</h5>
+		  	<a id="new-post" class="btn btn-danger pull-right" href="#">Supprimer article <i class="glyphicon glyphicon-remove"></i></a>
+		  	<a id="new-post" class="btn btn-warning pull-right" href="{{ path('blog_edit_post', {'id_blog': '12', 'id_post': '10' }) }}">Editer article <i class="glyphicon glyphicon-edit"></i></a>
 		  	<br/>
 		</div>
 		<div class="panel-body">

@@ -6,12 +6,12 @@
 
 {% block content %}
 <div id="blog-header">
-	blog : {{ id }}
+	blog : {{ id_blog }}
 </div>
 
 <div id="blog-content">
 
-	<a id="new-post" class="btn btn-success" href="{{ path('blog_new_post') }}">Nouvel article <i class="glyphicon glyphicon-plus"></i></a><br/>
+	<a id="new-post" class="btn btn-success" href="{{ path('blog_new_post', {'id_blog': '12'}) }}">Nouvel article <i class="glyphicon glyphicon-pencil"></i></a><br/>
 
 	<div id="last-blog-post" class="panel panel-default blog-post">
 		<div class="panel-heading">
@@ -19,7 +19,7 @@
 		  	<br/>
 		</div>
 		<div class="panel-body blog-post-preview">
-		    	<a class="btn btn-primary go-to-post" href="{{ path('blog_view_post', {'id': '10' }) }}">voir l'article <i class="glyphicon glyphicon-plus"></i></a>
+		    	<a class="btn btn-primary go-to-post" href="{{ path('blog_view_post', {'id_blog': '12', 'id_post': '10' }) }}">voir l'article <i class="glyphicon glyphicon-plus"></i></a>
 		    	aperçu de l'article...    
 		</div>
 	</div><!--/panel-body-->
@@ -30,7 +30,7 @@
 		  	<br/>
 		</div>
 		<div class="panel-body">
-		    <a class="btn btn-primary go-to-post">voir l'article <i class="glyphicon glyphicon-plus"></i></a>
+		    <a class="btn btn-primary go-to-post" href="{{ path('blog_view_post', {'id_blog': '12', 'id_post': '10' }) }}">voir l'article <i class="glyphicon glyphicon-plus"></i></a>
 		    aperçu de l'article...             
 		</div>
 	</div><!--/panel-body-->
@@ -41,7 +41,7 @@
 		  	<br/>
 		</div>
 		<div class="panel-body">
-		    <a class="btn btn-primary go-to-post">voir l'article <i class="glyphicon glyphicon-plus"></i></a>
+		    <a class="btn btn-primary go-to-post" href="{{ path('blog_view_post', {'id_blog': '12', 'id_post': '10' }) }}">voir l'article <i class="glyphicon glyphicon-plus"></i></a>
 		    aperçu de l'article...    	        
 		</div>
 	</div><!--/panel-body-->
@@ -52,7 +52,7 @@
 		  	<br/>
 		</div>
 		<div class="panel-body">
-		    <a class="btn btn-primary go-to-post">voir l'article <i class="glyphicon glyphicon-plus"></i></a>
+		    <a class="btn btn-primary go-to-post" href="{{ path('blog_view_post', {'id_blog': '12', 'id_post': '10' }) }}">voir l'article <i class="glyphicon glyphicon-plus"></i></a>
 		    aperçu de l'article...    	        
 		</div>
 	</div><!--/panel-body-->
@@ -63,7 +63,7 @@
 		  	<br/>
 		</div>
 		<div class="panel-body">
-		    <a class="btn btn-primary go-to-post">voir l'article <i class="glyphicon glyphicon-plus"></i></a>
+		    <a class="btn btn-primary go-to-post" href="{{ path('blog_view_post', {'id_blog': '12', 'id_post': '10' }) }}">voir l'article <i class="glyphicon glyphicon-plus"></i></a>
 		    aperçu de l'article...    	        
 		</div>
 	</div><!--/panel-body-->
@@ -74,7 +74,7 @@
 		  	<br/>
 		</div>
 		<div class="panel-body">
-		    <a class="btn btn-primary go-to-post">voir l'article <i class="glyphicon glyphicon-plus"></i></a>
+		    <a class="btn btn-primary go-to-post" href="{{ path('blog_view_post', {'id_blog': '12', 'id_post': '10' }) }}">voir l'article <i class="glyphicon glyphicon-plus"></i></a>
 		    aperçu de l'article...    	        
 		</div>
 	</div><!--/panel-body-->
@@ -85,7 +85,7 @@
 		  	<br/>
 		</div>
 		<div class="panel-body">
-		    <a class="btn btn-primary go-to-post">voir l'article <i class="glyphicon glyphicon-plus"></i></a>
+		    <a class="btn btn-primary go-to-post" href="{{ path('blog_view_post', {'id_blog': '12', 'id_post': '10' }) }}">voir l'article <i class="glyphicon glyphicon-plus"></i></a>
 		    aperçu de l'article...    	        
 		</div>
 	</div><!--/panel-body-->
@@ -96,7 +96,7 @@
 		  	<br/>
 		</div>
 		<div class="panel-body">
-		    <a class="btn btn-primary go-to-post">voir l'article <i class="glyphicon glyphicon-plus"></i></a>
+		    <a class="btn btn-primary go-to-post" href="{{ path('blog_view_post', {'id_blog': '12', 'id_post': '10' }) }}">voir l'article <i class="glyphicon glyphicon-plus"></i></a>
 		    aperçu de l'article...    	        
 		</div>
 	</div><!--/panel-body-->

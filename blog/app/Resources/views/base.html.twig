@@ -20,6 +20,21 @@
             </div>
 
             <div id="container" class="col-sm-11">
+                
+                {% if app.request.hasPreviousSession %}
+                    {% for type, messages in app.session.flashbag.all() %}
+                        {% for message in messages %}
+                            <div class="flash-{{ type }}">
+                                <div class="panel panel-default notice">
+                                    <div class="panel-body">
+                                        {{ message }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}
+
                 {% block content %}{% endblock %}
             </div>
         </div>

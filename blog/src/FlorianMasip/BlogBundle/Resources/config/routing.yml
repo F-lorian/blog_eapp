@@ -2,9 +2,13 @@ blog_homepage:
     path:     /
     defaults: { _controller: BlogBundle:Blog:index }
 
-blog_new:
+blog_new_user:
     path:     /register
     defaults: { _controller: BlogBundle:Blog:register }
+
+blog_new:
+    path:     /new
+    defaults: { _controller: BlogBundle:Blog:new }
 
 blog_edit:
     path:     /edit/{id_blog}

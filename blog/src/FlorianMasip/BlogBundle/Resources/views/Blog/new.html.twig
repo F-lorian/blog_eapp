@@ -1,0 +1,46 @@
+{# src/FlorianMasip/BlogBundle/Resources/views/Blog/register.html.twig #}
+
+{% extends '::base.html.twig' %}
+
+{% block title %}
+	{% if id_blog is defined %}
+        Modifier blog
+    {% else %}
+        Inscription
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+<div id="blog-content">
+
+{% if id_blog is defined %}
+    <h4 class="page-title">Modifier blog : {{ id_blog }}</h4>
+    <form id="edit-form" method="post" target="" >
+{% else %}
+    <h4 class="page-title">Inscription</h4>
+    <form id="edit-form" method="post" target="{{ path('blog_new') }}" >
+{% endif %}
+
+		<div id="blog-post" class="panel panel-default blog-post">
+			<div class="panel-body">
+				{{ form_widget(form.name, { 'attr': {'class': 'form-control', 'placeholder': 'nom du blog'} }) }}
+				<span class="label label-danger error">{{ form_errors(form.name) }}</span>
+				{{ form_widget(form.url_alias, { 'attr': {'class': 'form-control', 'placeholder': 'url du blog'} }) }}
+				<span class="label label-danger error">{{ form_errors(form.url_alias) }}</span>
+				{{ form_widget(form.theme, { 'attr': {'class': 'form-control', 'placeholder': 'theme du blog'} }) }}
+				<span class="label label-danger error">{{ form_errors(form.theme) }}</span>
+				{{ form_widget(form.description, { 'attr': {'class': 'form-control', 'placeholder': 'description du blog'} }) }}
+				{{ form_row(form._token) }}
+			</div>
+			<br/>
+				<button class="btn btn-primary wide">valider <i class="glyphicon glyphicon-ok"></i></button>
+				{{ form_errors(form) }}
+		</div><!--/panel-body-->
+	</form>
+
+</div>
+{% endblock %}
+
+
+

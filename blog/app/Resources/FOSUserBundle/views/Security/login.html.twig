@@ -1,0 +1,32 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+    
+{% block title %}Login{% endblock title %}
+
+{% block fos_user_action %}Login{% endblock fos_user_action %}
+
+{% block fos_user_content %}
+
+<form id="edit-form" method="post" action="{{ path("fos_user_security_check") }}" >
+    <div id="blog-post" class="panel panel-default blog-post">
+        <div class="panel-body">
+
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+            <input class="form-control" placeholder="pseudo" type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+            <input class="form-control" placeholder="mot de passe" type="password" id="password" name="_password" required="required" />
+            <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+            <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+
+        </div>
+                    
+        <br/>
+        {% if error %}
+            <span class="label label-danger error">{{ error.messageKey|trans(error.messageData, 'security') }}</span>
+        {% endif %}
+        <button class="btn btn-primary wide">valider <i class="glyphicon glyphicon-log-in"></i></button>
+                      
+    </div><!--/panel-body-->
+</form>
+
+{% endblock fos_user_content %}

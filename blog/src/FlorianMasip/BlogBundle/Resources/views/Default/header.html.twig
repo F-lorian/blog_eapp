@@ -8,19 +8,36 @@
 		</div>
 
 		<!--si connecté -->
+		{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            
 		<div class="panel-heading">
-		  	<a class="glyphicon glyphicon-user pull-left" href="{{ path('blog_view', {'id_blog': '10' }) }}"></a>
-		  	<a class="glyphicon glyphicon-log-out pull-right" href="#"></a>
-			<a class="glyphicon glyphicon-cog pull-right" href="{{ path('blog_edit', {'id_blog': '10' }) }}"></a><br/>
+		  	<a class="glyphicon glyphicon-user pull-left" href="{{ path('fos_user_profile_show') }}"></a>
+		  	<a class="glyphicon glyphicon-log-out pull-right" href="{{ path('fos_user_security_logout') }}"></a>
+			<a class="glyphicon glyphicon-cog pull-right" href="{{ path('fos_user_profile_edit') }}"></a><br/>
 		</div>
 		<div id="user_panel" class="panel-body">
-			<span id="user_panel_name_label" class="label label-primary" >Nom du Blog</span>
+			<span id="user_panel_name_label" class="label label-primary" >
+				{{ app.user.username }}
+			</span>
 		    <img id="user-panel-pic"  src="{{ asset('resources/public/img/user.png') }}"/>    	        
 		</div>
 
-		<!--sinon -->
 		<div class="panel-body">
-		    <a id="new-blog" class="btn btn-primary wide" href="{{ path('blog_new') }}">Inscription <i class="glyphicon glyphicon-book"></i></a>
+		    <a id="new-blog" class="btn btn-primary wide" href="{{ path('blog_new') }}">Nouveau Blog <i class="glyphicon glyphicon-book"></i></a>
+			<a class="glyphicon glyphicon-cog pull-right" href="{{ path('blog_edit', {'id_blog': '10' }) }}"></a><br/>
+		</div>
+
+		<!--sinon -->
+		{% else %}
+
+        <div class="panel-body">
+		    <a id="log-in" class="btn btn-primary wide" href="{{ path('fos_user_security_login') }}">
+		    	{{ 'layout.login'|trans({}, 'FOSUserBundle') }} <i class="glyphicon glyphicon-book"></i>
+		    </a>
+		</div>
+
+		<div class="panel-body">
+		    <a id="new-blog" class="btn btn-primary wide" href="{{ path('blog_new_user') }}">Inscription <i class="glyphicon glyphicon-book"></i></a>
 		</div>
 		<div class="panel-heading">
 		  	<span class="label label-default pull-left" ><i class="glyphicon glyphicon-user pull-left"></i>Connexion </span>
@@ -34,6 +51,7 @@
 		    </form>
 		</div>
 
+		{% endif %}
 		<!------------>
 	</div><!--/panel-body-->
 

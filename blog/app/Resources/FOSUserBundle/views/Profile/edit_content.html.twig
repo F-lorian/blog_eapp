@@ -1,0 +1,25 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<form id="edit-form" method="post" class="fos_user_profile_edit" action="{{ path("fos_user_profile_edit") }}" {{ form_enctype(form) }} >
+
+    <div id="blog-post" class="panel panel-default blog-post">
+        <div class="panel-body">
+
+            {{ form_widget(form.username, { 'attr': {'class': 'form-control', 'placeholder': 'pseudo'} }) }}
+            <span class="label label-danger error">{{ form_errors(form.username) }}</span>
+            {{ form_widget(form.email, { 'attr': {'class': 'form-control', 'placeholder': 'mail'} }) }}
+            <span class="label label-danger error">{{ form_errors(form.email) }}</span>
+            {{ form_widget(form.surname, { 'attr': {'class': 'form-control', 'placeholder': 'prenom'} }) }}
+            {{ form_widget(form.lastname, { 'attr': {'class': 'form-control', 'placeholder': 'nom'} }) }}
+            {{ form_widget(form.age, { 'attr': {'class': 'form-control', 'placeholder': 'age'} }) }}
+            <a class="btn btn-primary" href="{{ path('fos_user_change_password') }}">Changer mot de passe <i class="glyphicon glyphicon-edit"></i></a>
+            {{ form_row(form._token) }}   
+                
+        </div>
+                
+        <br/>
+        <span class="label label-danger error">{{ form_errors(form) }}</span>
+        <button class="btn btn-primary wide">Valider <i class="glyphicon glyphicon-ok"></i></button>
+                  
+    </div>
+</form>

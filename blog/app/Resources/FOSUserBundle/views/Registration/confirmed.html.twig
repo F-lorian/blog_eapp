@@ -1,0 +1,18 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block title %}Inscription Réussie{% endblock %}
+
+{% block fos_user_action %}Inscription{% endblock %}
+
+{% block fos_user_content %}
+
+<div id="blog-post" class="panel panel-default blog-post">
+    <div class="panel-body">
+	    {{ 'inscription réussie'|trans({'%username%': user.username}) }}
+	    <a href="{{ path("fos_user_security_login") }}">Login</a>
+ 	</div>           
+</div><!--/panel-body-->
+
+{% endblock fos_user_content %}

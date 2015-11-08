@@ -1,0 +1,47 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<div id="blog-post" class="panel panel-default blog-post">
+        <div class="panel-body">
+        	<div class="row">
+	        	<div class="col-sm-2">
+	        		<strong>
+	        		{% filter nl2br %}
+					    {{ 'profile.show.username'|trans}}:
+					    {{ 'profile.show.email'|trans }}:
+					    {{ 'Prénom'|trans }}:
+					    {{ 'Nom'|trans }}:
+					    {{ 'Age'|trans }}: 
+					{% endfilter %}
+					</strong>
+	        	</div>
+	        	<div class="col-sm-10">
+		        	{{ user.username }}<br/>
+		    		{{ user.email }}<br/>
+
+		    		
+		    		{% if user.username !='' %}
+		    		{{ user.surname }}
+		    		{% else %}
+		    		indéfini
+		    		{% endif %}
+		    		<br/>
+		    		
+		    		{% if user.lastname !='' %}
+		    		{{ user.lastname }}
+		    		{% else %}
+		    		indéfini
+		    		{% endif %}
+		    		<br/>
+		    		
+		    		{% if user.age !='' %}
+		    		{{ user.age }}
+		    		{% else %}
+		    		indéfini
+		    		{% endif %}
+	    		</div>
+			</div>
+			<br/>
+    		<a class="btn btn-primary" href="{{ path('fos_user_change_password') }}">Changer mot de passe <i class="glyphicon glyphicon-edit"></i></a>
+        </div>
+
+</div>

@@ -11,25 +11,25 @@ blog_new:
     defaults: { _controller: BlogBundle:Blog:new }
 
 blog_edit:
-    path:     /edit/{id_blog}
+    path:     /edit/{url_blog}
     defaults: { _controller: BlogBundle:Blog:edit }
 
 blog_view:
-    path:     /{id_blog}
+    path:     /{url_blog}
     defaults: { _controller: BlogBundle:Blog:blog }
 
 blog_new_post:
-    path:     /{id_blog}/new
+    path:     /{url_blog}/new
     defaults: { _controller: BlogBundle:Crud:new }
 
 blog_edit_post:
-    path:     /{id_blog}/edit/{id_post}
+    path:     /{url_blog}/edit/{url_post}
     defaults: { _controller: BlogBundle:Crud:edit }
 
 blog_delete_post:
-    path:     /{id_blog}/delete/{id_post}
+    path:     /{url_blog}/delete/{url_post}
     defaults: { _controller: BlogBundle:Crud:delete }
 
 blog_view_post:
-    path:     /{id_blog}/{id_post}
+    path:     /{url_blog}/{url_post}
     defaults: { _controller: BlogBundle:Blog:post }

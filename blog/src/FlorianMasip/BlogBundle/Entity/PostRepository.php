@@ -1,6 +1,6 @@
 <?php
 
-namespace Sfobis\BlogBundle\Entity;
+namespace FlorianMasip\BlogBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
@@ -25,13 +25,13 @@ class PostRepository extends EntityRepository {
         if ($nom_category != null) {
             $q = $this->_em->createQueryBuilder()
                     ->select('post')
-                    ->from('SfobisBlogBundle:Post', 'post')
+                    ->from('BlogBundle:Post', 'post')
                     ->where('post.nom_category = :nom_cat')->setParameter("nom_cat", $nom_category)
                     ->orderBy('post.date_creation', 'DESC');
         } else {
             $q = $this->_em->createQueryBuilder()
                     ->select('post')
-                    ->from('SfobisBlogBundle:Post', 'post')
+                    ->from('BlogBundle:Post', 'post')
                     ->orderBy('post.date_creation', 'DESC');
         }
 
@@ -49,7 +49,7 @@ class PostRepository extends EntityRepository {
     public function getAllList($id = 1) {
         $q = $this->_em->createQueryBuilder()
                 ->select('post')
-                ->from('SfobisBlogBundle:Post', 'post')
+                ->from('BlogBundle:Post', 'post')
                 ->orderBy('post.date_creation', 'DESC');
 
         $q->setFirstResult(($id - 1))->setMaxResults($id + 1);
@@ -67,7 +67,7 @@ class PostRepository extends EntityRepository {
             return $this->getEntityManager()
                             ->createQuery(
                 'SELECT p.url_alias
-                FROM SfobisBlogBundle:Post p
+                FROM BlogBundle:Post p
                 WHERE p.url_alias = :url')->setParameter('url', $url_alias)->getResult();
     }    
 

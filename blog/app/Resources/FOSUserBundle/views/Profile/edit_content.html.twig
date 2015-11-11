@@ -12,6 +12,7 @@
             {{ form_widget(form.surname, { 'attr': {'class': 'form-control', 'placeholder': 'prenom'} }) }}
             {{ form_widget(form.lastname, { 'attr': {'class': 'form-control', 'placeholder': 'nom'} }) }}
             {{ form_widget(form.age, { 'attr': {'class': 'form-control', 'placeholder': 'age'} }) }}
+            <br/>
             <a class="btn btn-primary" href="{{ path('fos_user_change_password') }}">Changer mot de passe <i class="glyphicon glyphicon-edit"></i></a>
             {{ form_row(form._token) }}   
                 

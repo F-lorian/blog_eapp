@@ -40,8 +40,11 @@
 		    		{% endif %}
 	    		</div>
 			</div>
+			{% if app.user.id == user.id %}
 			<br/>
     		<a class="btn btn-primary" href="{{ path('fos_user_change_password') }}">Changer mot de passe <i class="glyphicon glyphicon-edit"></i></a>
+			{% endif %}
+			
         </div>
 
 </div>

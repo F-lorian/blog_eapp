@@ -1,6 +1,6 @@
 <?php
 
-namespace Sfobis\BlogBundle\Entity;
+namespace FlorianMasip\BlogBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 
@@ -24,14 +24,14 @@ class CategoryRepository extends EntityRepository
             return $this->getEntityManager()
                             ->createQuery(
                 'SELECT p
-                FROM SfobisBlogBundle:Category p
+                FROM BlogBundle:Category p
                 WHERE p.nom = :nomCat
                 ORDER BY p.nom ASC')->setParameter('nomCat', $unNomCategory)->getResult();
         } else {
             return $this->getEntityManager()
                             ->createQuery(
                 'SELECT p
-                FROM SfobisBlogBundle:Category p
+                FROM BlogBundle:Category p
                 ORDER BY p.nom ASC')->getResult();
         }
                  

@@ -6,6 +6,8 @@ namespace FlorianMasip\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Blog
  *
@@ -24,12 +26,17 @@ class Blog
      */
     private $id;
 
+
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id_user", type="integer")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="blogs")
+     * @ORM\JoinColumn(name="id_user", referencedColumnName="id")
      */
-    private $idUser;
+    private $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Post", mappedBy="blog")
+     */
+    protected $posts;
 
     /**
      * @var string
@@ -50,7 +57,7 @@ class Blog
      *
      * @ORM\Column(name="url_alias", type="string", length=200, unique=true)
      */
-    private $url_alias;
+    private $urlAlias;
 
     /**
      * @var string
@@ -59,6 +66,11 @@ class Blog
      */
     private $description;
 
+
+    public function __construct()
+    {
+        $this->posts = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -81,32 +93,27 @@ class Blog
     }
 
     /**
-     * Set url_alias
+     * Set urlAlias
      *
-     * @param string $url_alias
+     * @param string $urlAlias
      *
      * @return Blog
      */
-    public function setUrlAlias($url_alias)
+    public function setUrlAlias($urlAlias)
     {
-        $this->url_alias = $url_alias;
+        $this->urlAlias = $urlAlias;
 
         return $this;
     }
 
     /**
-     * Get url_alias
+     * Get urlAlias
      *
      * @return string
      */
     public function getUrlAlias()
     {
-        return $this->url_alias;
-    }
-
-    public function getPosts()
-    {
-        return null;
+        return $this->urlAlias;
     }
 
     /**
@@ -193,5 +200,63 @@ class Blog
     public function getTheme()
     {
         return $this->theme;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \FlorianMasip\BlogBundle\Entity\User $user
+     *
+     * @return Blog
+     */
+    public function setUser(\FlorianMasip\BlogBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \FlorianMasip\BlogBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Add post
+     *
+     * @param \FlorianMasip\BlogBundle\Entity\Post $post
+     *
+     * @return Blog
+     */
+    public function addPost(\FlorianMasip\BlogBundle\Entity\Post $post)
+    {
+        $this->posts[] = $post;
+
+        return $this;
+    }
+
+    /**
+     * Remove post
+     *
+     * @param \FlorianMasip\BlogBundle\Entity\Post $post
+     */
+    public function removePost(\FlorianMasip\BlogBundle\Entity\Post $post)
+    {
+        $this->posts->removeElement($post);
+    }
+
+    /**
+     * Get posts
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPosts()
+    {
+        return $this->posts;
     }
 }

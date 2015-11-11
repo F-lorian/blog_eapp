@@ -8,18 +8,20 @@
 <div id="blog-content">
 	<div id="blog-post" class="panel panel-default blog-post">
 		<div class="panel-heading">
-		  	<span class="label label-warning pull-left blog-post-type" > News </span> 
-		  	<h5 class="">
-		  		Blog : {{ id_blog }} 
-		  		<i class="glyphicon glyphicon-chevron-right separator"></i> 
-		  		Titre Post : {{ id_post }}
-		  	</h5>
-		  	<a class="btn btn-danger pull-right" href="#">Supprimer article <i class="glyphicon glyphicon-remove"></i></a>
-		  	<a class="btn btn-warning pull-right" href="{{ path('blog_edit_post', {'id_blog': '12', 'id_post': '10' }) }}">Editer article <i class="glyphicon glyphicon-edit"></i></a>
+		  	<span class="label label-primary pull-left blog-post-type" > {{ post.nomCategory }} </span> 
+		  	<i class="glyphicon glyphicon-chevron-right separator"></i> 
+		  	<h5 class=""> {{ post.name }} </h5>
+		  	<span class="pull-right"> {{ post.dateCreation|date("m/d/Y") }} </span>
 		  	<br/>
 		</div>
 		<div class="panel-body">
-		    article         
+			{% if app.user.id == post.blog.user.id %}
+			<div class="row">
+			  	<a class="label label-danger pull-right" href="#">Supprimer article <i class="glyphicon glyphicon-remove border"></i></a>
+			  	<a class="label label-warning pull-right" href="{{ path('blog_edit_post', {'url_blog': url_blog, 'url_post': post.urlAlias }) }}">Editer article <i class="glyphicon glyphicon-edit border"></i></a>
+			</div>
+			{% endif %}
+		    {{ post.content }}        
 		</div>
 	</div><!--/panel-body-->
 </div>

@@ -16,7 +16,7 @@ class BlogType extends AbstractType
     {
         $builder
             ->add('name', 'text', array('label' => 'Nom', 'required' => true))
-            ->add('url_alias', 'text', array('label' => 'Url du lien', 'required' => true))
+            ->add('urlAlias', 'text', array('label' => 'Url du lien', 'required' => true))
             ->add('theme', 'text', array('label' => 'Thème', 'required' => true))
             ->add('description', 'textarea', array('label' => 'description', 'required' => false))
         ;

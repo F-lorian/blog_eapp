@@ -11,9 +11,10 @@
 		{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
             
 		<div class="panel-heading">
-		  	<a class="glyphicon glyphicon-user pull-left" href="{{ path('fos_user_profile_show') }}"></a>
-		  	<a class="glyphicon glyphicon-log-out pull-right" href="{{ path('fos_user_security_logout') }}"></a>
-			<a class="glyphicon glyphicon-cog pull-right" href="{{ path('fos_user_profile_edit') }}"></a><br/>
+			<a class="label label-default glyphicon glyphicon-user pull-left border border-circle" href="{{ path('fos_user_profile_show') }}"> </a>
+
+		  	<a class="label label-danger glyphicon glyphicon-log-out pull-right border border-circle" href="{{ path('fos_user_security_logout') }}"> </a>
+			<a class="label label-default glyphicon glyphicon-cog pull-right border border-circle" href="{{ path('fos_user_profile_edit') }}"> </a><br/>
 		</div>
 		<div id="user_panel" class="panel-body">
 			<span id="user_panel_name_label" class="label label-primary" >
@@ -22,9 +23,65 @@
 		    <img id="user-panel-pic"  src="{{ asset('resources/public/img/user.png') }}"/>    	        
 		</div>
 
+		
+
+		<div class="panel-heading">
+		  	<i class="glyphicon glyphicon-bookmark pull-left"></i>Mes blogs
+		  	<br/>
+		</div>
 		<div class="panel-body">
-		    <a id="new-blog" class="btn btn-primary wide" href="{{ path('blog_new') }}">Nouveau Blog <i class="glyphicon glyphicon-book"></i></a>
-			<a class="glyphicon glyphicon-cog pull-right" href="{{ path('blog_edit', {'id_blog': '10' }) }}"></a><br/>
+		    <a id="new-blog" class="btn btn-primary wide" href="{{ path('blog_new') }}">Créer un blog</a>
+		</div>
+		<div id="blogs-panel" class="panel-body">
+
+				{% for b in app.user.blogs %}
+				<div class="user-blog">
+					{% if blog is defined %}
+						{% if b.urlAlias == blog.urlAlias %}
+						<a class="label label-primary user-blog-config border border-circle" href="{{ path('blog_edit', {'url_blog': b.urlAlias }) }}">
+		 					<i class="glyphicon glyphicon-cog"></i>	
+						</a>
+						<a class="label label-primary user-blog-link wide" href="{{ path('blog_view', {'url_blog': b.urlAlias }) }}">
+		 					<i class="glyphicon glyphicon-folder-open border"></i> {{ b.Name }} 	
+						</a>
+						{% else %}
+						<a class="label label-default user-blog-config border border-circle" href="{{ path('blog_edit', {'url_blog': b.urlAlias }) }}">
+		 					<i class="glyphicon glyphicon-cog"></i>	
+						</a>
+						<a class="label label-default user-blog-link wide" href="{{ path('blog_view', {'url_blog': b.urlAlias }) }}">
+	 					    <i class="glyphicon glyphicon-folder-close border"></i> {{ b.Name }} 	
+						</a>
+						{% endif %}
+					{% elseif url_blog is defined %}
+						{% if b.urlAlias == url_blog %}
+						<a class="label label-primary user-blog-config border border-circle" href="{{ path('blog_edit', {'url_blog': b.urlAlias }) }}">
+		 					<i class="glyphicon glyphicon-cog"></i>	
+						</a>
+						<a class="label label-primary user-blog-link wide" href="{{ path('blog_view', {'url_blog': b.urlAlias }) }}">
+		 					<i class="glyphicon glyphicon-folder-open border"></i> {{ b.Name }} 	
+						</a>
+						{% else %}
+						<a class="label label-default user-blog-config border border-circle" href="{{ path('blog_edit', {'url_blog': b.urlAlias }) }}">
+		 					<i class="glyphicon glyphicon-cog"></i>	
+						</a>
+						<a class="label label-default user-blog-link wide" href="{{ path('blog_view', {'url_blog': b.urlAlias }) }}">
+	 					    <i class="glyphicon glyphicon-folder-close border"></i> {{ b.Name }} 	
+						</a>
+						{% endif %}
+					{% else %}
+					<a class="label label-default user-blog-config border border-circle" href="{{ path('blog_edit', {'url_blog': b.urlAlias }) }}">
+		 				<i class="glyphicon glyphicon-cog"></i>	
+					</a>
+					<a class="label label-default user-blog-link wide" href="{{ path('blog_view', {'url_blog': b.urlAlias }) }}">
+ 					    <i class="glyphicon glyphicon-folder-close border"></i> {{ b.Name }} 	
+					</a>
+					{% endif %}
+					
+				</div>
+
+				{% endfor %}
+				    
+	
 		</div>
 
 		<!--sinon -->
@@ -32,7 +89,7 @@
 
         <div class="panel-body">
 		    <a id="log-in" class="btn btn-primary wide" href="{{ path('fos_user_security_login') }}">
-		    	{{ 'layout.login'|trans({}, 'FOSUserBundle') }} <i class="glyphicon glyphicon-book"></i>
+		    	{{ 'layout.login'|trans({}, 'FOSUserBundle') }} <i class="glyphicon glyphicon-log-in"></i>
 		    </a>
 		</div>
 
@@ -64,7 +121,7 @@
 		<div class="panel-body">
 		    <ul>
 		    	<li class="search-result"> 
-		    		<a class="row" href="{{ path('blog_view', {'id_blog': '10' }) }}">
+		    		<a class="row" href="{{ path('blog_view', {'url_blog': '10' }) }}">
 			    		<span class="col-sm-2 search-result-pic">
 			    			<br/>
 			    			<img width="40" height="40" src="{{ asset('resources/public/img/user.png') }}"/>

@@ -7,6 +7,8 @@ namespace FlorianMasip\BlogBundle\Entity;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * User
  *
@@ -28,6 +30,9 @@ class User extends BaseUser
     {
         parent::__construct();
         // your own logic
+
+        $this->blogs = new ArrayCollection();
+    
     }
 
     /**
@@ -51,6 +56,11 @@ class User extends BaseUser
      * @ORM\Column(name="age", type="integer", length=3, nullable=true)
      */
     private $age;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Blog", mappedBy="user")
+     */
+    protected $blogs;
 
     /**
      * Set surname
@@ -123,4 +133,40 @@ class User extends BaseUser
     {
         return $this->age;
     }
+
+    /**
+     * Get blogs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBlogs()
+    {
+        return $this->blogs;
+    }
+
+    /**
+     * Add blog
+     *
+     * @param \FlorianMasip\BlogBundle\Entity\Blog $blog
+     *
+     * @return User
+     */
+    public function addBlog(\FlorianMasip\BlogBundle\Entity\Blog $blog)
+    {
+        $this->blogs[] = $blog;
+
+        return $this;
+    }
+
+    /**
+     * Remove blog
+     *
+     * @param \FlorianMasip\BlogBundle\Entity\Blog $blog
+     */
+    public function removeBlog(\FlorianMasip\BlogBundle\Entity\Blog $blog)
+    {
+        $this->blogs->removeElement($blog);
+    }
+
+
 }

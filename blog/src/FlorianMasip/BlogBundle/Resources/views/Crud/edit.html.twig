@@ -3,7 +3,7 @@
 {% extends '::base.html.twig' %}
 
 {% block title %}
-	{% if id_post is defined %}
+	{% if url_post is defined %}
         Edition
     {% else %}
         Nouvel article
@@ -21,7 +21,7 @@
     <h4 class="page-title">Nouvel article</h4>
     <form id="edit-form" method="post" target="{{ path('blog_new_post', {'url_blog': url_blog}) }}" >
 {% endif %}
-	
+
 		<div id="blog-post" class="panel panel-default blog-post">
 			<div class="panel-heading">
 				<div class="row">
@@ -36,11 +36,11 @@
 				</div>
 			</div>
 			<div class="panel-body">
-			    
+
 				{{ form_widget(form.urlAlias, { 'attr': {'class': 'form-control', 'placeholder': 'url de l\'article'} }) }}
 				<span class="label label-danger error">{{ form_errors(form.urlAlias) }}</span>
 				{{ form_widget(form.content, { 'attr': {'class': 'form-control', 'placeholder': 'article'} }) }}
-				{{ form_row(form._token) }}     
+				{{ form_row(form._token) }}
 			</div>
 			<br/>
 			<span class="label label-danger error">{{ form_errors(form) }}</span>

@@ -249,4 +249,28 @@ class Blog
     {
         $this->posts->removeElement($post);
     }
+
+    /**
+     * Get posts
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPosts()
+    {
+        return $this->posts;
+    }
+
+    /**
+     * Récupère le post par l'url
+     *
+     * @param string $urlAlias
+     * @return Post
+     */
+    public function getPostByUrlAlias($urlAlias) {
+      foreach ($this->posts as $p){
+        if($p->getUrlAlias() == $urlAlias){
+          return $p;
+        }
+      }
+    }
 }

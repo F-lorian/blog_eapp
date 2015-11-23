@@ -1,21 +1,16 @@
-function toggleClass(obj,_class){
 
-	$(obj).toggleClass(_class);
+function toggleClass (obj, Class) {
+  $(obj).toggleClass(Class)
 }
 
-function addClass(obj,_class){
-
-	$(obj).addClass(_class);
+function addClass (obj, Class) {
+  $(obj).addClass(Class)
 }
 
-function removeClass(obj,_class){
-
-	$(obj).removeClass(_class);
+function removeClass (obj, Class)	{
+  $(obj).removeClass(Class)
 }
 
-
-$(document).ready(function(){
-
-	$('#post').elastic();
-
-});
+$(document).ready(function ()	{
+  $('#post').elastic()
+})

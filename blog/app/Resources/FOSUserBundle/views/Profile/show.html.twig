@@ -2,9 +2,6 @@
 
 {% block fos_user_action %}
 	Profil
-	{% if app.user.id == user.id %}
-	<a class="label label-warning pull-right" href="{{ path('fos_user_profile_edit') }}">Editer profil <i class="glyphicon glyphicon-edit border"></i></a>
-	{% endif %}
 {% endblock fos_user_action %}
 
 {% block fos_user_content %}

@@ -32,6 +32,9 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: /edit/, role: IS_AUTHENTICATED_REMEMBERED }
+        - { path: /delete/, role: IS_AUTHENTICATED_REMEMBERED }
+        - { path: /new, role: IS_AUTHENTICATED_REMEMBERED }
             # activate different ways to authenticate
 
             # http_basic: ~

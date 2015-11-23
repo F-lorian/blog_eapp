@@ -7,38 +7,50 @@
 {% block content %}
 <div id="blog-header">
 	<h2 id="blog-name">{{ blog.name }}</h2>
+
+	{% if app.user.id is defined and app.user.id == blog.user.id %}
+		<a class="label label-danger pull-right" href="{{ path('blog_delete', {'url_blog': blog.urlAlias}) }}">Supprimer blog <i class="glyphicon glyphicon-remove border"></i></a>
+		<a class="label label-warning pull-right" href="{{ path('blog_edit', {'url_blog': blog.urlAlias }) }}">Modifier Blog <i class="glyphicon glyphicon-edit border"></i></a>
+	{% endif %}
+
 </div>
+<br/>
+<div class="blog-description" >
+		<strong>description du blog :</strong><br/>
+		{{ blog.description }}
 
+		{% render(controller("BlogBundle:Category:liste", {'url_blog': blog.urlAlias} )) %}
+
+</div>
 <div id="blog-content">
-
-	{% if app.user.id == blog.user.id %}
+	{% if app.user.id is defined and app.user.id == blog.user.id %}
 	<a id="new-post" class="btn btn-success" href="{{ path('blog_new_post', {'url_blog': blog.urlAlias }) }}">Nouvel article <i class="glyphicon glyphicon-pencil"></i></a><br/>
 	{% endif %}
 
-	{% for p in blog.posts %}
-		{% if p == blog.posts.first %}
+	{% for p in posts %}
+		{% if p == posts.first %}
 		<div id="last-blog-post" class="panel panel-default blog-post">
 		{% else %}
 		<div class="panel panel-default blog-post">
 		{% endif %}
-		
+
 			<div class="panel-heading">
-			  	<span class="label label-primary pull-left blog-post-type" > {{ p.nomCategory }} </span> 
+					<span class="label label-primary pull-left blog-post-type" > {{ p.nomCategory }} </span>
 			  	<h5 class="blog-post-title"> {{ p.name }} </h5>
 			  	<span class="pull-right"> {{ p.dateCreation|date("m/d/Y") }} </span>
 			  	<br/>
 			</div>
 			<div class="panel-body">
-			    <a class="btn btn-primary go-to-post" href="{{ path('blog_view_post', {'url_blog': blog.urlAlias, 'url_post': p.urlAlias }) }}">voir l'article <i class="glyphicon glyphicon-plus"></i></a>
-			    {{ p.content }}             
+			    <a class="btn btn-primary go-to-post" href="{{ path('blog_view_post', {'url_blog': blog.urlAlias, 'category': p.nomCategory, 'url_post': p.urlAlias }) }}">voir l'article <i class="glyphicon glyphicon-plus"></i></a>
+			    {{ p.content }}
 			</div>
 		</div>
-		
-	{% endfor %}
-	
 
-	
-	
+	{% endfor %}
+
+
+
+
 </div>
 
 {% endblock %}

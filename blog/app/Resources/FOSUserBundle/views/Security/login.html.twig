@@ -1,14 +1,14 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
 {% trans_default_domain 'FOSUserBundle' %}
-    
+
 {% block title %}Login{% endblock title %}
 
 {% block fos_user_action %}Login{% endblock fos_user_action %}
 
 {% block fos_user_content %}
 
-<form id="edit-form" method="post" action="{{ path("fos_user_security_check") }}" >
+<form id="connection-form" method="post" action="{{ path("fos_user_security_check") }}" >
     <div id="blog-post" class="panel panel-default blog-post">
         <div class="panel-body">
 
@@ -19,13 +19,13 @@
             <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
 
         </div>
-                    
+
         <br/>
         {% if error %}
             <span class="label label-danger error">{{ error.messageKey|trans(error.messageData, 'security') }}</span>
         {% endif %}
         <button class="btn btn-primary wide">valider <i class="glyphicon glyphicon-log-in"></i></button>
-                      
+
     </div><!--/panel-body-->
 </form>
 

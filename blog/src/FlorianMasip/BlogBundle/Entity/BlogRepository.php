@@ -27,7 +27,7 @@ class BlogRepository extends \Doctrine\ORM\EntityRepository
                 'SELECT b.urlAlias
                 FROM BlogBundle:Blog b
                 WHERE b.urlAlias = :url')->setParameter('url', $url_alias)->getResult();
-    } 
+    }
 
     /**
      * Récupère le blog par le nom
@@ -42,5 +42,5 @@ class BlogRepository extends \Doctrine\ORM\EntityRepository
                 FROM BlogBundle:Blog b
                 WHERE b.name = :name')->setParameter('name', $name)->getResult();
     }
- 
+
 }

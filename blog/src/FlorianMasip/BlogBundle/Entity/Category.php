@@ -30,9 +30,16 @@ class Category
 
 
     /**
+     * @ORM\ManyToOne(targetEntity="Blog", inversedBy="categories")
+     * @ORM\JoinColumn(name="id_blog", referencedColumnName="id")
+     */
+    private $blog;
+
+
+    /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -55,7 +62,7 @@ class Category
     /**
      * Get nom
      *
-     * @return string 
+     * @return string
      */
     public function getNom()
     {

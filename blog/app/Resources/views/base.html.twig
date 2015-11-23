@@ -19,36 +19,44 @@
                 {% endblock %}
             </div>
 
-            <div id="container" class="col-sm-11">
-                
+            <div id="page-content" class="col-sm-11">
+                <div id="container">
                 {% if app.request.hasPreviousSession %}
                     {% for type, messages in app.session.flashbag.all() %}
                         {% for message in messages %}
-                            <div class="flash-{{ type }}">
-                                <div class="panel panel-default notice">
-                                    <div class="panel-body">
-                                        {{ message }}
-                                    </div>
-                                </div>
+                            {% if type == "notice" %}
+                             <div class="label label-success wide message">
+
+                            {% elseif type == "error" %}
+
+                            <div class="label label-danger wide message">
+                            {% else %}
+                            {% endif %}
+                                <i class="glyphicon glyphicon-exclamation-sign pull-left"></i>
+                                {{ message }}
+                                <a class="glyphicon glyphicon-remove pull-right " href="#" onclick="$(this).parent().remove()" > </a>
                             </div>
+
                         {% endfor %}
                     {% endfor %}
                 {% endif %}
 
+
                 {% block content %}{% endblock %}
+                </div>
             </div>
         </div>
-        
+
         {% block footer %}
-            {% include "BlogBundle:Default:footer.html.twig" %}
+
         {% endblock %}
 
         {% block javascripts %}
-            {% javascripts 
-            '@BlogBundle/resources/public/js/jquery-2.1.1.min.js' 
-            '@BlogBundle/resources/public/js/scripts.js' 
-            '@BlogBundle/resources/public/js/jquery.elastic.source.js' 
-            '@BlogBundle/resources/public/js/*' 
+            {% javascripts
+            '@BlogBundle/resources/public/js/jquery-2.1.1.min.js'
+            '@BlogBundle/resources/public/js/scripts.js'
+            '@BlogBundle/resources/public/js/jquery.elastic.source.js'
+            '@BlogBundle/resources/public/js/*'
             %}
               <script type="text/javascript" src="{{ asset_url }}"></script>
             {% endjavascripts %}

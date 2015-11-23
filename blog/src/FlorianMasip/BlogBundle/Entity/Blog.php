@@ -39,6 +39,11 @@ class Blog
     protected $posts;
 
     /**
+     * @ORM\OneToMany(targetEntity="Post", mappedBy="blog")
+     */
+    protected $categories;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, unique=true)
@@ -70,6 +75,7 @@ class Blog
     public function __construct()
     {
         $this->posts = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     /**
@@ -258,5 +264,36 @@ class Blog
     public function getPosts()
     {
         return $this->posts;
+    }
+
+    /**
+     * Récupère les posts par la categorie
+     *
+     * @param string $category
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPostsByCategory($category)
+    {
+        $res = new ArrayCollection();
+        foreach ($this->posts as $p){
+          if($p->getNomCategory() == $category){
+            $res[] = $p;
+          }
+        }
+        return $res;
+    }
+
+    /**
+     * Récupère le post par l'url
+     *
+     * @param string $urlAlias
+     * @return Post
+     */
+    public function getPostByUrlAlias($urlAlias) {
+      foreach ($this->posts as $p){
+        if($p->getUrlAlias() == $urlAlias){
+          return $p;
+        }
+      }
     }
 }

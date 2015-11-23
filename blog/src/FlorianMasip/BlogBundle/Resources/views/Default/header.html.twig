@@ -1,15 +1,15 @@
 <header>
 	<div id="blog-panel" class="panel panel-default ">
 		<div class="panel-heading">
-		  	<h4> kikoo blog </h4>  	
+		  	<h4> kikoo blog </h4>
 		  	<a class="glyphicon glyphicon-home pull-right" href="{{ path('blog_homepage') }}" ></a>
-		  	<button id="search-blog-button" class="btn btn-primary" onclick="removeClass('#search-results-panel','closed')"><i class="glyphicon glyphicon glyphicon-search"></i></button>
+		  	<button id="search-blog-button" class="btn btn-primary" onclick="removeClass('#search-results-panel','closed')"> <i class="glyphicon glyphicon-search"></i></button>
 		  	<input type="text" class="form-control" id="search-blog" placeholder="chercher un blog" name="search-blog"/><br/>
 		</div>
 
 		<!--si connecté -->
 		{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-            
+
 		<div class="panel-heading">
 			<a class="label label-default glyphicon glyphicon-user pull-left border border-circle" href="{{ path('fos_user_profile_show') }}"> </a>
 
@@ -20,10 +20,10 @@
 			<span id="user_panel_name_label" class="label label-primary" >
 				{{ app.user.username }}
 			</span>
-		    <img id="user-panel-pic"  src="{{ asset('resources/public/img/user.png') }}"/>    	        
+		    <img id="user-panel-pic"  src="{{ asset('resources/public/img/user.png') }}"/>
 		</div>
 
-		
+
 
 		<div class="panel-heading">
 		  	<i class="glyphicon glyphicon-bookmark pull-left"></i>Mes blogs
@@ -39,49 +39,49 @@
 					{% if blog is defined %}
 						{% if b.urlAlias == blog.urlAlias %}
 						<a class="label label-primary user-blog-config border border-circle" href="{{ path('blog_edit', {'url_blog': b.urlAlias }) }}">
-		 					<i class="glyphicon glyphicon-cog"></i>	
+		 					<i class="glyphicon glyphicon-cog"></i>
 						</a>
 						<a class="label label-primary user-blog-link wide" href="{{ path('blog_view', {'url_blog': b.urlAlias }) }}">
-		 					<i class="glyphicon glyphicon-folder-open border"></i> {{ b.Name }} 	
+		 					<i class="glyphicon glyphicon-folder-open border"></i> {{ b.Name }}
 						</a>
 						{% else %}
 						<a class="label label-default user-blog-config border border-circle" href="{{ path('blog_edit', {'url_blog': b.urlAlias }) }}">
-		 					<i class="glyphicon glyphicon-cog"></i>	
+		 					<i class="glyphicon glyphicon-cog"></i>
 						</a>
 						<a class="label label-default user-blog-link wide" href="{{ path('blog_view', {'url_blog': b.urlAlias }) }}">
-	 					    <i class="glyphicon glyphicon-folder-close border"></i> {{ b.Name }} 	
+	 					    <i class="glyphicon glyphicon-folder-close border"></i> {{ b.Name }}
 						</a>
 						{% endif %}
 					{% elseif url_blog is defined %}
 						{% if b.urlAlias == url_blog %}
 						<a class="label label-primary user-blog-config border border-circle" href="{{ path('blog_edit', {'url_blog': b.urlAlias }) }}">
-		 					<i class="glyphicon glyphicon-cog"></i>	
+		 					<i class="glyphicon glyphicon-cog"></i>
 						</a>
 						<a class="label label-primary user-blog-link wide" href="{{ path('blog_view', {'url_blog': b.urlAlias }) }}">
-		 					<i class="glyphicon glyphicon-folder-open border"></i> {{ b.Name }} 	
+		 					<i class="glyphicon glyphicon-folder-open border"></i> {{ b.Name }}
 						</a>
 						{% else %}
 						<a class="label label-default user-blog-config border border-circle" href="{{ path('blog_edit', {'url_blog': b.urlAlias }) }}">
-		 					<i class="glyphicon glyphicon-cog"></i>	
+		 					<i class="glyphicon glyphicon-cog"></i>
 						</a>
 						<a class="label label-default user-blog-link wide" href="{{ path('blog_view', {'url_blog': b.urlAlias }) }}">
-	 					    <i class="glyphicon glyphicon-folder-close border"></i> {{ b.Name }} 	
+	 					    <i class="glyphicon glyphicon-folder-close border"></i> {{ b.Name }}
 						</a>
 						{% endif %}
 					{% else %}
 					<a class="label label-default user-blog-config border border-circle" href="{{ path('blog_edit', {'url_blog': b.urlAlias }) }}">
-		 				<i class="glyphicon glyphicon-cog"></i>	
+		 				<i class="glyphicon glyphicon-cog"></i>
 					</a>
 					<a class="label label-default user-blog-link wide" href="{{ path('blog_view', {'url_blog': b.urlAlias }) }}">
- 					    <i class="glyphicon glyphicon-folder-close border"></i> {{ b.Name }} 	
+ 					    <i class="glyphicon glyphicon-folder-close border"></i> {{ b.Name }}
 					</a>
 					{% endif %}
-					
+
 				</div>
 
 				{% endfor %}
-				    
-	
+
+
 		</div>
 
 		<!--sinon -->
@@ -96,17 +96,20 @@
 		<div class="panel-body">
 		    <a id="new-blog" class="btn btn-primary wide" href="{{ path('blog_new_user') }}">Inscription <i class="glyphicon glyphicon-book"></i></a>
 		</div>
-		<div class="panel-heading">
+		<!--div class="panel-heading">
 		  	<span class="label label-default pull-left" ><i class="glyphicon glyphicon-user pull-left"></i>Connexion </span>
 		  	<br/>
 		</div>
 		<div class="panel-body">
-		    <form id="connection-form" method="post" target="" >
-		    	<input type="text" class="form-control" placeholder="login" id="login" name="login"/>
-		    	<input type="password" class="form-control" placeholder="mot de passe" id="password" name="password"/>
-		    	<button id="connection-button" class="btn btn-primary wide">valider <i class="glyphicon glyphicon-log-in"></i></button>
+		    <form id="connection-form-header" method="post" action="{{ path("fos_user_security_check") }}" >
+
+					<input class="form-control" placeholder="pseudo" type="text" id="username" name="_username" value="" required="required" />
+					<input class="form-control" placeholder="mot de passe" type="password" id="password" name="_password" required="required" />
+					<input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+					<label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+					<button id="connection-button" class="btn btn-primary wide">valider <i class="glyphicon glyphicon-log-in"></i></button>
 		    </form>
-		</div>
+		</div-->
 
 		{% endif %}
 		<!------------>
@@ -120,7 +123,7 @@
 		</div>
 		<div class="panel-body">
 		    <ul>
-		    	<li class="search-result"> 
+		    	<li class="search-result">
 		    		<a class="row" href="{{ path('blog_view', {'url_blog': '10' }) }}">
 			    		<span class="col-sm-2 search-result-pic">
 			    			<br/>
@@ -133,7 +136,7 @@
 			    		<br/>
 		    		</a>
 		    	</li>
-		    	<li class="search-result"> 
+		    	<li class="search-result">
 		    		<span class="row">
 			    		<span class="col-sm-2 search-result-pic">
 			    			<br/>
@@ -145,7 +148,7 @@
 			    		</span>
 		    		</span>
 		    	</li>
-		    	<li class="search-result"> 
+		    	<li class="search-result">
 		    		<span class="row">
 			    		<span class="col-sm-2 search-result-pic">
 			    			<br/>
@@ -157,7 +160,7 @@
 			    		</span>
 		    		</span>
 		    	</li>
-		    	<li class="search-result"> 
+		    	<li class="search-result">
 		    		<span class="row">
 			    		<span class="col-sm-2 search-result-pic">
 			    			<br/>
@@ -169,7 +172,7 @@
 			    		</span>
 		    		</span>
 		    	</li>
-		    	<li class="search-result"> 
+		    	<li class="search-result">
 		    		<span class="row">
 			    		<span class="col-sm-2 search-result-pic">
 			    			<br/>
@@ -181,7 +184,7 @@
 			    		</span>
 		    		</span>
 		    	</li>
-		    	<li class="search-result"> 
+		    	<li class="search-result">
 		    		<span class="row">
 			    		<span class="col-sm-2 search-result-pic">
 			    			<br/>
@@ -193,7 +196,7 @@
 			    		</span>
 		    		</span>
 		    	</li>
-		    	<li class="search-result"> 
+		    	<li class="search-result">
 		    		<span class="row">
 			    		<span class="col-sm-2 search-result-pic">
 			    			<br/>
@@ -205,7 +208,7 @@
 			    		</span>
 		    		</span>
 		    	</li>
-		    	<li class="search-result"> 
+		    	<li class="search-result">
 		    		<span class="row">
 			    		<span class="col-sm-2 search-result-pic">
 			    			<br/>
@@ -217,7 +220,7 @@
 			    		</span>
 		    		</span>
 		    	</li>
-		    	<li class="search-result"> 
+		    	<li class="search-result">
 		    		<span class="row">
 			    		<span class="col-sm-2 search-result-pic">
 			    			<br/>
@@ -229,7 +232,7 @@
 			    		</span>
 		    		</span>
 		    	</li>
-		    	<li class="search-result"> 
+		    	<li class="search-result">
 		    		<span class="row">
 			    		<span class="col-sm-2 search-result-pic">
 			    			<br/>
@@ -241,7 +244,7 @@
 			    		</span>
 		    		</span>
 		    	</li>
-		    	<li class="search-result"> 
+		    	<li class="search-result">
 		    		<span class="row">
 			    		<span class="col-sm-2 search-result-pic">
 			    			<br/>
@@ -253,7 +256,7 @@
 			    		</span>
 		    		</span>
 		    	</li>
-		    </ul>       	        
+		    </ul>
 		</div>
 	</div><!--/panel-body-->
 </header>

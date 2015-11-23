@@ -14,6 +14,10 @@ blog_edit:
     path:     /edit/{url_blog}
     defaults: { _controller: BlogBundle:Blog:edit }
 
+blog_delete:
+    path:     /delete/{url_blog}
+    defaults: { _controller: BlogBundle:Blog:delete }
+
 blog_view:
     path:     /{url_blog}
     defaults: { _controller: BlogBundle:Blog:blog }
@@ -21,6 +25,10 @@ blog_view:
 blog_new_post:
     path:     /{url_blog}/new
     defaults: { _controller: BlogBundle:Crud:new }
+
+blog_view_by_category:
+    path:     /{url_blog}/{category}
+    defaults: { _controller: BlogBundle:Blog:blog }
 
 blog_edit_post:
     path:     /{url_blog}/edit/{url_post}
@@ -31,5 +39,5 @@ blog_delete_post:
     defaults: { _controller: BlogBundle:Crud:delete }
 
 blog_view_post:
-    path:     /{url_blog}/{url_post}
+    path:     /{url_blog}/{category}/{url_post}
     defaults: { _controller: BlogBundle:Blog:post }

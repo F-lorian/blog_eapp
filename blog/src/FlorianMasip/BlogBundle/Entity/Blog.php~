@@ -39,6 +39,11 @@ class Blog
     protected $posts;
 
     /**
+     * @ORM\OneToMany(targetEntity="Category", mappedBy="blog")
+     */
+    protected $categories;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, unique=true)
@@ -70,6 +75,7 @@ class Blog
     public function __construct()
     {
         $this->posts = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     /**
@@ -261,6 +267,23 @@ class Blog
     }
 
     /**
+     * Récupère les posts par la categorie
+     *
+     * @param \FlorianMasip\BlogBundle\Entity\Category $category
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPostsByCategory(\FlorianMasip\BlogBundle\Entity\Category $category)
+    {
+        $res = new ArrayCollection();
+        foreach ($this->posts as $p){
+          if($p->getCategory() == $category){
+            $res[] = $p;
+          }
+        }
+        return $res;
+    }
+
+    /**
      * Récupère le post par l'url
      *
      * @param string $urlAlias
@@ -272,5 +295,40 @@ class Blog
           return $p;
         }
       }
+    }
+
+
+    /**
+     * Add category
+     *
+     * @param \FlorianMasip\BlogBundle\Entity\Category $category
+     *
+     * @return Blog
+     */
+    public function addCategory(\FlorianMasip\BlogBundle\Entity\Category $category)
+    {
+        $this->categories[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param \FlorianMasip\BlogBundle\Entity\Category $category
+     */
+    public function removeCategory(\FlorianMasip\BlogBundle\Entity\Category $category)
+    {
+        $this->categories->removeElement($category);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCategories()
+    {
+        return $this->categories;
     }
 }

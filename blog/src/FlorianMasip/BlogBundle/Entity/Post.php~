@@ -42,11 +42,12 @@ class Post
     private $blog;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="nom_category", type="text", length=255)
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="categories")
+     * @ORM\JoinColumn(name="id_category", referencedColumnName="id")
      */
-    private $nomCategory;
+    private $category;
+
+
     /**
      * @var string
      *
@@ -64,7 +65,7 @@ class Post
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -87,7 +88,7 @@ class Post
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -110,7 +111,7 @@ class Post
     /**
      * Get urlAlias
      *
-     * @return string 
+     * @return string
      */
     public function getUrlAlias()
     {
@@ -133,13 +134,13 @@ class Post
     /**
      * Get nomCategory
      *
-     * @return string 
+     * @return string
      */
     public function getNomCategory()
     {
         return $this->nomCategory;
     }
-    
+
     /**
      * Set content
      *
@@ -156,13 +157,13 @@ class Post
     /**
      * Get content
      *
-     * @return string 
+     * @return string
      */
     public function getContent()
     {
         return $this->content;
     }
-    
+
     /**
      * Get dateCreation
      *
@@ -172,7 +173,7 @@ class Post
     {
         return $this->dateCreation;
     }
-    
+
     /**
      * Set dateCreation
      *
@@ -185,7 +186,7 @@ class Post
 
         return $this;
     }
-    
+
 
     /**
      * Set blog

@@ -26,8 +26,20 @@ blog_new_post:
     path:     /{url_blog}/new
     defaults: { _controller: BlogBundle:Crud:new }
 
+blog_new_category:
+    path:     /{url_blog}/new-category
+    defaults: { _controller: BlogBundle:Blog:newCategory }
+
+blog_edit_category:
+    path:     /{url_blog}/edit-category/{category_name}
+    defaults: { _controller: BlogBundle:Blog:editCategory }
+
+blog_delete_category:
+    path:     /{url_blog}/delete-category/{category_name}
+    defaults: { _controller: BlogBundle:Blog:deleteCategory }
+
 blog_view_by_category:
-    path:     /{url_blog}/{category}
+    path:     /{url_blog}/{category_name}
     defaults: { _controller: BlogBundle:Blog:blog }
 
 blog_edit_post:
@@ -39,5 +51,5 @@ blog_delete_post:
     defaults: { _controller: BlogBundle:Crud:delete }
 
 blog_view_post:
-    path:     /{url_blog}/{category}/{url_post}
+    path:     /{url_blog}/{category_name}/{url_post}
     defaults: { _controller: BlogBundle:Blog:post }

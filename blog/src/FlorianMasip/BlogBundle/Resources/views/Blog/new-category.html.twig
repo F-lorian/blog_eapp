@@ -1,0 +1,38 @@
+{# src/FlorianMasip/BlogBundle/Resources/views/Blog/register.html.twig #}
+
+{% extends '::base.html.twig' %}
+
+{% block title %}
+	{% if category_name is defined %}
+        Modifier categorie
+    {% else %}
+        Ajout d'une categorie
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+<div id="blog-content">
+
+{% if category_name is defined %}
+    <h4 class="page-title">Modifier categorie : {{ category_name }}</h4>
+    <form id="edit-category-form" method="post" target="{{ path('blog_edit_category', {'url_blog': url_blog, 'category_name': category_name}) }}" >
+{% else %}
+    <h4 class="page-title">Ajout d'une categorie</h4>
+	<form id="new-category-form" method="post" target="{{ path('blog_new_category', {'url_blog': url_blog}) }}" >
+{% endif %}
+
+		<div id="blog-post" class="panel panel-default blog-post">
+			<div class="panel-body">
+				{{ form_widget(form.nom, { 'attr': {'class': 'form-control', 'placeholder': 'nom de la catégorie'} }) }}
+				<span class="label label-danger error">{{ form_errors(form.nom) }}</span>
+				{{ form_row(form._token) }}
+			</div>
+			<br/>
+				<span class="label label-danger error">{{ form_errors(form) }}</span>
+				<button class="btn btn-primary wide">valider <i class="glyphicon glyphicon-ok"></i></button>
+		</div><!--/panel-body-->
+	</form>
+
+</div>
+{% endblock %}

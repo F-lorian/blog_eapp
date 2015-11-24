@@ -3,7 +3,7 @@
     <h3>Cours : </h3>
     <ul>
         {% for category in liste_category %}
-            <li><a href="{{ path('blog_view_by_category', {'url_blog': url_blog, 'category': category.getNom}) }}" title="voir la catégory : {{category.getNom}}">{{category.getNom}}</a></li>
+            <li><a href="{{ path('blog_view_by_category', {'url_blog': url_blog, 'category_name': category.nom}) }}" title="voir la catégory : {{category.nom}}">{{category.nom}}</a></li>
         {% endfor %}
     </ul>
 </div>

@@ -42,11 +42,12 @@ class Post
     private $blog;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="nom_category", type="text", length=255)
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="categories")
+     * @ORM\JoinColumn(name="id_category", referencedColumnName="id")
      */
-    private $nomCategory;
+    private $category;
+
+
     /**
      * @var string
      *
@@ -64,7 +65,7 @@ class Post
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -87,7 +88,7 @@ class Post
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -110,36 +111,13 @@ class Post
     /**
      * Get urlAlias
      *
-     * @return string 
+     * @return string
      */
     public function getUrlAlias()
     {
         return $this->urlAlias;
     }
 
-    /**
-     * Set nomCategory
-     *
-     * @param string $nomCategory
-     * @return Post
-     */
-    public function setNomCategory($nomCategory)
-    {
-        $this->nomCategory = $nomCategory;
-
-        return $this;
-    }
-
-    /**
-     * Get nomCategory
-     *
-     * @return string 
-     */
-    public function getNomCategory()
-    {
-        return $this->nomCategory;
-    }
-    
     /**
      * Set content
      *
@@ -156,13 +134,13 @@ class Post
     /**
      * Get content
      *
-     * @return string 
+     * @return string
      */
     public function getContent()
     {
         return $this->content;
     }
-    
+
     /**
      * Get dateCreation
      *
@@ -172,7 +150,7 @@ class Post
     {
         return $this->dateCreation;
     }
-    
+
     /**
      * Set dateCreation
      *
@@ -185,7 +163,7 @@ class Post
 
         return $this;
     }
-    
+
 
     /**
      * Set blog
@@ -209,5 +187,29 @@ class Post
     public function getBlog()
     {
         return $this->blog;
+    }
+
+    /**
+     * Set category
+     *
+     * @param \FlorianMasip\BlogBundle\Entity\Category $category
+     *
+     * @return Post
+     */
+    public function setCategory(\FlorianMasip\BlogBundle\Entity\Category $category = null)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \FlorianMasip\BlogBundle\Entity\Category
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 }

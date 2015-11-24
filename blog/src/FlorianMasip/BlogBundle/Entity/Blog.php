@@ -39,7 +39,7 @@ class Blog
     protected $posts;
 
     /**
-     * @ORM\OneToMany(targetEntity="Post", mappedBy="blog")
+     * @ORM\OneToMany(targetEntity="Category", mappedBy="blog")
      */
     protected $categories;
 
@@ -269,14 +269,14 @@ class Blog
     /**
      * Récupère les posts par la categorie
      *
-     * @param string $category
+     * @param \FlorianMasip\BlogBundle\Entity\Category $category
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getPostsByCategory($category)
+    public function getPostsByCategory(\FlorianMasip\BlogBundle\Entity\Category $category)
     {
         $res = new ArrayCollection();
         foreach ($this->posts as $p){
-          if($p->getNomCategory() == $category){
+          if($p->getCategory() == $category){
             $res[] = $p;
           }
         }
@@ -295,5 +295,40 @@ class Blog
           return $p;
         }
       }
+    }
+
+
+    /**
+     * Add category
+     *
+     * @param \FlorianMasip\BlogBundle\Entity\Category $category
+     *
+     * @return Blog
+     */
+    public function addCategory(\FlorianMasip\BlogBundle\Entity\Category $category)
+    {
+        $this->categories[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param \FlorianMasip\BlogBundle\Entity\Category $category
+     */
+    public function removeCategory(\FlorianMasip\BlogBundle\Entity\Category $category)
+    {
+        $this->categories->removeElement($category);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCategories()
+    {
+        return $this->categories;
     }
 }

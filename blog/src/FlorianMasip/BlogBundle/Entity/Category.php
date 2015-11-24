@@ -4,6 +4,8 @@ namespace FlorianMasip\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Category
  *
@@ -35,6 +37,15 @@ class Category
      */
     private $blog;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Post", mappedBy="category")
+     */
+    protected $posts;
+
+    public function __construct()
+    {
+        $this->posts = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -67,5 +78,63 @@ class Category
     public function getNom()
     {
         return $this->nom;
+    }
+
+    /**
+     * Set blog
+     *
+     * @param \FlorianMasip\BlogBundle\Entity\Blog $blog
+     *
+     * @return Category
+     */
+    public function setBlog(\FlorianMasip\BlogBundle\Entity\Blog $blog = null)
+    {
+        $this->blog = $blog;
+
+        return $this;
+    }
+
+    /**
+     * Get blog
+     *
+     * @return \FlorianMasip\BlogBundle\Entity\Blog
+     */
+    public function getBlog()
+    {
+        return $this->blog;
+    }
+
+    /**
+     * Add post
+     *
+     * @param \FlorianMasip\BlogBundle\Entity\Post $post
+     *
+     * @return Category
+     */
+    public function addPost(\FlorianMasip\BlogBundle\Entity\Post $post)
+    {
+        $this->posts[] = $post;
+
+        return $this;
+    }
+
+    /**
+     * Remove post
+     *
+     * @param \FlorianMasip\BlogBundle\Entity\Post $post
+     */
+    public function removePost(\FlorianMasip\BlogBundle\Entity\Post $post)
+    {
+        $this->posts->removeElement($post);
+    }
+
+    /**
+     * Get posts
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPosts()
+    {
+        return $this->posts;
     }
 }

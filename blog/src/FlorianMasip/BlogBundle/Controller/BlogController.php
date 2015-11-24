@@ -5,8 +5,10 @@ namespace FlorianMasip\BlogBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FlorianMasip\BlogBundle\Entity\Blog;
 use FlorianMasip\BlogBundle\Entity\User;
+use FlorianMasip\BlogBundle\Entity\Category;
 use FlorianMasip\BlogBundle\Form\BlogType;
 use FlorianMasip\BlogBundle\Form\UserType;
+use FlorianMasip\BlogBundle\Form\CategoryType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormError;
 
@@ -17,90 +19,41 @@ class BlogController extends Controller
         return $this->render('BlogBundle:Default:index.html.twig');
     }
 
-    public function blogAction($url_blog, $category = null)
+    public function blogAction($url_blog, $category_name = null)
     {
         $em = $this->getDoctrine()->getManager();
+
         $blogRepository = $em->getRepository('BlogBundle:Blog');
+        $categoryRepository = $em->getRepository('BlogBundle:Category');
+
         $blog = $blogRepository->findOneByUrlAlias($url_blog);
+        $defaultCategory = $categoryRepository->findOneByNom('general');
+        $categories = $categoryRepository->findByBlogOrdered($blog);
+
+        array_unshift($categories , $defaultCategory);
 
         if(!empty($blog)){
 
-            if($category){
-                $posts = $blog->getPostsByCategory($category);
+            if($category_name and $category_name != 'general'){
 
-                if(empty($posts)){
+                $category = $categoryRepository->findOneBy(array('nom' => $category_name, 'blog' => $blog));
+
+                if(empty($category)){
                     throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException ();
                 }
+
+                $posts = $blog->getPostsByCategory($category);
             }
             else{
+                $category = $defaultCategory;
                 $posts = $blog->getPosts();
             }
 
-            return $this->render('BlogBundle:Blog:blog.html.twig', array('blog' => $blog, 'posts' => $posts));
+            return $this->render('BlogBundle:Blog:blog.html.twig', array('blog' => $blog, 'categories' => $categories, 'posts' => $posts, 'category' => $category));
+
         }
         //à remplacer par un 404
         throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException ();
-    }
-
-  /*  public function registerAction(Request $request)
-    {
-
-        $user = new User();
-        $form = $this->createForm(new UserType(), $user);
-        $form->handleRequest($request);
-
-        if ($request->isMethod('POST')) {
-            $em = $this->getDoctrine()->getManager();
-            $userRepository = $em->getRepository('BlogBundle:User');
-
-            $pseudo = $form["pseudo"]->getData();
-            $mail = $form["mail"]->getData();
-            $surname = $form["surname"]->getData();
-            $lastname = $form["lastname"]->getData();
-            $age = $form["age"]->getData();
-            $password = $form["password"]->getData();
-
-            $error = false;
-
-            $test_pseudo = $userRepository->getUserByPseudo($pseudo);
-            $test_mail = $userRepository->getUserByMail($mail);
-            // Teste si le pseudo existe déjà en base
-            if (!empty($test_pseudo) && $test_pseudo[0]['mail'] != $request->getSession()->get('mail')) {
-                $form["pseudo"]->addError(new FormError("Le pseudo : '$pseudo' est déjà utilisé"));
-                $error = true;
-            }
-            // Teste si le mail existe déjà en base
-            if (!empty($test_mail) && $test_mail[0]['pseudo'] != $request->getSession()->get('pseudo')) {
-                $form["mail"]->addError(new FormError("Le mail: '$mail' est déjà utilisé"));
-                $error = true;
-            }
-
-
-            if ($form->isValid() && !$error) {
-                $user->setPseudo($pseudo);
-                $user->setMail($mail);
-                $user->setSurname($surname);
-                $user->setLastname($lastname);
-                $user->setAge($age);
-                $user->setPassword($password);
-                $em->persist($user);
-                $em->flush();
-
-                $request->getSession()->getFlashBag()->add('notice', 'Inscription réussie');
-                return $this->redirect($this->generateUrl('blog_homepage'));
-
-            } else {
-                $request->getSession()->getFlashBag()->add('error', "Erreur lors de l'inscription");
-            }
-        }
-        //$request->getSession()->getFlashBag()->add('notice', 'test de notice');
-        return $this->render('BlogBundle:Blog:register.html.twig', array("form" => $form->createView()));
-    }
-*/
-    public function loginAction(Request $request)
-    {
-
-
     }
 
     public function newAction(Request $request)
@@ -170,9 +123,8 @@ class BlogController extends Controller
 
             $em = $this->getDoctrine()->getManager();
             $blogRepository = $em->getRepository('BlogBundle:Blog');
-            $blog = $blogRepository->findOneByUrlAlias($url_blog);
 
-            $form = $this->createForm(new BlogType(), $blog);
+            $form = $this->createForm(new BlogType(), $b);
 
 
             if ($request->isMethod('POST')) {
@@ -207,15 +159,15 @@ class BlogController extends Controller
                 }
 
                 if ($form->isValid() && !$error) {
-                    $blog->setName($name);
-                    $blog->setUrlAlias($url_alias);
-                    $blog->setTheme($theme);
-                    $blog->setDescription($description);
+                    $b->setName($name);
+                    $b->setUrlAlias($url_alias);
+                    $b->setTheme($theme);
+                    $b->setDescription($description);
                     //$em->persist($blog);
                     $em->flush();
 
                     $request->getSession()->getFlashBag()->add('notice', 'Blog modifié');
-                    return $this->redirect($this->generateUrl('blog_view', array('url_blog' => $blog->getUrlAlias())));
+                    return $this->redirect($this->generateUrl('blog_view', array('url_blog' => $url_alias)));
 
                 } else {
                     $request->getSession()->getFlashBag()->add('error', "Erreur lors de la modification");
@@ -234,28 +186,195 @@ class BlogController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
-        $blogRepository = $em->getRepository('BlogBundle:Post');
-        $post = $blogRepository->findOneByUrlAlias($url_post);
+        $blogRepository = $em->getRepository('BlogBundle:Blog');
+        $blog = $blogRepository->findOneByUrlAlias($url_blog);
+        $post = $blog->getPostByUrlAlias($url_post);
 
-        return $this->render('BlogBundle:Blog:post.html.twig', array('url_blog' => $url_blog, 'post' => $post));
+        if(!empty($post)){
+            return $this->render('BlogBundle:Blog:post.html.twig', array('url_blog' => $url_blog, 'post' => $post));
+        }
+        throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException ();
     }
 
-    public function deleteAction($url_blog)
+    public function deleteAction(Request $request, $url_blog)
     {
         foreach ($this->getUser()->getBlogs() as $b){
           if($b->getUrlAlias() == $url_blog){
             $em = $this->getDoctrine()->getManager();
             $blogRepository = $em->getRepository('BlogBundle:Blog');
-            $blog = $blogRepository->findOneByUrlAlias($url_blog);
 
-            $em->remove($blog);
+            $em->remove($b);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('notice', 'Blog supprimé');
+            $request->getSession()->getFlashBag()->add('notice', 'Blog supprimé');
             return $this->redirect($this->generateUrl('blog_homepage'));
           }
         }
 
         throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException();
     }
+
+    public function newCategoryAction(Request $request, $url_blog)
+    {
+
+        foreach ($this->getUser()->getBlogs() as $b){
+          if($b->getUrlAlias() == $url_blog){
+
+            $em = $this->getDoctrine()->getManager();
+
+            $blogRepository = $em->getRepository('BlogBundle:Blog');
+
+            $categoryRepository = $em->getRepository('BlogBundle:Category');
+            $category = new Category();
+            $form = $this->createForm(new CategoryType(), $category);
+
+            if ($request->isMethod('POST')) {
+                $form = $this->createForm(new CategoryType());
+                $form->handleRequest($request);
+
+                // Récupère l'url alias entrée pour teste (existance et regex)
+                $nomCategory = $form["nom"]->getData();
+
+                $error = false;
+
+                // Teste si l'url contient autre chose que des chiffres des lettres ou des tirets
+                if (!preg_match("/^[a-z-A-Z-0-9]+$/", $nomCategory)) {
+                    $form["nom"]->addError(new FormError("Une categorie ne peut contenir que des chiffres, des lettres ou des tirets"));
+                    $error = true;
+                }else{
+
+                    $test_nom = $categoryRepository->findOneBy(array('nom' => $nomCategory, 'blog' => $b));
+                    // Teste si l'url_alias existe déjà en base
+                    if (!empty($test_nom)) {
+                        $form["nom"]->addError(new FormError("la catégorie '$nomCategory' existe déjà sur ce blog"));
+                        $error = true;
+                    }
+                }
+
+                // Si le formulaire est valide
+                if ($form->isValid() && !$error) {
+
+                    $category->setNom($nomCategory);
+                    $category->setBlog($b);
+
+                    $em->persist($category);
+                    $em->flush();
+
+                    // Message de confirmation pour l'utilisateur
+                    $request->getSession()->getFlashBag()->add('notice', "catégorie ajoutée avec succès");
+
+                    return $this->redirect($this->generateUrl('blog_view_by_category', array('url_blog' => $url_blog, 'category_name' => $nomCategory)));
+                } else {
+
+                    // Message de confirmation pour l'utilisateur
+                    $request->getSession()->getFlashBag()->add('error', "Erreur lors de l'ajout'");
+
+                }
+            }
+
+            return $this->render('BlogBundle:Blog:new-category.html.twig', array('url_blog' => $url_blog, 'form' => $form->createView()));
+          }
+        }
+
+        throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException();
+    }
+
+
+    public function editCategoryAction(Request $request, $url_blog, $category_name)
+    {
+
+        foreach ($this->getUser()->getBlogs() as $b){
+          if($b->getUrlAlias() == $url_blog){
+
+            $em = $this->getDoctrine()->getManager();
+
+            $blogRepository = $em->getRepository('BlogBundle:Blog');
+            $blog = $blogRepository->findOneByUrlAlias($url_blog);
+
+            $categoryRepository = $em->getRepository('BlogBundle:Category');
+            $category = $categoryRepository->findOneBy(array('nom' => $category_name, 'blog' => $blog));
+            $form = $this->createForm(new CategoryType(), $category);
+
+            if(empty($category)){
+                throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException();
+            }
+            
+            if ($request->isMethod('POST')) {
+                $form = $this->createForm(new CategoryType());
+                $form->handleRequest($request);
+
+                // Récupère l'url alias entrée pour teste (existance et regex)
+                $name = $form["nom"]->getData();
+
+                $error = false;
+
+                // Teste si l'url contient autre chose que des chiffres des lettres ou des tirets
+                if (!preg_match("/^[a-z-A-Z-0-9]+$/", $name)) {
+                    $form["nom"]->addError(new FormError("Une categorie ne peut contenir que des chiffres, des lettres ou des tirets"));
+                    $error = true;
+                }else{
+
+                    $test_nom = $categoryRepository->findOneBy(array('nom' => $name, 'blog' => $blog));
+                    // Teste si l'url_alias existe déjà en base
+                    if (!empty($test_nom)) {
+                        $form["nom"]->addError(new FormError("la catégorie '$name' existe déjà sur ce blog"));
+                        $error = true;
+                    }
+                }
+
+                // Si le formulaire est valide
+                if ($form->isValid() && !$error) {
+
+                    $category->setNom($name);
+
+                    $em->flush();
+
+                    // Message de confirmation pour l'utilisateur
+                    $request->getSession()->getFlashBag()->add('notice', "catégorie modifiée");
+
+                    return $this->redirect($this->generateUrl('blog_view_by_category', array('url_blog' => $url_blog, 'category_name' => $name)));
+                } else {
+
+                    // Message de confirmation pour l'utilisateur
+                    $request->getSession()->getFlashBag()->add('error', "Erreur lors de la modification");
+
+                }
+            }
+
+            return $this->render('BlogBundle:Blog:new-category.html.twig', array('url_blog' => $url_blog, 'category_name' => $category_name, 'form' => $form->createView()));
+          }
+        }
+
+        throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException();
+    }
+
+    public function deleteCategoryAction(Request $request, $url_blog, $category_name)
+    {
+        foreach ($this->getUser()->getBlogs() as $b){
+            if($b->getUrlAlias() == $url_blog){
+                $em = $this->getDoctrine()->getManager();
+                $blogRepository = $em->getRepository('BlogBundle:Blog');
+                $categoryRepository = $em->getRepository('BlogBundle:Category');
+
+                $category = $categoryRepository->findOneBy(array('nom' => $category_name, 'blog' => $b));
+                $defaultCategory = $categoryRepository->findOneByNom('general');
+
+                if(empty($category)){
+                    throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException();
+                }
+
+                foreach ($category->getPosts() as $p){
+                    $p->setCategory($defaultCategory);
+                }
+
+                $em->remove($category);
+                $em->flush();
+                $request->getSession()->getFlashBag()->add('notice', 'Catégorie supprimé');
+                return $this->redirect($this->generateUrl('blog_view', array('url_blog' => $url_blog)));
+
+            }
+        }
+        throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException();
+    }
+
 
 }

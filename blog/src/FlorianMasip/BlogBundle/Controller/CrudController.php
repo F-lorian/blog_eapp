@@ -17,16 +17,20 @@ class CrudController extends Controller
         if($b->getUrlAlias() == $url_blog){
 
           $post = new Post();
-          $form = $this->createForm(new PostType(), $post);
+
+          $em = $this->getDoctrine()->getManager();
+          $form = $this->createForm(new PostType(array('blog' => $b)), $post);
+
           $form->handleRequest($request);
 
           if ($request->isMethod('POST')) {
 
               $em = $this->getDoctrine()->getManager();
               $postRepository = $em->getRepository('BlogBundle:Post');
+              $categoryRepository = $em->getRepository('BlogBundle:Category');
 
               // Récupère l'url alias entrée pour teste (existance et regex)
-              $category = $form["nomCategory"]->getData();
+              $category = $form["category"]->getData();
               $url_alias = $form["urlAlias"]->getData();
               $name = $form["name"]->getData();
               $content = $form["content"]->getData();
@@ -58,9 +62,10 @@ class CrudController extends Controller
                   $post->setContent($content);
                   // Transforme l'objet "NomCategory" (id,nom) en string (nom) avant l'insertion en BDD
                   if (!empty($category)){
-                      $post->setNomCategory($post->getNomCategory()->getNom());
+                      $post->setCategory($category);
                   } else {
-                      $post->setNomCategory("General");
+                      $category = $categoryRepository->findOneByNom("general");
+                      $post->setCategory($category);
                   }
                   // Set la date de creation
                   $post->setDateCreation(new \DateTime());
@@ -71,7 +76,7 @@ class CrudController extends Controller
                   // Message de confirmation pour l'utilisateur
                   $request->getSession()->getFlashBag()->add('notice', "Le post a été créé avec succès");
 
-                  return $this->redirect($this->generateUrl('blog_view_post', array('url_blog' => $url_blog, 'category' => $post->getNomCategory(), 'url_post' => $url_alias)));
+                  return $this->redirect($this->generateUrl('blog_view_post', array('url_blog' => $url_blog, 'category_name' => $category->getNom(), 'url_post' => $url_alias)));
               } else {
 
                   // Message de confirmation pour l'utilisateur
@@ -95,15 +100,16 @@ class CrudController extends Controller
 
             $em = $this->getDoctrine()->getManager();
             $postRepository = $em->getRepository('BlogBundle:Post');
+            $categoryRepository = $em->getRepository('BlogBundle:Category');
             $post = $postRepository->findOneByUrlAlias($url_post);
-            $form = $this->createForm(new PostType(), $post);
+            $form = $this->createForm(new PostType(array('blog' => $b)), $post);
 
             if ($request->isMethod('POST')) {
-                $form = $this->createForm(new PostType());
+                $form = $this->createForm(new PostType(array('blog' => $b)));
                 $form->handleRequest($request);
 
                 // Récupère l'url alias entrée pour teste (existance et regex)
-                $category = $form["nomCategory"]->getData();
+                $category = $form["category"]->getData();
                 $url_alias = $form["urlAlias"]->getData();
                 $name = $form["name"]->getData();
                 $content = $form["content"]->getData();
@@ -131,9 +137,10 @@ class CrudController extends Controller
                     $post->setContent($content);
                     // Transforme l'objet "NomCategory" (id,nom) en string (nom) avant l'insertion en BDD
                     if (!empty($category)){
-                        $post->setNomCategory($category->getNom());
+                        $post->setCategory($category);
                     } else {
-                        $post->setNomCategory("General");
+                        $category = $categoryRepository->findOneByNom("general");
+                        $post->setCategory($category);
                     }
 
                     //$em->persist($post);
@@ -142,7 +149,7 @@ class CrudController extends Controller
                     // Message de confirmation pour l'utilisateur
                     $request->getSession()->getFlashBag()->add('notice', "Le post a été modifié avec succès");
 
-                    return $this->redirect($this->generateUrl('blog_view_post', array('url_blog' => $url_blog, 'category' => $post->getNomCategory(), 'url_post' => $url_alias)));
+                    return $this->redirect($this->generateUrl('blog_view_post', array('url_blog' => $url_blog, 'category_name' => $category->getNom(), 'url_post' => $url_alias)));
                 } else {
 
                     // Message de confirmation pour l'utilisateur
@@ -158,7 +165,7 @@ class CrudController extends Controller
         throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException();
     }
 
-    public function deleteAction($url_blog, $url_post)
+    public function deleteAction(Request $request, $url_blog, $url_post)
     {
 
       foreach ($this->getUser()->getBlogs() as $b){
@@ -169,11 +176,14 @@ class CrudController extends Controller
           $post = $postRepository->findOneByUrlAlias($url_post);*/
           $post = $b->getPostByUrlAlias($url_post);
 
-          $em->remove($post);
-          $em->flush();
+          if(!empty($post)){
+              $em->remove($post);
+              $em->flush();
+              $request->getSession()->getFlashBag()->add('notice', 'Post supprimé');
+              return $this->redirect($this->generateUrl('blog_view_by_category', array('category_name' => $post->getCategory()->getNom(), 'url_blog' => $url_blog)));
+          }
+          throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
 
-          $this->get('session')->getFlashBag()->add('notice', 'Post supprimé');
-          return $this->redirect($this->generateUrl('blog_view', array('url_blog' => $url_blog)));
         }
       }
 

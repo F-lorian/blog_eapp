@@ -5,23 +5,37 @@ namespace FlorianMasip\BlogBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use FlorianMasip\BlogBundle\Entity\Blog;
 
 class PostType extends AbstractType
 {
+
+    public function __construct($options = null) {
+       $this->options = $options;
+    }
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $opts = $this->options;
         $builder
             ->add('name', 'text', array('label' => 'Titre'))
             ->add('urlAlias', 'text', array('label' => 'Url du lien'))
-            ->add('nomCategory', 'entity', array(
+            ->add('category', 'entity', array(
             'class' => 'BlogBundle:Category',
-            'query_builder' => function($repository) { return $repository->createQueryBuilder('p')->orderBy('p.nom', 'ASC'); },
+            'query_builder' => function($repository) use (&$opts){
+                        return $repository->createQueryBuilder('c')
+                                ->where('c.nom != :default AND c.blog = :blog')
+                                ->setParameter('default','general')
+                                ->setParameter('blog',$opts['blog'])
+                                ->orderBy('c.nom', 'ASC');
+            },
+            /*'choices' => $this->options['blog']->getCategories(),*/
             'property' => 'nom',
-            'label' => 'Catégory',        
+            'label' => 'Catégorie',
             'empty_value' => '---',
             'empty_data'  => null,
             'required' => false,
@@ -30,7 +44,7 @@ class PostType extends AbstractType
             ->add('valider', 'submit')
         ;
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */

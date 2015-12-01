@@ -43,13 +43,31 @@
 			<!--{% render(controller("BlogBundle:Category:liste", {'url_blog': blog.urlAlias} )) %} -->
 
 				<h4 class="list-group-item list-group-title"><strong> Catégories </strong></h4>
-			{% for c in categories %}
-				{% if category is defined and c == category %}
-					{% if c.nom != 'general' %}
-					<a class="label label-primary label-circle inset label-hover list-group-option " href="{{ path('blog_edit_category', {'url_blog': blog.urlAlias, 'category_name': c.nom}) }}">
-						<i class="glyphicon glyphicon-cog"></i>
-					</a>
-					{% endif %}
+
+			{% if category == null %}
+			<a class="list-group-item active" href="{{ path('blog_view_by_category', {'url_blog': blog.urlAlias, 'category_name': defaultCategory.nom}) }}" title="voir la catégorie : {{defaultCategory.nom}}">
+				<span class="label label-primary inset">
+					<i class="glyphicon glyphicon-folder-open"></i>
+				</span>
+				{{defaultCategory.nom}}
+			</a>
+			{% else %}
+			<a class="list-group-item" href="{{ path('blog_view_by_category', {'url_blog': blog.urlAlias, 'category_name': defaultCategory.nom}) }}" title="voir la catégorie : {{defaultCategory.nom}}">
+				<span class="label label-default inset">
+					<i class="glyphicon glyphicon-folder-close"></i>
+				</span>
+				{{defaultCategory.nom}}
+			</a>
+			{% endif %}
+
+			{% for c in blog.categories %}
+				{% if category != null and c == category %}
+				<a class="label label-primary label-circle inset label-hover list-group-option option-2" href="{{ path('blog_edit_category', {'url_blog': blog.urlAlias, 'category_name': c.nom}) }}">
+					<i class="glyphicon glyphicon-cog"></i>
+				</a>
+				<a class="label label-primary label-circle inset label-hover list-group-option" href="{{ path('blog_delete_category', {'url_blog': blog.urlAlias, 'category_name': c.nom}) }}">
+					<i class="glyphicon glyphicon-remove"></i>
+				</a>
 				<a class="list-group-item active" href="{{ path('blog_view_by_category', {'url_blog': blog.urlAlias, 'category_name': c.nom}) }}" title="voir la catégorie : {{c.nom}}">
 					<span class="label label-primary inset">
 						<i class="glyphicon glyphicon-folder-open"></i>
@@ -57,11 +75,12 @@
 					{{c.nom}}
 				</a>
 				{% else %}
-					{% if c.nom != 'general' %}
-					<a class="label label-default label-circle inset label-hover list-group-option" href="{{ path('blog_edit_category', {'url_blog': blog.urlAlias, 'category_name': c.nom}) }}">
-						<i class="glyphicon glyphicon-cog"></i>
-					</a>
-					{% endif %}
+				<a class="label label-default label-circle inset label-hover list-group-option option-2" href="{{ path('blog_edit_category', {'url_blog': blog.urlAlias, 'category_name': c.nom}) }}">
+					<i class="glyphicon glyphicon-cog"></i>
+				</a>
+				<a class="label label-default label-circle inset label-hover list-group-option" href="{{ path('blog_delete_category', {'url_blog': blog.urlAlias, 'category_name': c.nom}) }}">
+					<i class="glyphicon glyphicon-remove"></i>
+				</a>
 				<a class="list-group-item" href="{{ path('blog_view_by_category', {'url_blog': blog.urlAlias, 'category_name': c.nom}) }}" title="voir la catégorie : {{c.nom}}">
 					<span class="label label-default inset">
 						<i class="glyphicon glyphicon-folder-close"></i>
@@ -93,13 +112,14 @@
 		<br/>
 		{% endif %}
 
-		{% for p in posts %}
-			{% if p == posts.first %}
-			<div id="last-blog-post" class="panel panel-default blog-post">
-			{% else %}
-			<div class="panel panel-default blog-post">
-			{% endif %}
+		{# Pagination - top #}
+        {% if posts|length > 0 %}
+            {% include 'BlogBundle:Blog:pagination.html.twig' %}
+        {% endif %}
 
+		{% for p in posts %}
+
+			<div class="panel panel-default blog-post">
 				<div class="panel-heading">
 					<a class="label label-primary inset pull-left blog-post-type" href="{{ path('blog_view_by_category', {'url_blog': blog.urlAlias, 'category_name': p.category.nom}) }}">
 						{{ p.category.nom }}
@@ -120,7 +140,10 @@
 		{% endfor %}
 
 
-
+		{# Pagination - bottom #}
+        {% if posts|length > 0 %}
+            {% include 'BlogBundle:Blog:pagination.html.twig' %}
+        {% endif %}
 
 	</div>
 </div>

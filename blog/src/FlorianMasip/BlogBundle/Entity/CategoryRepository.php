@@ -14,7 +14,7 @@ class CategoryRepository extends EntityRepository
 {
 
     /**
-     * Récupère une liste des catégorys selon un nom de catégory
+     * Récupère une liste des catégories selon un nom de catégorie
      * @param string $unNomCategory
      * @return array
      */
@@ -37,20 +37,4 @@ class CategoryRepository extends EntityRepository
 
     }
 
-    /**
-     * Récupère la liste des catégories d'un blog
-     * @param Blog blog
-     * @return array
-     */
-    public function findByBlogOrdered($blog) {
-
-        return $this->getEntityManager()
-                        ->createQuery(
-            'SELECT c
-            FROM BlogBundle:Category c
-            WHERE c.blog = :blog
-            ORDER BY c.nom ASC')
-            ->setParameter('blog', $blog)
-            ->getResult();
-    }
 }

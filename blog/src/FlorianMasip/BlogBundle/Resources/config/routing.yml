@@ -19,8 +19,10 @@ blog_delete:
     defaults: { _controller: BlogBundle:Blog:delete }
 
 blog_view:
-    path:     /{url_blog}
-    defaults: { _controller: BlogBundle:Blog:blog }
+    path:     /{url_blog}/{page}
+    defaults: { _controller: BlogBundle:Blog:blog, page: 1 }
+    requirements:
+        page:  \d+
 
 blog_new_post:
     path:     /{url_blog}/new
@@ -39,8 +41,10 @@ blog_delete_category:
     defaults: { _controller: BlogBundle:Blog:deleteCategory }
 
 blog_view_by_category:
-    path:     /{url_blog}/{category_name}
-    defaults: { _controller: BlogBundle:Blog:blog }
+    path:     /{url_blog}/{category_name}/{page}
+    defaults: { _controller: BlogBundle:Blog:blog, page: 1 }
+    requirements:
+        page:  \d+
 
 blog_edit_post:
     path:     /{url_blog}/edit/{url_post}

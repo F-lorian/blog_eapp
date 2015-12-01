@@ -200,7 +200,7 @@ a#new-post{
 	/*text-align: center;*/
 	box-shadow:0px 0px 15px #000000;
 	color : white;
-	margin-bottom: 30;
+	margin-bottom: 30px;
 }
 
 /*****list group*******/
@@ -297,14 +297,27 @@ a.list-group-item.active:focus{
 .list-group-option{
 	position: absolute;
 	z-index: 3;
-	margin-top: 4px;
+	margin-top: 6px;
+}
+
+.list-group-option .option-2{
+	position: absolute;
+	z-index: 3;
+	margin-top: 6px;
 	margin-left: 267px;
 }
 
 #blogs-panel .list-group-option{
-	right: 5px;
+	margin-left: 165px;
 }
 
+#blog-categories .list-group-option{
+	margin-left: 267px;
+}
+
+#blog-categories .list-group-option.option-2{
+	margin-left: 237px;
+}
 
 /*****************************/
 
@@ -747,7 +760,10 @@ a#log-out:hover{
 /*************************/
 
 
-
+.pagination>li>a,.pagination>li>span{
+	border : none;
+	margin-right: 2px;
+}
 
 .label{
 	font-weight: normal;

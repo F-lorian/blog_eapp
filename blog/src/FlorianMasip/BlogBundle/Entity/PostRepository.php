@@ -16,59 +16,32 @@ class PostRepository extends EntityRepository {
     /**
      * Récupère la pagination des post avec un max par page
      *
+     * @param \FlorianMasip\BlogBundle\Entity\Blog $blog
      * @param int $page
-     * @param int $maxperpage
-     * @param string $nom_category
+     * @param int $postsPerPage
+     * @param \FlorianMasip\BlogBundle\Entity\Category $category
      * @return Paginator
      */
-    public function getList($page = 1, $maxperpage = 5, $nom_category = null) {
-        if ($nom_category != null) {
+    public function getPostsList($blog, $page = 0, $postsPerPage = 5, $category = null) {
+        if ($category != null) {
             $q = $this->_em->createQueryBuilder()
                     ->select('post')
                     ->from('BlogBundle:Post', 'post')
-                    ->where('post.nom_category = :nom_cat')->setParameter("nom_cat", $nom_category)
-                    ->orderBy('post.date_creation', 'DESC');
+                    ->where('post.category = :category AND post.blog = :blog')
+                    ->setParameter("category", $category)
+                    ->setParameter("blog", $blog)
+                    ->orderBy('post.dateCreation', 'DESC');
         } else {
             $q = $this->_em->createQueryBuilder()
                     ->select('post')
                     ->from('BlogBundle:Post', 'post')
-                    ->orderBy('post.date_creation', 'DESC');
+                    ->where('post.blog = :blog')->setParameter("blog", $blog)
+                    ->orderBy('post.dateCreation', 'DESC');
         }
 
-        $q->setFirstResult(($page - 1) * $maxperpage)->setMaxResults($maxperpage);
-        
-        return new Paginator($q);
-    }
-
-    /**
-     * Récupère la pagination de tous les post
-     *
-     * @param int $id
-     * @return Paginator
-     */
-    public function getAllList($id = 1) {
-        $q = $this->_em->createQueryBuilder()
-                ->select('post')
-                ->from('BlogBundle:Post', 'post')
-                ->orderBy('post.date_creation', 'DESC');
-
-        $q->setFirstResult(($id - 1))->setMaxResults($id + 1);
+        $q->setFirstResult($page * $postsPerPage)->setMaxResults($postsPerPage);
 
         return new Paginator($q);
     }
-    
-    /**
-     * Récupère le post par l'url_alias
-     *
-     * @param int $url_alias
-     * @return Paginator
-     */
-    public function getUrlAlias($url_alias) {
-            return $this->getEntityManager()
-                            ->createQuery(
-                'SELECT p.url_alias
-                FROM BlogBundle:Post p
-                WHERE p.url_alias = :url')->setParameter('url', $url_alias)->getResult();
-    }    
 
 }

@@ -137,4 +137,19 @@ class Category
     {
         return $this->posts;
     }
+
+    /**
+     * Get posts by url alias
+     *
+     * @param string $urlAlias
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+     public function getPostByUrlAlias($urlAlias) {
+       foreach ($this->posts as $p){
+         if($p->getUrlAlias() == $urlAlias){
+           return $p;
+         }
+       }
+     }
 }

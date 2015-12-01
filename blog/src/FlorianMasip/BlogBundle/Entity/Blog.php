@@ -35,11 +35,13 @@ class Blog
 
     /**
      * @ORM\OneToMany(targetEntity="Post", mappedBy="blog")
+     * @ORM\OrderBy({"dateCreation" = "DESC"})
      */
     protected $posts;
 
     /**
      * @ORM\OneToMany(targetEntity="Category", mappedBy="blog")
+     * @ORM\OrderBy({"nom" = "ASC"})
      */
     protected $categories;
 
@@ -272,15 +274,32 @@ class Blog
      * @param \FlorianMasip\BlogBundle\Entity\Category $category
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getPostsByCategory(\FlorianMasip\BlogBundle\Entity\Category $category)
+    public function getPostsByCategory(\FlorianMasip\BlogBundle\Entity\Category $category, $page, $postsPerPage)
     {
         $res = new ArrayCollection();
-        foreach ($this->posts as $p){
-          if($p->getCategory() == $category){
-            $res[] = $p;
-          }
+        if($category != null){
+            foreach ($this->posts as $p){
+                if($p->getCategory() == $category){
+                    $res[] = $p;
+                }
+            }
         }
-        return $res;
+        else{
+            return $this->posts;
+        }
+
+        /*$i = $page * $postsPerPage;
+      while(sizeof($res)){
+
+      }
+        for ($i =  ($page*$postsPerPage) + 1 ; $i < sizeof($this->posts); $i--){
+            $p = $this->posts[$i];
+            if($p->getCategory() == $category){
+                $res[] = $p;
+            }
+        }
+
+        return $res;*/
     }
 
     /**
@@ -297,6 +316,20 @@ class Blog
       }
     }
 
+    /**
+     * Récupère le post par l'url et la categorie
+     *
+     * @param string $urlAlias
+     * @param \FlorianMasip\BlogBundle\Entity\Category $category
+     * @return Post
+     */
+    public function getPostByUrlAliasAndCategory($urlAlias, \FlorianMasip\BlogBundle\Entity\Category $category) {
+      foreach ($this->posts as $p){
+        if($p->getUrlAlias() == $urlAlias and $p->getCategory() == $category){
+          return $p;
+        }
+      }
+    }
 
     /**
      * Add category
@@ -331,4 +364,21 @@ class Blog
     {
         return $this->categories;
     }
+
+
+    /**
+     * teste si le blog a une catégorie et retourne l'objet
+     *
+     * @param string $categoryName
+     * @return \FlorianMasip\BlogBundle\Entity\Category
+     */
+    public function hasCategory($categoryName)
+    {
+        foreach ($this->categories as $c){
+          if($c->getNom() == $categoryName){
+            return $c;
+          }
+        }
+    }
+
 }

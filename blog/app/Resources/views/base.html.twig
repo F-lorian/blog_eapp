@@ -24,13 +24,10 @@
                 {% if app.request.hasPreviousSession %}
                     {% for type, messages in app.session.flashbag.all() %}
                         {% for message in messages %}
-                            {% if type == "notice" %}
-                             <div class="label label-success wide message">
-
-                            {% elseif type == "error" %}
-
+                            {% if type == "error" %}
                             <div class="label label-danger wide message">
                             {% else %}
+                            <div class="label label-success wide message">
                             {% endif %}
                                 <i class="glyphicon glyphicon-exclamation-sign pull-left"></i>
                                 {{ message }}

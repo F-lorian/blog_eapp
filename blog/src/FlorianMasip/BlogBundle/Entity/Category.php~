@@ -4,6 +4,8 @@ namespace FlorianMasip\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Category
  *
@@ -27,7 +29,6 @@ class Category
      * @ORM\Column(name="nom", type="string", length=255)
      */
     private $nom;
-
 
     /**
      * @ORM\ManyToOne(targetEntity="Blog", inversedBy="categories")
@@ -100,5 +101,78 @@ class Category
     public function getBlog()
     {
         return $this->blog;
+    }
+
+    /**
+     * Add post
+     *
+     * @param \FlorianMasip\BlogBundle\Entity\Post $post
+     *
+     * @return Category
+     */
+    public function addPost(\FlorianMasip\BlogBundle\Entity\Post $post)
+    {
+        $this->posts[] = $post;
+
+        return $this;
+    }
+
+    /**
+     * Remove post
+     *
+     * @param \FlorianMasip\BlogBundle\Entity\Post $post
+     */
+    public function removePost(\FlorianMasip\BlogBundle\Entity\Post $post)
+    {
+        $this->posts->removeElement($post);
+    }
+
+    /**
+     * Get posts
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPosts()
+    {
+        return $this->posts;
+    }
+
+    /**
+     * Get posts by url alias
+     *
+     * @param string $urlAlias
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+     public function getPostByUrlAlias($urlAlias) {
+       foreach ($this->posts as $p){
+         if($p->getUrlAlias() == $urlAlias){
+           return $p;
+         }
+       }
+     }
+
+    /**
+     * Set nbPosts
+     *
+     * @param integer $nbPosts
+     *
+     * @return Category
+     */
+    public function setNbPosts($nbPosts)
+    {
+        $this->nbPosts = $nbPosts;
+
+        return $this;
+    }
+
+    /**
+     * Get nbPosts
+     *
+     * @return integer
+     */
+    public function getNbPosts()
+    {
+        return $this->nbPosts;
     }
 }

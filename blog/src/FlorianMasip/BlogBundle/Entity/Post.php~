@@ -119,29 +119,6 @@ class Post
     }
 
     /**
-     * Set nomCategory
-     *
-     * @param string $nomCategory
-     * @return Post
-     */
-    public function setNomCategory($nomCategory)
-    {
-        $this->nomCategory = $nomCategory;
-
-        return $this;
-    }
-
-    /**
-     * Get nomCategory
-     *
-     * @return string
-     */
-    public function getNomCategory()
-    {
-        return $this->nomCategory;
-    }
-
-    /**
      * Set content
      *
      * @param string $content
@@ -210,5 +187,33 @@ class Post
     public function getBlog()
     {
         return $this->blog;
+    }
+
+    /**
+     * Set category
+     *
+     * @param \FlorianMasip\BlogBundle\Entity\Category $category
+     *
+     * @return Post
+     */
+    public function setCategory(\FlorianMasip\BlogBundle\Entity\Category $category = null)
+    {
+        if($this->category != null){
+            $this->category->setNbPosts($this->category->getNbPosts() - 1);
+        }
+        $category->setNbPosts($category->getNbPosts() + 1);
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \FlorianMasip\BlogBundle\Entity\Category
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 }

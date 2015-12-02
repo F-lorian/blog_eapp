@@ -31,6 +31,7 @@ class BlogController extends Controller
 
         if(!empty($blog)){
 
+            //$categoriesCount = $blog->getNbPostsByCategory();
             $defaultCategory = $categoryRepository->findOneByBlog(null);
             $category = null;
             $postsPerPage = 5;
@@ -52,14 +53,15 @@ class BlogController extends Controller
 
             //$posts = $blog->getPostsByCategory($category, $page-1, $postsPerPage);
             $posts = $postRepository->getPostsList($blog, $page-1, $postsPerPage, $category);
-            $nb_post = count($posts);
+
+            $nbPost = count($posts);
 
             //Paramètre du pagination
             $pagination = array(
                 'page' => $page,
                 'route' => $paginationRoute,
                 'route_index' => "blog_view",
-                'pages_count' => ceil($nb_post / $postsPerPage),
+                'pages_count' => ceil($nbPost / $postsPerPage),
                 'route_params' => $paginationRouteParam
             );
 
@@ -342,7 +344,7 @@ class BlogController extends Controller
                     $error = true;
                 }else{
 
-                    $test_nom = $categoryRepository->findOneBy(array('nom' => $name, 'blog' => $blog));
+                    $test_nom = $categoryRepository->findOneBy(array('nom' => $name, 'blog' => $b));
                     // Teste si l'url_alias existe déjà en base
                     if (!empty($test_nom)) {
                         $form["nom"]->addError(new FormError("la catégorie '$name' existe déjà sur ce blog"));

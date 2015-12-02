@@ -1,0 +1,19 @@
+<div class="panel-heading">
+    <a class="label label-default label-circle inset pull-left" href="{{ path('fos_user_profile_show') }}">
+        <i class="glyphicon glyphicon-user"></i>
+    </a>
+    <a id="log-out" class="label label-danger label-circle inset pull-right" href="{{ path('fos_user_security_logout') }}">
+        <i class="glyphicon glyphicon-log-out"></i>
+    </a>
+    <a class="label label-default label-circle inset pull-right" href="{{ path('fos_user_profile_edit') }}">
+        <i class="glyphicon glyphicon-cog"></i>
+    </a>
+    <br/>
+</div>
+<div id="user_panel" class="panel-body">
+    <span id="user_panel_name_label" class="label label-primary" >
+        {{ app.user.username }}
+    </span>
+
+    <img id="user-panel-pic"  src="{{ asset('bundles/common/img/user.png') }}"/>
+</div>

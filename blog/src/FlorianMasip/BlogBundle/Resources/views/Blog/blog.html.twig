@@ -5,7 +5,7 @@
 {% block title %} Blog {% endblock %}
 
 {% block content %}
-<div id="blog-header">
+<header id="blog-header" role="banner">
 	<div id="blog-header-pic">
 	</div>
 	<div id="blog-header-content">
@@ -29,7 +29,7 @@
 		<br/>
 		<h2 id="blog-name">{{ blog.name }}</h2>
 	</div>
-</div>
+</header>
 <br/>
 <div class="blog-description" >
 		<strong>description du blog :</strong><br/>
@@ -39,66 +39,7 @@
 
 <div class="row">
 	<div class="col-sm-4">
-		<div id="blog-categories"  class="list-group">
-			<!--{% render(controller("BlogBundle:Category:liste", {'url_blog': blog.urlAlias} )) %} -->
-
-				<h4 class="list-group-item list-group-title"><strong> Catégories </strong></h4>
-
-			{% if category == null %}
-			<a class="list-group-item active" href="{{ path('blog_view_by_category', {'url_blog': blog.urlAlias, 'category_name': defaultCategory.nom}) }}" title="voir la catégorie : {{defaultCategory.nom}}">
-				<span class="label label-primary inset">
-					<i class="glyphicon glyphicon-folder-open"></i>
-				</span>
-				{{defaultCategory.nom}}
-			</a>
-			{% else %}
-			<a class="list-group-item" href="{{ path('blog_view_by_category', {'url_blog': blog.urlAlias, 'category_name': defaultCategory.nom}) }}" title="voir la catégorie : {{defaultCategory.nom}}">
-				<span class="label label-default inset">
-					<i class="glyphicon glyphicon-folder-close"></i>
-				</span>
-				{{defaultCategory.nom}}
-			</a>
-			{% endif %}
-
-			{% for c in blog.categories %}
-				{% if category != null and c == category %}
-				<a class="label label-primary label-circle inset label-hover list-group-option option-2" href="{{ path('blog_edit_category', {'url_blog': blog.urlAlias, 'category_name': c.nom}) }}">
-					<i class="glyphicon glyphicon-cog"></i>
-				</a>
-				<a class="label label-primary label-circle inset label-hover list-group-option" href="{{ path('blog_delete_category', {'url_blog': blog.urlAlias, 'category_name': c.nom}) }}">
-					<i class="glyphicon glyphicon-remove"></i>
-				</a>
-				<a class="list-group-item active" href="{{ path('blog_view_by_category', {'url_blog': blog.urlAlias, 'category_name': c.nom}) }}" title="voir la catégorie : {{c.nom}}">
-					<span class="label label-primary inset">
-						<i class="glyphicon glyphicon-folder-open"></i>
-					</span>
-					{{c.nom}}
-				</a>
-				{% else %}
-				<a class="label label-default label-circle inset label-hover list-group-option option-2" href="{{ path('blog_edit_category', {'url_blog': blog.urlAlias, 'category_name': c.nom}) }}">
-					<i class="glyphicon glyphicon-cog"></i>
-				</a>
-				<a class="label label-default label-circle inset label-hover list-group-option" href="{{ path('blog_delete_category', {'url_blog': blog.urlAlias, 'category_name': c.nom}) }}">
-					<i class="glyphicon glyphicon-remove"></i>
-				</a>
-				<a class="list-group-item" href="{{ path('blog_view_by_category', {'url_blog': blog.urlAlias, 'category_name': c.nom}) }}" title="voir la catégorie : {{c.nom}}">
-					<span class="label label-default inset">
-						<i class="glyphicon glyphicon-folder-close"></i>
-					</span>
-					{{c.nom}}
-				</a>
-				{% endif %}
-			{% endfor %}
-
-			{% if app.user.id is defined and app.user.id == blog.user.id %}
-			<a class="list-group-item list-group-action" href="{{ path('blog_new_category', {'url_blog': blog.urlAlias}) }}">
-				<span class="label label-primary inset">
-					<i class="glyphicon glyphicon-plus"></i>
-				</span>
-				ajouter une catégorie
-			</a>
-			{% endif %}
-		</div>
+		{% include 'BlogBundle:Blog:categories.html.twig' %}
 	</div>
 	<div id="blog-content" class="col-sm-8">
 		<br/>
@@ -109,40 +50,19 @@
 				<i class="glyphicon glyphicon-pencil"></i>
 			</span>
 		</a>
-		<br/>
 		{% endif %}
 
 		{# Pagination - top #}
         {% if posts|length > 0 %}
             {% include 'BlogBundle:Blog:pagination.html.twig' %}
-        {% endif %}
-
-		{% for p in posts %}
-
-			<div class="panel panel-default blog-post">
-				<div class="panel-heading">
-					<a class="label label-primary inset pull-left blog-post-type" href="{{ path('blog_view_by_category', {'url_blog': blog.urlAlias, 'category_name': p.category.nom}) }}">
-						{{ p.category.nom }}
-					</a>
-					<i class="glyphicon glyphicon-chevron-right separator"></i>
-				  	<h5 class="blog-post-title"> {{ p.name }} </h5>
-				  	<span class="pull-right"> {{ p.dateCreation|date("m/d/Y") }} </span>
-				  	<br/>
-				</div>
-				<div class="panel-body">
-				    <a class="btn btn-primary go-to-post" href="{{ path('blog_view_post', {'url_blog': blog.urlAlias, 'category_name': p.category.nom, 'url_post': p.urlAlias }) }}">
-						voir l'article <i class="glyphicon glyphicon-plus"></i>
-					</a>
-				    {{ p.content }}
-				</div>
-			</div>
-
-		{% endfor %}
-
-
-		{# Pagination - bottom #}
-        {% if posts|length > 0 %}
+    		{% include 'BlogBundle:Blog:posts.html.twig' %}
             {% include 'BlogBundle:Blog:pagination.html.twig' %}
+		{% else %}
+			<div class="panel panel-default blog-post">
+		        <div class="panel-body">
+		            aucun article dans cette section
+		        </div>
+		    </div>
         {% endif %}
 
 	</div>

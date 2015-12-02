@@ -2,13 +2,13 @@
     <ul class="pagination">
         {% if pagination.page>1 %}
         <li >
-            <a class="label label-default inset" href="{{ path(pagination.route,pagination.route_params|merge({'page': 1})) }}" aria-label="Previous">
+            <a class="" href="{{ path(pagination.route,pagination.route_params|merge({'page': 1})) }}" aria-label="Previous">
                 <span aria-hidden="true">&laquo;</span>
             </a>
         </li>
             {% if pagination.page-1 == 1 %}
             <li>
-                <a class="label label-default inset" href="{{ path(pagination.route,pagination.route_params|merge({'page': pagination.page-1})) }}">
+                <a class="" href="{{ path(pagination.route,pagination.route_params|merge({'page': pagination.page-1})) }}">
                     Précendente
                 </a>
             </li>
@@ -17,11 +17,9 @@
 
         {#display p numbers only from p-4 to p+4 but don't go <1 or >pages_count#}
         {% for p in range(max(pagination.page-4, 1), min(pagination.page+4, pagination.pages_count)) %}
-            <li>
-                <a  {% if p == pagination.page %} class="label label-primary inset"
-                    {% else %}class="label label-default inset"
-                    {% endif %}
-                    {% if p == 1 %} href="{{ path(pagination.route_index,pagination.route_params) }}"
+            <li {% if p == pagination.page %} class="active"
+                {% endif %}>
+                <a  {% if p == 1 %} href="{{ path(pagination.route_index,pagination.route_params) }}"
                     {% else %} href="{{ path(pagination.route,pagination.route_params|merge({'page': p})) }}"
                     {% endif %}>
                     {{ p }}
@@ -31,12 +29,12 @@
 
         {% if pagination.page<pagination.pages_count %}
         <li>
-            <a class="label label-default inset" href="{{ path(pagination.route,pagination.route_params|merge({'page': pagination.page+1})) }}">
+            <a class="" href="{{ path(pagination.route,pagination.route_params|merge({'page': pagination.page+1})) }}">
                 Suivante
             </a>
         </li>
         <li>
-            <a class="label label-default inset" href="{{ path(pagination.route,pagination.route_params|merge({'page': pagination.pages_count})) }}" aria-label="Next">
+            <a class="" href="{{ path(pagination.route,pagination.route_params|merge({'page': pagination.pages_count})) }}" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
             </a>
         </li>

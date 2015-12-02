@@ -30,7 +30,6 @@ class Category
      */
     private $nom;
 
-
     /**
      * @ORM\ManyToOne(targetEntity="Blog", inversedBy="categories")
      * @ORM\JoinColumn(name="id_blog", referencedColumnName="id")
@@ -152,4 +151,14 @@ class Category
          }
        }
      }
+
+    /**
+     * Get nbPosts
+     *
+     * @return integer
+     */
+    public function getNbPosts()
+    {
+        return count($this->posts);
+    }
 }

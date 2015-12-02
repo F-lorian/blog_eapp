@@ -1,0 +1,24 @@
+{% for p in posts %}
+
+    <div class="panel panel-default blog-post">
+        <div class="panel-heading">
+            <a class="label label-primary inset pull-left blog-post-type" href="{{ path('blog_view_by_category', {'url_blog': blog.urlAlias, 'category_name': p.category.nom}) }}">
+                {{ p.category.nom }}
+            </a>
+            <i class="glyphicon glyphicon-chevron-right separator"></i>
+            <h5 class="blog-post-title"> {{ p.name }} </h5>
+            <span class="pull-right">
+                <span class="white">le</span> {{ p.dateCreation|date("d/m/Y") }}
+                <span class="white">à</span> {{ p.dateCreation|date("H:i:s") }}
+            </span>
+            <br/>
+        </div>
+        <div class="panel-body">
+            <a class="btn btn-primary go-to-post" href="{{ path('blog_view_post', {'url_blog': blog.urlAlias, 'category_name': p.category.nom, 'url_post': p.urlAlias }) }}">
+                voir l'article <i class="glyphicon glyphicon-plus"></i>
+            </a>
+            {{ p.content }}
+        </div>
+    </div>
+
+{% endfor %}

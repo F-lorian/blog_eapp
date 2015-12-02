@@ -1,0 +1,76 @@
+<nav id="blog-categories" class="list-group">
+    <!--{% render(controller("BlogBundle:Category:liste", {'url_blog': blog.urlAlias} )) %} -->
+
+        <h4 class="list-group-item list-group-title"><strong> Catégories </strong></h4>
+
+    {% if category == null %}
+    <a class="list-group-item active" href="{{ path('blog_view_by_category', {'url_blog': blog.urlAlias, 'category_name': defaultCategory.nom}) }}" title="voir la catégorie : {{defaultCategory.nom}}">
+        <span class="label label-primary inset">
+            <i class="glyphicon glyphicon-folder-open"></i>
+        </span>
+        {{defaultCategory.nom}}
+        <span class="badge">
+        {{blog.getNbPosts}}
+        </span>
+    </a>
+    {% else %}
+    <a class="list-group-item" href="{{ path('blog_view_by_category', {'url_blog': blog.urlAlias, 'category_name': defaultCategory.nom}) }}" title="voir la catégorie : {{defaultCategory.nom}}">
+        <span class="label label-default inset">
+            <i class="glyphicon glyphicon-folder-close"></i>
+        </span>
+        <span class="badge">
+        {{blog.getNbPosts}}
+        </span>
+        {{defaultCategory.nom}}
+    </a>
+    {% endif %}
+
+    {% for c in blog.categories %}
+        {% if category != null and c == category %}
+        <div class="list-group-options active">
+            <a class="label label-primary label-circle inset label-hover" href="{{ path('blog_edit_category', {'url_blog': blog.urlAlias, 'category_name': c.nom}) }}">
+                <i class="glyphicon glyphicon-cog"></i>
+            </a>
+            <a class="label label-primary label-circle inset label-hover" href="{{ path('blog_delete_category', {'url_blog': blog.urlAlias, 'category_name': c.nom}) }}">
+                <i class="glyphicon glyphicon-remove"></i>
+            </a>
+        </div>
+        <a class="list-group-item active" href="{{ path('blog_view_by_category', {'url_blog': blog.urlAlias, 'category_name': c.nom}) }}" title="voir la catégorie : {{c.nom}}">
+            <span class="label label-primary inset">
+                <i class="glyphicon glyphicon-folder-open"></i>
+            </span>
+            {{c.nom}}
+            <span class="badge">
+            {{c.getNbPosts}}
+            </span>
+        </a>
+        {% else %}
+        <div class="list-group-options">
+            <a class="label label-default label-circle inset label-hover" href="{{ path('blog_edit_category', {'url_blog': blog.urlAlias, 'category_name': c.nom}) }}">
+                <i class="glyphicon glyphicon-cog"></i>
+            </a>
+            <a class="label label-default label-circle inset label-hover" href="{{ path('blog_delete_category', {'url_blog': blog.urlAlias, 'category_name': c.nom}) }}">
+                <i class="glyphicon glyphicon-remove"></i>
+            </a>
+        </div>
+        <a class="list-group-item" href="{{ path('blog_view_by_category', {'url_blog': blog.urlAlias, 'category_name': c.nom}) }}" title="voir la catégorie : {{c.nom}}">
+            <span class="label label-default inset">
+                <i class="glyphicon glyphicon-folder-close"></i>
+            </span>
+            <span class="badge">
+            {{c.getNbPosts}}
+            </span>
+            {{c.nom}}
+        </a>
+        {% endif %}
+    {% endfor %}
+
+    {% if app.user.id is defined and app.user.id == blog.user.id %}
+    <a class="list-group-item list-group-action" href="{{ path('blog_new_category', {'url_blog': blog.urlAlias}) }}">
+        <span class="label label-primary inset">
+            <i class="glyphicon glyphicon-plus"></i>
+        </span>
+        ajouter une catégorie
+    </a>
+    {% endif %}
+</nav>

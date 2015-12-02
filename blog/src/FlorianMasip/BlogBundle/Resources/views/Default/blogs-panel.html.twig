@@ -1,0 +1,72 @@
+<div class="panel-heading">
+    <i class="glyphicon glyphicon-bookmark pull-left"></i>Mes blogs
+    <br/>
+</div>
+
+<div id="blogs-panel" class="panel-body">
+    <div class="list-group">
+        {% for b in app.user.blogs %}
+            {% if blog is defined %}
+                {% if b.urlAlias == blog.urlAlias %}
+                <a class="label label-primary label-circle inset label-hover list-group-option" href="{{ path('blog_edit', {'url_blog': b.urlAlias }) }}">
+                    <i class="glyphicon glyphicon-cog"></i>
+                </a>
+                <a class="list-group-item active" href="{{ path('blog_view', {'url_blog': b.urlAlias }) }}" >
+                    <span class="label label-primary inset">
+                        <i class="glyphicon glyphicon-folder-open"></i>
+                    </span>
+                    {{b.Name}}
+                </a>
+                {% else %}
+                <a class="label label-default label-circle inset label-hover list-group-option" href="{{ path('blog_edit', {'url_blog': b.urlAlias }) }}">
+                    <i class="glyphicon glyphicon-cog"></i>
+                </a>
+                <a class="list-group-item" href="{{ path('blog_view', {'url_blog': b.urlAlias }) }}" >
+                    <span class="label label-default inset">
+                        <i class="glyphicon glyphicon-folder-close"></i>
+                    </span>
+                    {{b.Name}}
+                </a>
+                {% endif %}
+            {% elseif url_blog is defined %}
+                {% if b.urlAlias == url_blog %}
+                <a class="label label-primary label-circle inset label-hover list-group-option" href="{{ path('blog_edit', {'url_blog': b.urlAlias }) }}">
+                    <i class="glyphicon glyphicon-cog"></i>
+                </a>
+                <a class="list-group-item active" href="{{ path('blog_view', {'url_blog': b.urlAlias }) }}" >
+                    <span class="label label-primary inset">
+                        <i class="glyphicon glyphicon-folder-open"></i>
+                    </span>
+                    {{b.Name}}
+                </a>
+                {% else %}
+                <a class="label label-default label-circle inset label-hover list-group-option" href="{{ path('blog_edit', {'url_blog': b.urlAlias }) }}">
+                    <i class="glyphicon glyphicon-cog"></i>
+                </a>
+                <a class="list-group-item" href="{{ path('blog_view', {'url_blog': b.urlAlias }) }}" >
+                    <span class="label label-default inset">
+                        <i class="glyphicon glyphicon-folder-close"></i>
+                    </span>
+                    {{b.Name}}
+                </a>
+                {% endif %}
+            {% else %}
+            <a class="label label-default label-circle inset label-hover list-group-option" href="{{ path('blog_edit', {'url_blog': b.urlAlias }) }}">
+                <i class="glyphicon glyphicon-cog"></i>
+            </a>
+            <a class="list-group-item" href="{{ path('blog_view', {'url_blog': b.urlAlias }) }}" >
+                <span class="label label-default inset">
+                    <i class="glyphicon glyphicon-folder-close"></i>
+                </span>
+                {{b.Name}}
+            </a>
+            {% endif %}
+        {% endfor %}
+        <a class="list-group-item list-group-action" href="{{ path('blog_new') }}">
+            <span class="label label-primary inset">
+                <i class="glyphicon glyphicon-plus"></i>
+            </span>
+            créer un blog
+        </a>
+        </div>
+</div>

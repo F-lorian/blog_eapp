@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
-            {% stylesheets filter='cssrewrite' '@BlogBundle/resources/public/css/*' %}
+            {% stylesheets filter='cssrewrite' '@css' %}
               <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
             {% endstylesheets %}
         {% endblock %}
@@ -49,13 +49,8 @@
         {% endblock %}
 
         {% block javascripts %}
-            {% javascripts
-            '@BlogBundle/resources/public/js/jquery-2.1.1.min.js'
-            '@BlogBundle/resources/public/js/scripts.js'
-            '@BlogBundle/resources/public/js/jquery.elastic.source.js'
-            '@BlogBundle/resources/public/js/*'
-            %}
-              <script type="text/javascript" src="{{ asset_url }}"></script>
+            {% javascripts '@scripts' %}
+              <script src="{{ asset_url }}"></script>
             {% endjavascripts %}
         {% endblock %}
     </body>

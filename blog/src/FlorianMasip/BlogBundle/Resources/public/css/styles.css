@@ -203,6 +203,48 @@ a#new-post{
 	margin-bottom: 30px;
 }
 
+
+/*****pagination*******/
+
+.pagination{
+	background-color: rgba(24, 46, 51, 1);
+	width : 100%;
+	padding: 5px;
+}
+.pagination>li>a,.pagination>li>span{
+	border : none;
+	margin-right: 2px;
+}
+
+.pagination>li>a{
+	border: none;
+	/*border-bottom: solid 2px #353535;*/
+	background-color: #3F3F3F ;
+	color : #bfbfbf ;
+
+}
+
+.pagination>li>a:hover{
+	color : #e5e5e5 !important;
+	background-color: #5E5E5E !important;
+}
+
+.pagination>li>a:focus{
+	color : #e5e5e5 !important;
+	background-color: #5E5E5E !important;
+}
+
+.pagination>li.active>a{
+	background-color: #337AB7;
+	color: #87cfff !important;
+	text-shadow: 1px 1px 2px #1b4460 !important;
+}
+.pagination>li.active>a:hover{
+	background-color: #337AB7;
+	color: #87cfff !important;
+	text-shadow: 1px 1px 2px #1b4460 !important;
+}
+
 /*****list group*******/
 .list-group{
 	border-radius: 0;
@@ -256,6 +298,10 @@ a.list-group-item:focus{
 	color: #5ebeff !important;
 }
 
+.list-group-item.active .badge{
+	text-shadow: none;
+}
+
 a.list-group-item.active:hover{
 	background-color: #337AB7 !important;
 	color: #87cfff !important;
@@ -300,24 +346,25 @@ a.list-group-item.active:focus{
 	margin-top: 6px;
 }
 
-.list-group-option .option-2{
+.list-group-options{
 	position: absolute;
-	z-index: 3;
-	margin-top: 6px;
-	margin-left: 267px;
+	background-color: #3F3F3F;
+	box-shadow:0px 0px 15px #000000;
+}
+
+.list-group-options.active{
+	background-color: #337AB7;
 }
 
 #blogs-panel .list-group-option{
 	margin-left: 165px;
 }
 
-#blog-categories .list-group-option{
-	margin-left: 267px;
+#blog-categories .list-group-options{
+	margin-left: 295px;
+	padding: 5px;
 }
 
-#blog-categories .list-group-option.option-2{
-	margin-left: 237px;
-}
 
 /*****************************/
 
@@ -760,9 +807,9 @@ a#log-out:hover{
 /*************************/
 
 
-.pagination>li>a,.pagination>li>span{
-	border : none;
-	margin-right: 2px;
+
+.white{
+	color: white;
 }
 
 .label{

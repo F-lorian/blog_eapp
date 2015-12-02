@@ -67,6 +67,7 @@ class CrudController extends Controller
                       $category = $categoryRepository->findOneByNom("general");
                       $post->setCategory($category);
                   }
+
                   // Set la date de creation
                   $post->setDateCreation(new \DateTime());
 

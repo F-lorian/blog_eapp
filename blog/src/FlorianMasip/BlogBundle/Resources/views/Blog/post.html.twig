@@ -6,16 +6,19 @@
 
 {% block content %}
 <div id="blog-content">
-	<div id="blog-post" class="panel panel-default blog-post">
-		<div class="panel-heading">
+	<article id="blog-post" class="panel panel-default blog-post">
+		<header class="panel-heading">
 		  	<a class="label label-primary inset pull-left blog-post-type" href="{{ path('blog_view_by_category', {'url_blog': post.blog.urlAlias, 'category_name': post.category.nom}) }}">
 				{{ post.category.nom }}
 			</a>
 		  	<i class="glyphicon glyphicon-chevron-right separator"></i>
 		  	<h5 class=""> {{ post.name }} </h5>
-		  	<span class="pull-right"> {{ post.dateCreation|date("d/m/Y H:i:s") }} </span>
+		  	<span class="pull-right">
+				<span class="white">le</span> {{ post.dateCreation|date("d/m/Y") }}
+				<span class="white">à</span> {{ post.dateCreation|date("H:i:s") }}
+			</span>
 		  	<br/>
-		</div>
+		</header>
 		<div class="panel-body">
 			{% if app.user.id == post.blog.user.id %}
 			<div class="row">
@@ -33,8 +36,10 @@
 				</a>
 			</div>
 			{% endif %}
+			<p>
 		    {{ post.content }}
+			</p>
 		</div>
-	</div><!--/panel-body-->
+	</article><!--/panel-body-->
 </div>
 {% endblock %}

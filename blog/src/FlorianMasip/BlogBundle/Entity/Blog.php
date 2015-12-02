@@ -303,6 +303,16 @@ class Blog
     }
 
     /**
+     * Get nbPosts
+     *
+     * @return integer
+     */
+    public function getNbPosts()
+    {
+        return count($this->posts);
+    }
+
+    /**
      * Récupère le post par l'url
      *
      * @param string $urlAlias

@@ -1,4 +1,4 @@
-<header>
+<nav role="navigation">
 	<div id="blog-panel" class="panel panel-default ">
 		<div class="panel-heading">
 		  	<h4> kikoo blog </h4>
@@ -10,99 +10,8 @@
 		<!--si connecté -->
 		{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 
-		<div class="panel-heading">
-			<a class="label label-default label-circle inset pull-left" href="{{ path('fos_user_profile_show') }}">
-				<i class="glyphicon glyphicon-user"></i>
-			</a>
-			<a id="log-out" class="label label-danger label-circle inset pull-right" href="{{ path('fos_user_security_logout') }}">
-				<i class="glyphicon glyphicon-log-out"></i>
-			</a>
-			<a class="label label-default label-circle inset pull-right" href="{{ path('fos_user_profile_edit') }}">
-				<i class="glyphicon glyphicon-cog"></i>
-			</a>
-			<br/>
-		</div>
-		<div id="user_panel" class="panel-body">
-			<span id="user_panel_name_label" class="label label-primary" >
-				{{ app.user.username }}
-			</span>
-		    <img id="user-panel-pic"  src="{{ asset('resources/public/img/user.png') }}"/>
-		</div>
-
-
-
-		<div class="panel-heading">
-		  	<i class="glyphicon glyphicon-bookmark pull-left"></i>Mes blogs
-		  	<br/>
-		</div>
-
-		<div id="blogs-panel" class="panel-body">
-			<div class="list-group">
-				{% for b in app.user.blogs %}
-					{% if blog is defined %}
-						{% if b.urlAlias == blog.urlAlias %}
-						<a class="label label-primary label-circle inset label-hover list-group-option" href="{{ path('blog_edit', {'url_blog': b.urlAlias }) }}">
-							<i class="glyphicon glyphicon-cog"></i>
-						</a>
-						<a class="list-group-item active" href="{{ path('blog_view', {'url_blog': b.urlAlias }) }}" >
-							<span class="label label-primary inset">
-								<i class="glyphicon glyphicon-folder-open"></i>
-							</span>
-							{{b.Name}}
-						</a>
-						{% else %}
-						<a class="label label-default label-circle inset label-hover list-group-option" href="{{ path('blog_edit', {'url_blog': b.urlAlias }) }}">
-							<i class="glyphicon glyphicon-cog"></i>
-						</a>
-						<a class="list-group-item" href="{{ path('blog_view', {'url_blog': b.urlAlias }) }}" >
-							<span class="label label-default inset">
-								<i class="glyphicon glyphicon-folder-close"></i>
-							</span>
-							{{b.Name}}
-						</a>
-						{% endif %}
-					{% elseif url_blog is defined %}
-						{% if b.urlAlias == url_blog %}
-						<a class="label label-primary label-circle inset label-hover list-group-option" href="{{ path('blog_edit', {'url_blog': b.urlAlias }) }}">
-							<i class="glyphicon glyphicon-cog"></i>
-						</a>
-						<a class="list-group-item active" href="{{ path('blog_view', {'url_blog': b.urlAlias }) }}" >
-							<span class="label label-primary inset">
-								<i class="glyphicon glyphicon-folder-open"></i>
-							</span>
-							{{b.Name}}
-						</a>
-						{% else %}
-						<a class="label label-default label-circle inset label-hover list-group-option" href="{{ path('blog_edit', {'url_blog': b.urlAlias }) }}">
-							<i class="glyphicon glyphicon-cog"></i>
-						</a>
-						<a class="list-group-item" href="{{ path('blog_view', {'url_blog': b.urlAlias }) }}" >
-							<span class="label label-default inset">
-								<i class="glyphicon glyphicon-folder-close"></i>
-							</span>
-							{{b.Name}}
-						</a>
-						{% endif %}
-					{% else %}
-					<a class="label label-default label-circle inset label-hover list-group-option" href="{{ path('blog_edit', {'url_blog': b.urlAlias }) }}">
-						<i class="glyphicon glyphicon-cog"></i>
-					</a>
-					<a class="list-group-item" href="{{ path('blog_view', {'url_blog': b.urlAlias }) }}" >
-						<span class="label label-default inset">
-							<i class="glyphicon glyphicon-folder-close"></i>
-						</span>
-						{{b.Name}}
-					</a>
-					{% endif %}
-				{% endfor %}
-				<a class="list-group-item list-group-action" href="{{ path('blog_new') }}">
-					<span class="label label-primary inset">
-						<i class="glyphicon glyphicon-plus"></i>
-					</span>
-					créer un blog
-				</a>
-				</div>
-		</div>
+		{% include 'BlogBundle:Default:user-panel.html.twig' %}
+		{% include 'BlogBundle:Default:blogs-panel.html.twig' %}
 
 		<!--sinon -->
 		{% else %}
@@ -135,41 +44,5 @@
 		<!------------>
 	</div><!--/panel-body-->
 
-	<div id="search-results-panel" class="panel panel-default closed">
-		<div class="panel-heading">
-		  	<span class="label label-default pull-left" > Resultats </span>
-		  	<i class="glyphicon glyphicon-remove pull-right" onclick="addClass('#search-results-panel','closed')"></i>
-		  	<br/>
-		</div>
-		<div class="panel-body">
-		    <ul>
-		    	<li class="search-result">
-		    		<a class="row" href="{{ path('blog_view', {'url_blog': '10' }) }}">
-			    		<span class="col-sm-2 search-result-pic">
-			    			<br/>
-			    			<img width="40" height="40" src="{{ asset('resources/public/img/user.png') }}"/>
-			    		</span>
-			    		<span class="col-sm-9 search-result-preview">
-			    			<span class="label label-default search-result-title" > Titre </span><br/>
-			    			Aperçu description...
-			    		</span>
-			    		<br/>
-		    		</a>
-		    	</li>
-		    	<li class="search-result">
-		    		<span class="row">
-			    		<span class="col-sm-2 search-result-pic">
-			    			<br/>
-			    			<img width="40" height="40" src="{{ asset('resources/public/img/user.png') }}"/>
-			    		</span>
-			    		<span class="col-sm-9 search-result-preview">
-			    			<span class="label label-default search-result-title" > Titre </span><br/>
-			    			Aperçu description...
-			    		</span>
-		    		</span>
-		    	</li>
-
-		    </ul>
-		</div>
-	</div><!--/panel-body-->
-</header>
+	{% include 'BlogBundle:Default:search-results.html.twig' %}
+</nav>

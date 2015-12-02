@@ -198,6 +198,10 @@ class Post
      */
     public function setCategory(\FlorianMasip\BlogBundle\Entity\Category $category = null)
     {
+        /*if($this->category != null){
+            $this->category->setNbPosts($this->category->getNbPosts() - 1);
+        }
+        $category->setNbPosts($category->getNbPosts() + 1);*/
         $this->category = $category;
 
         return $this;

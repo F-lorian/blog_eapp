@@ -12,7 +12,7 @@
 		<a class="label label-primary inset pull-left blog-post-type">
 			{{ blog.theme }}
 		</a>
-		{% if app.user.id is defined and app.user.id == blog.user.id %}
+		{% if app.user is defined and app.user == blog.user %}
 			<a class="label label-danger pull-right" href="{{ path('blog_delete', {'url_blog': blog.urlAlias}) }}">
 				Supprimer blog
 				<span class="label label-danger inset">

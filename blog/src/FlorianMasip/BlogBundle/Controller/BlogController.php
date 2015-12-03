@@ -163,7 +163,7 @@ class BlogController extends Controller
 
                 $test_name = $blogRepository->findOneByName($name);
                 // Teste si le nom existe déjà en base
-                if (!empty($test_name)) {
+                if (!empty($test_name) && $test_name != $b ) {
                     $form["name"]->addError(new FormError("Le nom : '$name' est déjà utilisé"));
                     $error = true;
                 }
@@ -175,7 +175,7 @@ class BlogController extends Controller
                 }else{
                     $test_url = $blogRepository->findOneByUrlAlias($url_alias);
                     // Teste si l'url_alias existe déjà en base
-                    if (!empty($test_url)) {
+                    if (!empty($test_url) && $test_url != $b) {
                         $form["urlAlias"]->addError(new FormError("L'url : '$url_alias' est déjà utilisée"));
                         $error = true;
                     }
@@ -353,7 +353,7 @@ class BlogController extends Controller
 
                     $test_nom = $categoryRepository->findOneBy(array('nom' => $name, 'blog' => $b));
                     // Teste si l'url_alias existe déjà en base
-                    if (!empty($test_nom)) {
+                    if (!empty($test_nom) && $test_nom != $category) {
                         $form["nom"]->addError(new FormError("la catégorie '$name' existe déjà sur ce blog"));
                         $error = true;
                     }

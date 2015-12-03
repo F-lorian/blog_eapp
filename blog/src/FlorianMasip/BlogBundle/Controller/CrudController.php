@@ -124,7 +124,7 @@ class CrudController extends Controller
                 }else{
                     $test_url = $postRepository->findOneByUrlAlias($url_alias);
                     // Teste si l'url_alias existe déjà en base
-                    if (!empty($test_url)) {
+                    if (!empty($test_url) && $test_url != $post) {
                         $form["urlAlias"]->addError(new FormError("L'url : '$url_alias' est déjà utilisée"));
                         $error = true;
                     }

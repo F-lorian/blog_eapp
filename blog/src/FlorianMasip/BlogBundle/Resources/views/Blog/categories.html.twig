@@ -27,14 +27,16 @@
 
     {% for c in blog.categories %}
         {% if category != null and c == category %}
-        <div class="list-group-options active">
-            <a class="label label-primary label-circle inset label-hover" href="{{ path('blog_edit_category', {'url_blog': blog.urlAlias, 'category_name': c.nom}) }}">
-                <i class="glyphicon glyphicon-cog"></i>
-            </a>
-            <a class="label label-primary label-circle inset label-hover" href="{{ path('blog_delete_category', {'url_blog': blog.urlAlias, 'category_name': c.nom}) }}">
-                <i class="glyphicon glyphicon-remove"></i>
-            </a>
-        </div>
+            {% if app.user is defined and app.user == blog.user %}
+            <div class="list-group-options active">
+                <a class="label label-primary label-circle inset label-hover" href="{{ path('blog_edit_category', {'url_blog': blog.urlAlias, 'category_name': c.nom}) }}">
+                    <i class="glyphicon glyphicon-cog"></i>
+                </a>
+                <a class="label label-primary label-circle inset label-hover" href="{{ path('blog_delete_category', {'url_blog': blog.urlAlias, 'category_name': c.nom}) }}">
+                    <i class="glyphicon glyphicon-remove"></i>
+                </a>
+            </div>
+            {% endif %}
         <a class="list-group-item active" href="{{ path('blog_view_by_category', {'url_blog': blog.urlAlias, 'category_name': c.nom}) }}" title="voir la catégorie : {{c.nom}}">
             <span class="label label-primary inset">
                 <i class="glyphicon glyphicon-folder-open"></i>
@@ -45,14 +47,16 @@
             {{c.nom}}
         </a>
         {% else %}
-        <div class="list-group-options">
-            <a class="label label-default label-circle inset label-hover" href="{{ path('blog_edit_category', {'url_blog': blog.urlAlias, 'category_name': c.nom}) }}">
-                <i class="glyphicon glyphicon-cog"></i>
-            </a>
-            <a class="label label-default label-circle inset label-hover" href="{{ path('blog_delete_category', {'url_blog': blog.urlAlias, 'category_name': c.nom}) }}">
-                <i class="glyphicon glyphicon-remove"></i>
-            </a>
-        </div>
+            {% if app.user is defined and app.user == blog.user %}
+            <div class="list-group-options">
+                <a class="label label-default label-circle inset label-hover" href="{{ path('blog_edit_category', {'url_blog': blog.urlAlias, 'category_name': c.nom}) }}">
+                    <i class="glyphicon glyphicon-cog"></i>
+                </a>
+                <a class="label label-default label-circle inset label-hover" href="{{ path('blog_delete_category', {'url_blog': blog.urlAlias, 'category_name': c.nom}) }}">
+                    <i class="glyphicon glyphicon-remove"></i>
+                </a>
+            </div>
+            {% endif %}
         <a class="list-group-item" href="{{ path('blog_view_by_category', {'url_blog': blog.urlAlias, 'category_name': c.nom}) }}" title="voir la catégorie : {{c.nom}}">
             <span class="label label-default inset">
                 <i class="glyphicon glyphicon-folder-close"></i>

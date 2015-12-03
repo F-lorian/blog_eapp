@@ -29,6 +29,10 @@ class BlogController extends Controller
 
         $blog = $blogRepository->findOneByUrlAlias($url_blog);
 
+        if($page < 1){
+            throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException ();
+        }
+
         if(!empty($blog)){
 
             //$categoriesCount = $blog->getNbPostsByCategory();
@@ -50,18 +54,21 @@ class BlogController extends Controller
                 $paginationRouteParam = array('url_blog' => $blog->getUrlAlias(), 'category_name' => $category_name);
 
             }
-
             //$posts = $blog->getPostsByCategory($category, $page-1, $postsPerPage);
             $posts = $postRepository->getPostsList($blog, $page-1, $postsPerPage, $category);
 
             $nbPost = count($posts);
+            $nbPage = ceil($nbPost / $postsPerPage);
+
+            if(($nbPage > 0 and $page > $nbPage) or ($nbPage == 0 and $page > 1)){
+                throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException ();
+            }
 
             //Paramètre du pagination
             $pagination = array(
                 'page' => $page,
                 'route' => $paginationRoute,
-                'route_index' => "blog_view",
-                'pages_count' => ceil($nbPost / $postsPerPage),
+                'pages_count' => $nbPage,
                 'route_params' => $paginationRouteParam
             );
 

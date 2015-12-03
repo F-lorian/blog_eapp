@@ -1,12 +1,12 @@
 <nav>
     <ul class="pagination">
         {% if pagination.page>1 %}
-        <li >
+        <li>
             <a class="" href="{{ path(pagination.route,pagination.route_params|merge({'page': 1})) }}" aria-label="Previous">
                 <span aria-hidden="true">&laquo;</span>
             </a>
         </li>
-            {% if pagination.page-1 == 1 %}
+            {% if pagination.page-1 >= 1 %}
             <li>
                 <a class="" href="{{ path(pagination.route,pagination.route_params|merge({'page': pagination.page-1})) }}">
                     Précendente
@@ -19,7 +19,7 @@
         {% for p in range(max(pagination.page-4, 1), min(pagination.page+4, pagination.pages_count)) %}
             <li {% if p == pagination.page %} class="active"
                 {% endif %}>
-                <a  {% if p == 1 %} href="{{ path(pagination.route_index,pagination.route_params) }}"
+                <a  {% if p == 1 %} href="{{ path(pagination.route,pagination.route_params) }}"
                     {% else %} href="{{ path(pagination.route,pagination.route_params|merge({'page': p})) }}"
                     {% endif %}>
                     {{ p }}

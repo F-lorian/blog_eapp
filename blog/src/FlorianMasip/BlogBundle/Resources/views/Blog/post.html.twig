@@ -12,11 +12,17 @@
 				{{ post.category.nom }}
 			</a>
 		  	<i class="glyphicon glyphicon-chevron-right separator"></i>
-		  	<h5 class=""> {{ post.name }} </h5>
-		  	<span class="pull-right">
+			<span class="pull-right">
 				<span class="white">le</span> {{ post.dateCreation|date("d/m/Y") }}
 				<span class="white">à</span> {{ post.dateCreation|date("H:i:s") }}
 			</span>
+		  	<h5 class="blog-post-title">
+				{% if post.name|length < 150 %}
+				{{ post.name }}
+				{% else %}
+				{{ post.name[:150] }}...
+				{% endif %}
+			</h5>
 		  	<br/>
 		</header>
 		<div class="panel-body">
@@ -35,6 +41,7 @@
 					</span>
 				</a>
 			</div>
+			<br/>
 			{% endif %}
 			<p>
 		    {{ post.content }}

@@ -52,18 +52,18 @@ assetic:
     assets:
         css:
             inputs:
-                - 'bundles/common/css/bootstrap.min.css'
-                - 'bundles/common/css/styles.css'
+                - 'bundles/blog/css/bootstrap.min.css'
+                - 'bundles/blog/css/styles.css'
         scripts:
             inputs:
-                - 'bundles/common/js/dependencies/jquery.js'
-                - 'bundles/common/js/dependencies/jquery-1.3.2.js'
-                - 'bundles/common/js/jquery-2.1.1.min.js'
-                - 'bundles/common/js/bootbox.min.js'
-                - 'bundles/common/js/bootstrap.js'
-                - 'bundles/common/js/jquery.elastic.source.js'
-                - 'bundles/common/js/moment-with-locales.js'
-                - 'bundles/common/js/scripts.js'
+                - 'bundles/blog/js/dependencies/jquery.js'
+                - 'bundles/blog/js/dependencies/jquery-1.3.2.js'
+                - 'bundles/blog/js/jquery-2.1.1.min.js'
+                - 'bundles/blog/js/bootbox.min.js'
+                - 'bundles/blog/js/bootstrap.js'
+                - 'bundles/blog/js/jquery.elastic.source.js'
+                - 'bundles/blog/js/moment-with-locales.js'
+                - 'bundles/blog/js/scripts.js'
                 #- '@AppBundle/Resources/public/js/thirdparty/jquery.js'
                 #- '@AppBundle/Resources/public/js/thirdparty/jquery.ui.js'
 

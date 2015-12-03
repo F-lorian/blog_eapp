@@ -7,10 +7,10 @@
             </a>
             <i class="glyphicon glyphicon-chevron-right separator"></i>
             <h5 class="blog-post-title">
-                {% if p.name|length < 50 %}
+                {% if p.name|length < 60 %}
                 {{ p.name }}
                 {% else %}
-                {{ p.name[:50] }}...
+                {{ p.name[:60] }}...
                 {% endif %}
             </h5>
             <span class="pull-right">
@@ -24,10 +24,10 @@
                 voir l'article <i class="glyphicon glyphicon-plus"></i>
             </a>
             <p>
-                {% if p.content|length < 430 %}
+                {% if p.content|length < 350 %}
                 {{ p.content }}
                 {% else %}
-                {{ p.content[:430] }}...
+                {{ p.content[:350] }}...
                 {% endif %}
             </p>
         </div>

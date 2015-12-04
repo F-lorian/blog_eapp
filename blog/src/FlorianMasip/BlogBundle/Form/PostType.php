@@ -41,7 +41,6 @@ class PostType extends AbstractType
             'required' => false,
                     ))
             ->add('content', 'textarea', array('label' => 'Contenu'))
-            ->add('valider', 'submit')
         ;
     }
 

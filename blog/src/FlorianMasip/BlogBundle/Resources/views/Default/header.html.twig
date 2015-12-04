@@ -1,4 +1,4 @@
-<nav role="navigation">
+<nav>
 	<div id="blog-panel" class="panel panel-default ">
 		<div class="panel-heading">
 		  	<h4> kikoo blog </h4>
@@ -7,13 +7,13 @@
 		  	<input type="text" class="form-control" id="search-blog" placeholder="chercher un blog" name="search-blog"/><br/>
 		</div>
 
-		<!--si connecté -->
+		{# si connecté #}
 		{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 
 		{% include 'BlogBundle:Default:user-panel.html.twig' %}
 		{% include 'BlogBundle:Default:blogs-panel.html.twig' %}
 
-		<!--sinon -->
+		{# sinon #}
 		{% else %}
 
         <div class="panel-body">
@@ -41,8 +41,8 @@
 		</div-->
 
 		{% endif %}
-		<!------------>
-	</div><!--/panel-body-->
+		{# fin #}
+	</div>
 
 	{% include 'BlogBundle:Default:search-results.html.twig' %}
 </nav>

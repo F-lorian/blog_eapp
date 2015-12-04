@@ -153,26 +153,12 @@ class Category
      }
 
     /**
-     * Set nbPosts
-     *
-     * @param integer $nbPosts
-     *
-     * @return Category
-     */
-    public function setNbPosts($nbPosts)
-    {
-        $this->nbPosts = $nbPosts;
-
-        return $this;
-    }
-
-    /**
      * Get nbPosts
      *
      * @return integer
      */
     public function getNbPosts()
     {
-        return $this->nbPosts;
+        return count($this->posts);
     }
 }

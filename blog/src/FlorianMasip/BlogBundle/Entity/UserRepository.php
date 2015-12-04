@@ -14,31 +14,4 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 class UserRepository extends \Doctrine\ORM\EntityRepository
 {
 
-	/**
-     * Récupère l'uilisateur par le pseudo
-     *
-     * @param string $pseudo
-     * @return Paginator
-     */
-    public function getUserByPseudo($pseudo) {
-            return $this->getEntityManager()
-                            ->createQuery(
-                'SELECT u.pseudo, u.mail
-                FROM BlogBundle:User u
-                WHERE u.pseudo = :pseudo')->setParameter('pseudo', $pseudo)->getResult();
-    }
-
-    /**
-     * Récupère l'uilisateur par le mail
-     *
-     * @param string $mail
-     * @return Paginator
-     */
-    public function getUserByMail($mail) {
-            return $this->getEntityManager()
-                            ->createQuery(
-                'SELECT u.mail, u.pseudo
-                FROM BlogBundle:User u
-                WHERE u.mail = :mail')->setParameter('mail', $mail)->getResult();
-    } 
 }

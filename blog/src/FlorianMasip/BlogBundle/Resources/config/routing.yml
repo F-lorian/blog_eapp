@@ -55,5 +55,7 @@ blog_delete_post:
     defaults: { _controller: BlogBundle:Crud:delete }
 
 blog_view_post:
-    path:     /{url_blog}/{category_name}/{url_post}
-    defaults: { _controller: BlogBundle:Blog:post }
+    path:     /{url_blog}/{category_name}/{url_post}/{page}
+    defaults: { _controller: BlogBundle:Blog:post, page: 1 }
+    requirements:
+        page:  \d+

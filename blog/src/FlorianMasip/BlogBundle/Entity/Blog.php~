@@ -5,8 +5,10 @@
 namespace FlorianMasip\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
 use Doctrine\Common\Collections\ArrayCollection;
+
+use Symfony\Component\HttpFoundation\File\UploaderFile;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Blog
@@ -34,16 +36,29 @@ class Blog
     private $user;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="picture_path", type="string", length=255, nullable=true)
+     */
+    private $picturePath;
+
+    /**
+     *
+     * @Assert\file(maxSize="6000000")
+     */
+    private $pictureFile;
+
+    /**
      * @ORM\OneToMany(targetEntity="Post", mappedBy="blog")
      * @ORM\OrderBy({"dateCreation" = "DESC"})
      */
-    protected $posts;
+    private $posts;
 
     /**
      * @ORM\OneToMany(targetEntity="Category", mappedBy="blog")
      * @ORM\OrderBy({"nom" = "ASC"})
      */
-    protected $categories;
+    private $categories;
 
     /**
      * @var string
@@ -303,24 +318,13 @@ class Blog
     }
 
     /**
-     * Récupère le nombre de posts pour les categories
+     * Get nbPosts
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return integer
      */
-    public function getNbPostsByCategory()
+    public function getNbPosts()
     {
-        $res = new ArrayCollection();
-
-        foreach ($this->$categories as $category) {
-            $nb = 0;
-            foreach ($this->posts as $p){
-                if($p->getCategory() == $category){
-                    $nb++;
-                }
-            }
-            $res[] = $nb;
-        }
-        return $res;
+        return count($this->posts);
     }
 
     /**
@@ -402,4 +406,50 @@ class Blog
         }
     }
 
+
+    /**
+     * Set picturePath
+     *
+     * @param string $picturePath
+     *
+     * @return Blog
+     */
+    public function setPicturePath($picturePath)
+    {
+        $this->picturePath = $picturePath;
+
+        return $this;
+    }
+
+    /**
+     * Get picturePath
+     *
+     * @return string
+     */
+    public function getPicturePath()
+    {
+        return $this->picturePath;
+    }
+
+    /**
+     * Set pictureFile
+     *
+     * @param UploadedFile $pictureFile
+     *
+     */
+    public function setPictureFile($pictureFile)
+    {
+        $this->$profilePictureFile = $profilePictureFile;
+
+    }
+
+    /**
+     * Get pictureFile
+     *
+     * @return UploadedFile
+     */
+    public function getPictureFile()
+    {
+        return $this->pictureFile;
+    }
 }

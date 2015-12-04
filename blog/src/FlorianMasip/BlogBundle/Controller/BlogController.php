@@ -6,9 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FlorianMasip\BlogBundle\Entity\Blog;
 use FlorianMasip\BlogBundle\Entity\User;
 use FlorianMasip\BlogBundle\Entity\Category;
+use FlorianMasip\BlogBundle\Entity\Comment;
 use FlorianMasip\BlogBundle\Form\BlogType;
 use FlorianMasip\BlogBundle\Form\UserType;
 use FlorianMasip\BlogBundle\Form\CategoryType;
+use FlorianMasip\BlogBundle\Form\CommentType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormError;
 
@@ -16,7 +18,16 @@ class BlogController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('BlogBundle:Default:index.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $blogRepository = $em->getRepository('BlogBundle:Blog');
+        $postRepository = $em->getRepository('BlogBundle:Post');
+
+        $blogs = $blogRepository->getLastCreatedBlogs(5);
+        $nbBlogs = count($blogRepository->findAll());
+        $posts = $postRepository->getLastPosts(5);
+        $nbPosts = count($postRepository->findAll());
+
+        return $this->render('BlogBundle:Default:index.html.twig', array('blogs' => $blogs, 'nbBlogs' => $nbBlogs, 'posts' => $posts, 'nbPosts' => $nbPosts));
     }
 
     public function blogAction($url_blog, $category_name = null, $page = 1)
@@ -205,13 +216,14 @@ class BlogController extends Controller
 
     }
 
-    public function postAction($url_blog, $category_name, $url_post)
+    public function postAction(Request $request, $url_blog, $category_name, $url_post, $page = 1)
     {
 
         $em = $this->getDoctrine()->getManager();
         $blogRepository = $em->getRepository('BlogBundle:Blog');
         $postRepository = $em->getRepository('BlogBundle:Post');
         $categoryRepository = $em->getRepository('BlogBundle:Category');
+        $commentRepository = $em->getRepository('BlogBundle:Comment');
 
         $defaultCategory = $categoryRepository->findOneByNom('general');
 
@@ -226,8 +238,48 @@ class BlogController extends Controller
 
         if(!empty($category)){
             $post = $postRepository->findOneBy(array('category' => $category, 'urlAlias' => $url_post, 'blog' => $blog));
+
             if(!empty($post)){
-                return $this->render('BlogBundle:Blog:post.html.twig', array('url_blog' => $url_blog, 'post' => $post));
+                $commentsPerPage = 10;
+                $paginationRoute = "blog_view_post";
+                $paginationRouteParam = array('url_blog' => $url_blog, 'category_name' => $category_name, 'url_post' => $url_post);
+                $comments = $commentRepository->getCommentsList($post, $page-1, $commentsPerPage);
+
+                $nbComments = count($comments);
+                $nbPage = ceil($nbComments / $commentsPerPage);
+
+                if(($nbPage > 0 and $page > $nbPage) or ($nbPage == 0 and $page > 1)){
+                    throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException ();
+                }
+
+                //Paramètre du pagination
+                $pagination = array(
+                    'page' => $page,
+                    'route' => $paginationRoute,
+                    'pages_count' => $nbPage,
+                    'route_params' => $paginationRouteParam
+                );
+
+                $comment = new Comment();
+                $form = $this->createForm(new CommentType(), $comment);
+                $form->handleRequest($request);
+
+                if ($request->isMethod('POST')) {
+                    if ($form->isValid()) {
+                        $comment->setPost($post);
+                        $comment->setUser($this->getUser());
+                        $comment->setDateCreation(new \DateTime());
+                        $em->persist($comment);
+                        $em->flush();
+
+                        $request->getSession()->getFlashBag()->add('notice', 'commentaire ajouté');
+
+                    } else {
+                        $request->getSession()->getFlashBag()->add('error', "Erreur lors de l'envoi du commentaire");
+                    }
+                }
+
+                return $this->render('BlogBundle:Blog:post.html.twig', array('url_blog' => $url_blog, 'post' => $post, 'comments' => $comments, 'pagination' => $pagination, "form" => $form->createView()));
             }
         }
 

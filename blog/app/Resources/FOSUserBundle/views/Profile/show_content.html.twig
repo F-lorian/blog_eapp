@@ -16,6 +16,7 @@
 	        	<div class="col-sm-2">
 	        		<strong>
 	        		{% filter nl2br %}
+                        {{ 'photo de profil'|trans}}:
 					    {{ 'profile.show.username'|trans}}:
 					    {{ 'profile.show.email'|trans }}:
 					    {{ 'Prénom'|trans }}:
@@ -25,6 +26,7 @@
 					</strong>
 	        	</div>
 	        	<div class="col-sm-10">
+                    {{ user.profilePicturePath }}<br/>
 		        	{{ user.username }}<br/>
 		    		{{ user.email }}<br/>
 

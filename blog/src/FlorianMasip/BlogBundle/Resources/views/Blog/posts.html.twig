@@ -2,7 +2,7 @@
 
     <article class="panel panel-default blog-post">
         <header class="panel-heading">
-            <a class="label label-primary inset pull-left blog-post-type" href="{{ path('blog_view_by_category', {'url_blog': blog.urlAlias, 'category_name': p.category.nom}) }}">
+            <a class="label label-primary inset blog-post-type" href="{{ path('blog_view_by_category', {'url_blog': blog.urlAlias, 'category_name': p.category.nom}) }}">
                 {{ p.category.nom }}
             </a>
             <i class="glyphicon glyphicon-chevron-right separator"></i>

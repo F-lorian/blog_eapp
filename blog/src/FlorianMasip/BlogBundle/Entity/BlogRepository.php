@@ -3,7 +3,7 @@
 namespace FlorianMasip\BlogBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
-
+use Doctrine\ORM\Tools\Pagination\Paginator;
 /**
  * BlogRepository
  *
@@ -12,6 +12,21 @@ use Doctrine\ORM\EntityRepository;
  */
 class BlogRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * Récupère les derniers blogs
+     *
+     * @param int $nb
+     * @return Paginator
+     */
+    public function getLastCreatedBlogs($nb = 5) {
 
+        $q = $this->_em->createQueryBuilder()
+                ->select('blog')
+                ->from('BlogBundle:Blog', 'blog');
+
+        $q->setMaxResults($nb);
+
+        return new Paginator($q);
+    }
 
 }

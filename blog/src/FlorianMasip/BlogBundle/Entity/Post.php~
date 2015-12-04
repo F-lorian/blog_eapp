@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Post
  *
- * @ORM\Table()
+ * @ORM\Table(name="post")
  * @ORM\Entity(repositoryClass="FlorianMasip\BlogBundle\Entity\PostRepository")
  */
 class Post
@@ -61,6 +61,12 @@ class Post
      * @ORM\Column(name="date_creation", type="datetime")
      */
     private $dateCreation;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="Post")
+     * @ORM\OrderBy({"dateCreation" = "DESC"})
+     */
+    private $comments;
 
     /**
      * Get id
@@ -198,10 +204,10 @@ class Post
      */
     public function setCategory(\FlorianMasip\BlogBundle\Entity\Category $category = null)
     {
-        if($this->category != null){
+        /*if($this->category != null){
             $this->category->setNbPosts($this->category->getNbPosts() - 1);
         }
-        $category->setNbPosts($category->getNbPosts() + 1);
+        $category->setNbPosts($category->getNbPosts() + 1);*/
         $this->category = $category;
 
         return $this;
@@ -215,5 +221,46 @@ class Post
     public function getCategory()
     {
         return $this->category;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add comment
+     *
+     * @param \FlorianMasip\BlogBundle\Entity\Comment $comment
+     *
+     * @return Post
+     */
+    public function addComment(\FlorianMasip\BlogBundle\Entity\Comment $comment)
+    {
+        $this->comments[] = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Remove comment
+     *
+     * @param \FlorianMasip\BlogBundle\Entity\Comment $comment
+     */
+    public function removeComment(\FlorianMasip\BlogBundle\Entity\Comment $comment)
+    {
+        $this->comments->removeElement($comment);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 }

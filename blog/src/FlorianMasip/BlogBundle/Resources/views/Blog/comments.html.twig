@@ -1,0 +1,19 @@
+{% for c in comments %}
+<div class="panel panel-default blog-post">
+    <header class="panel-heading">
+        <a class="label label-primary inset blog-post-type">
+            {{ c.user.username }}
+        </a>
+        <span class="pull-right">
+            <span class="white">le</span> {{ c.dateCreation|date("d/m/Y") }}
+            <span class="white">à</span> {{ c.dateCreation|date("H:i:s") }}
+        </span>
+        <br/>
+    </header>
+    <div class="panel-body">
+        <p>
+            {{ c.content }}
+        </p>
+    </div>
+</div>
+{% endfor %}

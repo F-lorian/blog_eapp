@@ -24,8 +24,15 @@
 
 		<div id="blog-post" class="panel panel-default blog-post">
 			<div class="panel-body">
-				{{ form_widget(form.nom, { 'attr': {'class': 'form-control', 'placeholder': 'nom de la catégorie'} }) }}
-				<span class="label label-danger error">{{ form_errors(form.nom) }}</span>
+				<div class="row">
+					<div class="col-sm-2">
+						{{ form_label(form.nom) }}
+					</div>
+					<div class="col-sm-10">
+						{{ form_widget(form.nom, { 'attr': {'class': 'form-control', 'placeholder': '...'} }) }}
+						<span class="label label-danger error">{{ form_errors(form.nom) }}</span>
+					</div>
+				</div>
 				{{ form_row(form._token) }}
 			</div>
 			<br/>

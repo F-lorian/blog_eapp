@@ -9,7 +9,7 @@
 	<div id="blog-header-pic">
 	</div>
 	<div id="blog-header-content">
-		<a class="label label-primary inset pull-left blog-post-type">
+		<a class="label label-primary inset pull-left">
 			{{ blog.theme }}
 		</a>
 		{% if app.user is defined and app.user == blog.user %}
@@ -59,9 +59,7 @@
             {% include 'BlogBundle:Blog:pagination.html.twig' %}
 		{% else %}
 			<div class="panel panel-default blog-post">
-		        <div class="panel-body">
 		            aucun article dans cette section
-		        </div>
 		    </div>
         {% endif %}
 

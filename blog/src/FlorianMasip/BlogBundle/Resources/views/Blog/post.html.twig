@@ -8,14 +8,19 @@
 <div id="blog-content">
 	<article id="blog-post" class="panel panel-default blog-post">
 		<header class="panel-heading">
-		  	<a class="label label-primary inset pull-left blog-post-type" href="{{ path('blog_view_by_category', {'url_blog': post.blog.urlAlias, 'category_name': post.category.nom}) }}">
-				{{ post.category.nom }}
-			</a>
-		  	<i class="glyphicon glyphicon-chevron-right separator"></i>
 			<span class="pull-right">
 				<span class="white">le</span> {{ post.dateCreation|date("d/m/Y") }}
 				<span class="white">à</span> {{ post.dateCreation|date("H:i:s") }}
 			</span>
+			<a class="label label-primary inset blog-post-type" href="{{ path('blog_view', {'url_blog': post.blog.urlAlias}) }}">
+				{{ post.blog.name }}
+			</a>
+			<i class="glyphicon glyphicon-chevron-right separator"></i>
+		  	<a class="label label-primary inset blog-post-type" href="{{ path('blog_view_by_category', {'url_blog': post.blog.urlAlias, 'category_name': post.category.nom}) }}">
+				{{ post.category.nom }}
+			</a>
+		  	<i class="glyphicon glyphicon-chevron-right separator"></i>
+
 		  	<h5 class="blog-post-title">{{ post.name }}</h5>
 		  	<br/>
 		</header>
@@ -41,6 +46,23 @@
 		    {{ post.content }}
 			</p>
 		</div>
-	</article><!--/panel-body-->
+	</article>
+	<section id="comments">
+		<h4 class="page-title">Commentaires <small>( {{ comments|length }} )</small></h4>
+
+		{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+			{% include 'BlogBundle:Blog:comment-form.html.twig' %}
+		{% endif %}
+
+		{% if comments|length > 0 %}
+            {% include 'BlogBundle:Blog:pagination.html.twig' %}
+    		{% include 'BlogBundle:Blog:comments.html.twig' %}
+            {% include 'BlogBundle:Blog:pagination.html.twig' %}
+		{% else %}
+			<div class="panel panel-default blog-post">
+					aucun commentaire
+			</div>
+		{% endif %}
+	</section>
 </div>
 {% endblock %}

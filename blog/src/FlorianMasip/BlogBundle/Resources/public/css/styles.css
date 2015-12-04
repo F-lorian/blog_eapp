@@ -1,5 +1,5 @@
 body{
-	background: url(../img/fond.png);
+	background: url(../../../bundles/blog/img/fond.png);
 	/*background-color:E6E6E6 #1f3c42;*/
 	background-color: #1f3c42;
 
@@ -123,8 +123,9 @@ a:focus{
 }
 
 #last-posts,#last-blogs{
-	width: 540px;
+	/*width: 540px;*/
 	padding: 30px;
+	padding-bottom: 0px;
 	/*position: fixed;
 	height: 100%;
 	overflow-y: auto;*/
@@ -167,7 +168,8 @@ a#new-post{
 .blog-post .panel-heading{
 	/*background-color: #eaeaea;*/
 	padding: 3px;
-	padding-bottom: 1px;
+	padding-top: 2px;
+	padding-bottom: 3px;
 	padding-right: 10px;
 	border : none;
 	border-radius: 5px;
@@ -448,6 +450,7 @@ a.list-group-item.active:focus{
 
 .blog-post-type{
 	/*margin-right: 10px;*/
+	line-height: 26px;
 }
 
 #last-blog-post {
@@ -598,28 +601,43 @@ li.search-result .search-result-title{
 	padding-bottom: 10px;
 }
 
-
-select, input{
-	margin-bottom: 4px !important;
-	background-color: #4F4F4F !important;
-	border : none !important;
-	color : #e0e0e0 !important;
+form .panel-body .row{
+	padding: 4px;
+	margin-bottom: 5px;
+	background-color: #dbdbdb;
+	border-radius: 5px;
 }
 
+form .panel-body .row>div{
+	padding: 0;
+}
+
+form label{
+	color: black;
+	width: 100%;
+	padding: 5px;
+}
+
+select, input, textarea{
+	background-color: #b7b7b7 !important;
+	border : none !important;
+	color : black !important;
+}
+/*
 textarea{
 	background-color: inherit !important;
 	color : black !important;
 	min-height: 500px !important;
 }
-
-textarea#description{
-	min-height: 200px !important;
+*/
+textarea#blog_new_post_content{
+	min-height: 500px !important;
 }
 
 
 textarea:hover, select:hover,input:hover{
-	background-color: #b7b7b7 !important;
-	color: black !important;
+	background-color: #636363 !important;
+	color: #e0e0e0 !important;
 
 }
 
@@ -632,6 +650,8 @@ input#search-blog{
 	/*width:90%;
 	margin-left: auto;
 	margin-right: auto;*/
+	background-color: #4F4F4F !important;
+	color : #e0e0e0 !important;
 	margin-bottom: 7px !important;
 	display: block;
 	margin-top: 20px !important;
@@ -664,6 +684,10 @@ a.go-to-post{
 
 #last-blog-post a.go-to-post{
 	margin-top : 300px;
+}
+
+#last-blogs a.go-to-post, #last-posts a.go-to-post{
+	right:258px;
 }
 
 /******* à garder LABEL INSET********/

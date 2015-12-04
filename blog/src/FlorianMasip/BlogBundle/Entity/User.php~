@@ -5,9 +5,12 @@
 namespace FlorianMasip\BlogBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
-use Doctrine\ORM\Mapping as ORM;
 
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+
+use Symfony\Component\HttpFoundation\File\UploaderFile;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
@@ -32,14 +35,55 @@ class User extends BaseUser
         // your own logic
 
         $this->blogs = new ArrayCollection();
-    
+        $this->comments = new ArrayCollection();
+
+    }
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="profile_picture_path", type="string", length=255, nullable=true)
+     */
+    private $profilePicturePath;
+
+    /**
+     *
+     * @Assert\file(maxSize="6000000")
+     */
+    private $profilePictureFile;
+
+    public function getAbsolutePath()
+    {
+        return null === $this->path
+            ? null
+            : $this->getUploadRootDir().'/'.$this->path;
+    }
+
+    public function getWebPath()
+    {
+        return null === $this->path
+            ? null
+            : $this->getUploadDir().'/'.$this->path;
+    }
+
+    protected function getUploadRootDir()
+    {
+        // the absolute directory path where uploaded
+        // documents should be saved
+        return __DIR__.'/../Resources/public/img';
+    }
+
+    protected function getUploadDir()
+    {
+        // get rid of the __DIR__ so it doesn't screw up
+        // when displaying uploaded doc/image in the view.
+        return 'images';
     }
 
     /**
      * @var string
      *
      * @ORM\Column(name="surname", type="string", length=255, nullable=true)
-     *
      */
     private $surname;
 
@@ -60,7 +104,12 @@ class User extends BaseUser
     /**
      * @ORM\OneToMany(targetEntity="Blog", mappedBy="user")
      */
-    protected $blogs;
+    private $blogs;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="user")
+     */
+    private $comments;
 
     /**
      * Set surname
@@ -169,4 +218,86 @@ class User extends BaseUser
     }
 
 
+
+    /**
+     * Set profilePicturePath
+     *
+     * @param string $profilePicturePath
+     *
+     * @return User
+     */
+    public function setProfilePicturePath($profilePicturePath)
+    {
+        $this->profilePicturePath = $profilePicturePath;
+
+        return $this;
+    }
+
+    /**
+     * Get profilePicturePath
+     *
+     * @return string
+     */
+    public function getProfilePicturePath()
+    {
+        return $this->profilePicturePath;
+    }
+
+    /**
+     * Set profilePictureFile
+     *
+     * @param UploadedFile $profilePictureFile
+     *
+     */
+    public function setProfilePictureFile($profilePictureFile)
+    {
+        $this->$profilePictureFile = $profilePictureFile;
+
+    }
+
+    /**
+     * Get profilePictureFile
+     *
+     * @return UploadedFile
+     */
+    public function getProfilePictureFile()
+    {
+        return $this->profilePictureFile;
+    }
+
+
+
+    /**
+     * Add comment
+     *
+     * @param \FlorianMasip\BlogBundle\Entity\Comment $comment
+     *
+     * @return User
+     */
+    public function addComment(\FlorianMasip\BlogBundle\Entity\Comment $comment)
+    {
+        $this->comments[] = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Remove comment
+     *
+     * @param \FlorianMasip\BlogBundle\Entity\Comment $comment
+     */
+    public function removeComment(\FlorianMasip\BlogBundle\Entity\Comment $comment)
+    {
+        $this->comments->removeElement($comment);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
 }

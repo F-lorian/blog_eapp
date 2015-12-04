@@ -44,4 +44,22 @@ class PostRepository extends EntityRepository {
         return new Paginator($q);
     }
 
+    /**
+     * Récupère les derniers posts
+     *
+     * @param int $nb
+     * @return Paginator
+     */
+    public function getLastPosts($nb = 5) {
+
+        $q = $this->_em->createQueryBuilder()
+                ->select('post')
+                ->from('BlogBundle:Post', 'post')
+                ->orderBy('post.dateCreation', 'DESC');
+
+        $q->setMaxResults($nb);
+
+        return new Paginator($q);
+    }
+
 }

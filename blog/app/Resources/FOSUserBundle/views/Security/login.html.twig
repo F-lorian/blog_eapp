@@ -13,13 +13,31 @@
         <div class="panel-body">
 
             <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-            <input class="form-control" placeholder="pseudo" type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
-            <input class="form-control" placeholder="mot de passe" type="password" id="password" name="_password" required="required" />
-            <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-            <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
-
+            <div class="row">
+                <div class="col-sm-2">
+                    <label for="_username">{{ 'security.login.username'|trans }}</label>
+                </div>
+                <div class="col-sm-10">
+                    <input class="form-control" placeholder="..." type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2">
+                    <label for="_username">{{ 'security.login.password'|trans }}</label>
+                </div>
+                <div class="col-sm-10">
+                    <input class="form-control" placeholder="..." type="password" id="password" name="_password" required="required" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2">
+                    <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+                </div>
+                <div class="col-sm-10">
+                    <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                </div>
+            </div>
         </div>
-
         <br/>
         {% if error %}
             <span class="label label-danger error">{{ error.messageKey|trans(error.messageData, 'security') }}</span>

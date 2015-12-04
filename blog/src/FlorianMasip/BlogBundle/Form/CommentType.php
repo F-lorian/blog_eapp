@@ -5,9 +5,11 @@ namespace FlorianMasip\BlogBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use FlorianMasip\BlogBundle\Entity\Comment;
 
-class BlogType extends AbstractType
+class CommentType extends AbstractType
 {
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -15,11 +17,7 @@ class BlogType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('pictureFile',"file", array('label' => 'photo de couverture', 'required' => false))
-            ->add('name', 'text', array('label' => 'Nom', 'required' => true))
-            ->add('urlAlias', 'text', array('label' => 'url du blog', 'required' => true))
-            ->add('theme', 'text', array('label' => 'Thème', 'required' => true))
-            ->add('description', 'textarea', array('label' => 'description', 'required' => false))
+            ->add('content', 'textarea', array('label' => 'Poster un commentaire', 'required' => true))
         ;
     }
 
@@ -29,7 +27,7 @@ class BlogType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'FlorianMasip\BlogBundle\Entity\Blog'
+            'data_class' => 'FlorianMasip\BlogBundle\Entity\Comment'
         ));
     }
 
@@ -38,6 +36,6 @@ class BlogType extends AbstractType
      */
     public function getName()
     {
-        return 'new_blog';
+        return 'post_new_comment';
     }
 }

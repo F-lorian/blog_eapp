@@ -5,105 +5,84 @@
 {% block title %} Index {% endblock %}
 
 {% block content %}
-<div id="last-posts" class="col-sm-6">
+
+<h1 class="page-title">Accueil</h1>
+<div class="panel panel-default blog-post">
+	Bienvenue sur kikoo blog !<br/>
+	<strong>nombre de blogs crées</strong> : {{ nbBlogs }}<br/>
+	<strong>nombre d'article postés</strong> : {{ nbPosts }}
+</div>
+<div id="last-blogs">
+	<h4 class="page-title">Derniers blogs créés</h4>
+	{% for b in blogs %}
+	    <article class="panel panel-default blog-post">
+	        <header class="panel-heading">
+	            <a class="label label-primary inset blog-post-type">
+	                {{ b.theme }}
+	            </a>
+	            <i class="glyphicon glyphicon-chevron-right separator"></i>
+	            <h5 class="blog-post-title">
+	                {% if b.name|length < 60 %}
+	                {{ b.name }}
+	                {% else %}
+	                {{ b.name[:60] }}...
+	                {% endif %}
+	            </h5>
+	            <br/>
+	        </header>
+	        <div class="panel-body">
+	            <a class="btn btn-primary go-to-post" href="{{ path('blog_view', {'url_blog': b.urlAlias}) }}">
+	                voir le blog <i class="glyphicon glyphicon-plus"></i>
+	            </a>
+	            <p>
+	                {% if b.description|length < 350 %}
+	                {{ b.description }}
+	                {% else %}
+	                {{ b.description[:350] }}...
+	                {% endif %}
+	            </p>
+	        </div>
+	    </article>
+
+	{% endfor %}
+</div>
+<div id="last-posts">
 
 	<h4 class="page-title">Derniers posts</h4>
+	{% for p in posts %}
+	<article class="panel panel-default blog-post">
+		<header class="panel-heading">
+			<span class="pull-right">
+				<span class="white">le</span> {{ p.dateCreation|date("d/m/Y") }}
+				<span class="white">à</span> {{ p.dateCreation|date("H:i:s") }}
+			</span>
+			<a class="label label-primary inset blog-post-type" href="{{ path('blog_view', {'url_blog': p.blog.urlAlias}) }}">
+				{{ p.blog.name }}
+			</a>
+			<i class="glyphicon glyphicon-chevron-right separator"></i>
+		  	<a class="label label-primary inset blog-post-type" href="{{ path('blog_view_by_category', {'url_blog': p.blog.urlAlias, 'category_name': p.category.nom}) }}">
+				{{ p.category.nom }}
+			</a>
+		  	<i class="glyphicon glyphicon-chevron-right separator"></i>
 
-	<div class="panel panel-default blog-post">
-		<div class="panel-heading">
-		  	<span class="label label-warning pull-left blog-post-type" > News </span> <h5 class="blog-post-title">Titre</h5>
+		  	<h5 class="blog-post-title">{{ p.name }}</h5>
 		  	<br/>
-		</div>
+		</header>
 		<div class="panel-body">
-		    <a class="btn btn-primary go-to-post">voir l'article <i class="glyphicon glyphicon-plus"></i></a>
-		    aperçu de l'article...             
+			<a class="btn btn-primary go-to-post" href="{{ path('blog_view_post', {'url_blog': p.blog.urlAlias, 'category_name': p.category.nom, 'url_post': p.urlAlias }) }}">
+				voir l'article <i class="glyphicon glyphicon-plus"></i>
+			</a>
+			<p>
+				{% if p.content|length < 150 %}
+				{{ p.content }}
+				{% else %}
+				{{ p.content[:150] }}...
+				{% endif %}
+			</p>
 		</div>
-	</div><!--/panel-body-->
-	<div class="panel panel-default blog-post">
-		<div class="panel-heading">
-		  	<span class="label label-warning pull-left blog-post-type" > News </span> <h5 class="blog-post-title">Titre</h5>
-		  	<br/>
-		</div>
-		<div class="panel-body">
-		    <a class="btn btn-primary go-to-post">voir l'article <i class="glyphicon glyphicon-plus"></i></a>
-		    aperçu de l'article...             
-		</div>
-	</div><!--/panel-body-->
-	<div class="panel panel-default blog-post">
-		<div class="panel-heading">
-		  	<span class="label label-warning pull-left blog-post-type" > News </span> <h5 class="blog-post-title">Titre</h5>
-		  	<br/>
-		</div>
-		<div class="panel-body">
-		    <a class="btn btn-primary go-to-post">voir l'article <i class="glyphicon glyphicon-plus"></i></a>
-		    aperçu de l'article...             
-		</div>
-	</div><!--/panel-body-->
-	<div class="panel panel-default blog-post">
-		<div class="panel-heading">
-		  	<span class="label label-warning pull-left blog-post-type" > News </span> <h5 class="blog-post-title">Titre</h5>
-		  	<br/>
-		</div>
-		<div class="panel-body">
-		    <a class="btn btn-primary go-to-post">voir l'article <i class="glyphicon glyphicon-plus"></i></a>
-		    aperçu de l'article...             
-		</div>
-	</div><!--/panel-body-->
+	</article>
 
-</div>
-<div id="last-blogs" class="col-sm-6">
+	{% endfor %}
 
-	<h4 class="page-title">Derniers blogs créés</h4>
-
-	<div class="panel panel-default blog-post">
-		<div class="panel-heading">
-		  	<span class="label label-primary pull-left blog-post-type" > Thème </span> <h5 class="blog-post-title">Titre</h5>
-		  	<br/>
-		</div>
-		<div class="panel-body">
-		    <a class="btn btn-primary go-to-post">voir le blog <i class="glyphicon glyphicon-plus"></i></a>
-		    aperçu description...             
-		</div>
-	</div><!--/panel-body-->
-	<div class="panel panel-default blog-post">
-		<div class="panel-heading">
-		  	<span class="label label-primary pull-left blog-post-type" > Thème </span> <h5 class="blog-post-title">Titre</h5>
-		  	<br/>
-		</div>
-		<div class="panel-body">
-		    <a class="btn btn-primary go-to-post">voir le blog <i class="glyphicon glyphicon-plus"></i></a>
-		    aperçu description...             
-		</div>
-	</div><!--/panel-body-->
-	<div class="panel panel-default blog-post">
-		<div class="panel-heading">
-		  	<span class="label label-primary pull-left blog-post-type" > Thème </span> <h5 class="blog-post-title">Titre</h5>
-		  	<br/>
-		</div>
-		<div class="panel-body">
-		    <a class="btn btn-primary go-to-post">voir le blog <i class="glyphicon glyphicon-plus"></i></a>
-		    aperçu description...             
-		</div>
-	</div><!--/panel-body-->
-	<div class="panel panel-default blog-post">
-		<div class="panel-heading">
-		  	<span class="label label-primary pull-left blog-post-type" > Thème </span> <h5 class="blog-post-title">Titre</h5>
-		  	<br/>
-		</div>
-		<div class="panel-body">
-		    <a class="btn btn-primary go-to-post">voir le blog <i class="glyphicon glyphicon-plus"></i></a>
-		    aperçu description...             
-		</div>
-	</div><!--/panel-body-->
-	<div class="panel panel-default blog-post">
-		<div class="panel-heading">
-		  	<span class="label label-primary pull-left blog-post-type" > Thème </span> <h5 class="blog-post-title">Titre</h5>
-		  	<br/>
-		</div>
-		<div class="panel-body">
-		    <a class="btn btn-primary go-to-post">voir le blog <i class="glyphicon glyphicon-plus"></i></a>
-		    aperçu description...             
-		</div>
-	</div><!--/panel-body-->
 </div>
 {% endblock %}

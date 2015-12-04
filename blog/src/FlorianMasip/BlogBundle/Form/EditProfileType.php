@@ -24,7 +24,7 @@ class EditProfileType extends AbstractType
             ->add('plainPassword', 'password', array('label' => 'Retaper le mot de passe', 'required' => true))
         ;
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */
@@ -34,12 +34,7 @@ class EditProfileType extends AbstractType
             'data_class' => 'FlorianMasip\BlogBundle\Entity\User'
         ));
     }
-/*
-    public function getParent()
-    {
-        return 'fos_user_registration';
-    }
-*/
+
     /**
      * @return string
      */

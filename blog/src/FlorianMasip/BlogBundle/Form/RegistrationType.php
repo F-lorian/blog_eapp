@@ -15,6 +15,7 @@ class RegistrationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('profilePictureFile',"file", array('label' => 'photo de profil', 'required' => false))
             ->add('username', 'text', array('label' => 'Pseudo', 'required' => true))
             ->add('email', 'text', array('label' => 'Mail', 'required' => true))
             ->add('surname', 'text', array('label' => 'Prénom', 'required' => false))
@@ -24,7 +25,7 @@ class RegistrationType extends AbstractType
             ->add('plainPassword', 'password', array('label' => 'Retaper le mot de passe', 'required' => true))
         ;
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */

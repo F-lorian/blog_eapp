@@ -15,5 +15,7 @@
         {{ app.user.username }}
     </span>
 
-    <img id="user-panel-pic"  src="{{ asset('bundles/blog/img/user.png') }}"/>
+    {% image '@BlogBundle/Resources/public/img/user.png' %}
+        <img id="user-panel-pic" src="{{ asset_url }}" alt="" />
+    {% endimage %}
 </div>

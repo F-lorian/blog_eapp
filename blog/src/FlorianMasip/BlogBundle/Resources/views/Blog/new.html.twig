@@ -21,22 +21,28 @@
     <h4 class="page-title">Création d'un blog</h4>
     <form id="edit-form" method="post" target="{{ path('blog_new') }}" >
 {% endif %}
-
 		<div id="blog-post" class="panel panel-default blog-post">
 			<div class="panel-body">
-				{{ form_widget(form.name, { 'attr': {'class': 'form-control', 'placeholder': 'nom du blog'} }) }}
-				<span class="label label-danger error">{{ form_errors(form.name) }}</span>
-				{{ form_widget(form.urlAlias, { 'attr': {'class': 'form-control', 'placeholder': 'url du blog'} }) }}
-				<span class="label label-danger error">{{ form_errors(form.urlAlias) }}</span>
-				{{ form_widget(form.theme, { 'attr': {'class': 'form-control', 'placeholder': 'theme du blog'} }) }}
-				<span class="label label-danger error">{{ form_errors(form.theme) }}</span>
-				{{ form_widget(form.description, { 'attr': {'class': 'form-control', 'placeholder': 'description du blog'} }) }}
-				{{ form_row(form._token) }}
+				{% for c in form %}
+					{% if c != form._token %}
+					<div class="row">
+						<div class="col-sm-2">
+							{{ form_label(c) }}
+						</div>
+						<div class="col-sm-10">
+							{{ form_widget(c, { 'attr': {'class': 'form-control', 'placeholder': '...'} }) }}
+							<span class="label label-danger error">{{ form_errors(c) }}</span>
+						</div>
+					</div>
+					{% else %}
+						{{ form_row(c) }}
+					{% endif %}
+				{% endfor %}
 			</div>
 			<br/>
-				<span class="label label-danger error">{{ form_errors(form) }}</span>
-				<button class="btn btn-primary btn-block">valider <i class="glyphicon glyphicon-ok"></i></button>
-		</div><!--/panel-body-->
+			<span class="label label-danger error">{{ form_errors(form) }}</span>
+			<button class="btn btn-primary btn-block">valider <i class="glyphicon glyphicon-ok"></i></button>
+		</div>
 	</form>
 
 </div>

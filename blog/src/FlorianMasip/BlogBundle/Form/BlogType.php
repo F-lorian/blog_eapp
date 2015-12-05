@@ -15,7 +15,7 @@ class BlogType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('pictureFile',"file", array('label' => 'photo de couverture', 'required' => false))
+            ->add('pictureFile',"file", array('label' => 'photo de couverture (1100 x 200)', 'required' => false))
             ->add('name', 'text', array('label' => 'Nom', 'required' => true))
             ->add('urlAlias', 'text', array('label' => 'url du blog', 'required' => true))
             ->add('theme', 'text', array('label' => 'Thème', 'required' => true))

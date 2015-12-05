@@ -7,6 +7,9 @@
 {% block content %}
 <header id="blog-header" role="banner">
 	<div id="blog-header-pic">
+		{% if blog.picturePath %}
+		<img src="{{ asset('bundles/blog/img/banners/') ~ blog.picturePath }}" width="100%" height="200" alt="Title"/>
+		{% endif %}
 	</div>
 	<div id="blog-header-content">
 		<a class="label label-primary inset pull-left">

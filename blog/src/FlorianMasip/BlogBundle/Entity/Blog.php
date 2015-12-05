@@ -7,7 +7,7 @@ namespace FlorianMasip\BlogBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
-use Symfony\Component\HttpFoundation\File\UploaderFile;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -15,6 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="blog")
  * @ORM\Entity(repositoryClass="FlorianMasip\BlogBundle\Entity\BlogRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Blog
 {
@@ -47,6 +48,129 @@ class Blog
      * @Assert\file(maxSize="6000000")
      */
     private $pictureFile;
+
+    private $temp;
+
+    public function getAbsolutePath()
+    {
+        return null === $this->picturePath
+            ? null
+            : $this->getUploadRootDir().'/'.$this->picturePath;
+    }
+
+    public function getWebPath()
+    {
+        return null === $this->picturePath
+            ? null
+            : $this->getUploadDir().'/'.$this->picturePath;
+    }
+
+    //pour permettre de récupérer les images dans le dossier web
+    protected function getUploadRootDir()
+    {
+        // the absolute directory path where uploaded
+        // documents should be saved
+         return __DIR__.'/../../../../web/bundles/blog/img/'.$this->getUploadDir();
+    }
+
+    protected function getUploadDir()
+    {
+        // get rid of the __DIR__ so it doesn't screw up
+        // when displaying uploaded doc/image in the view.
+        return 'banners';
+    }
+
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setPictureFile(UploadedFile $file = null)
+    {
+        $this->pictureFile = $file;
+        // check if we have an old image path
+        if (isset($this->picturePath)) {
+            // store the old name to delete after the update
+            $this->temp = $this->picturePath;
+            $this->picturePath = null;
+        } else {
+            $this->picturePath = 'initial';
+        }
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function preUpload()
+    {
+        if (null !== $this->getPictureFile()) {
+            // do whatever you want to generate a unique name
+            $filename = sha1(uniqid(mt_rand(), true));
+            //$filename = $this->id;
+            $this->picturePath = $filename.'.'.$this->getPictureFile()->guessExtension();
+        }
+    }
+
+    /**
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     */
+    public function upload()
+    {
+        if (null === $this->getPictureFile()) {
+            return;
+        }
+
+        // if there is an error when moving the file, an exception will
+        // be automatically thrown by move(). This will properly prevent
+        // the entity from being persisted to the database on error
+        $this->getPictureFile()->move($this->getUploadRootDir(), $this->picturePath);
+
+        // check if we have an old image
+        if (isset($this->temp)) {
+            // delete the old image
+            unlink($this->getUploadRootDir().'/'.$this->temp);
+            // clear the temp image path
+            $this->temp = null;
+        }
+        $this->file = null;
+    }
+
+    /**
+     * @ORM\PostRemove()
+     */
+    public function removeUpload()
+    {
+        $file = $this->getAbsolutePath();
+        if ($file) {
+            unlink($file);
+        }
+    }
+
+    /*public function upload()
+    {
+        // the file property can be empty if the field is not required
+        if (null === $this->getPictureFile()) {
+            return;
+        }
+
+        // use the original file name here but you should
+        // sanitize it at least to avoid any security issues
+
+        // move takes the target directory and then the
+        // target filename to move to
+        $this->getPictureFile()->move(
+            $this->getUploadRootDir(),
+            $this->getPictureFile()->getClientOriginalName()
+        );
+
+        // set the path property to the filename where you've saved the file
+        $this->picturePath = $this->getPictureFile()->getClientOriginalName();
+
+        // clean up the file property as you won't need it anymore
+        $this->pictureFile = null;
+    }*/
 
     /**
      * @ORM\OneToMany(targetEntity="Post", mappedBy="blog")
@@ -437,11 +561,11 @@ class Blog
      * @param UploadedFile $pictureFile
      *
      */
-    public function setPictureFile($pictureFile)
+    /*public function setPictureFile(UploadedFile $pictureFile = null )
     {
-        $this->$profilePictureFile = $profilePictureFile;
+        $this->pictureFile = $pictureFile;
 
-    }
+    }*/
 
     /**
      * Get pictureFile

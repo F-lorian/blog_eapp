@@ -63,7 +63,7 @@ class Post
     private $dateCreation;
 
     /**
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="Post")
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="post")
      * @ORM\OrderBy({"dateCreation" = "DESC"})
      */
     private $comments;

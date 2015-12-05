@@ -104,37 +104,26 @@ class BlogController extends Controller
 
             $name = $form["name"]->getData();
             $url_alias = $form["urlAlias"]->getData();
-            $theme = $form["theme"]->getData();
-            $description = $form["description"]->getData();
-
-            $error = false;
 
             $test_name = $blogRepository->findOneByName($name);
             // Teste si le nom existe déjà en base
             if (!empty($test_name)) {
                 $form["name"]->addError(new FormError("Le nom : '$name' est déjà utilisé"));
-                $error = true;
             }
 
             // Teste si l'url contient autre chose que des chiffres des lettres ou des tirets
             if (!preg_match("/^[a-z-A-Z-0-9]+$/", $url_alias)) {
                 $form["urlAlias"]->addError(new FormError("L'url ne peut contenir que des chiffres, des lettres ou des tirets"));
-                $error = true;
             }else{
                 $test_url = $blogRepository->findOneByUrlAlias($url_alias);
                 // Teste si l'url_alias existe déjà en base
                 if (!empty($test_url)) {
                     $form["urlAlias"]->addError(new FormError("L'url : '$url_alias' est déjà utilisée"));
-                    $error = true;
                 }
             }
 
-            if ($form->isValid() && !$error) {
+            if ($form->isValid()) {
                 $blog->setUser($this->getUser());
-                $blog->setName($name);
-                $blog->setUrlAlias($url_alias);
-                $blog->setTheme($theme);
-                $blog->setDescription($description);
                 $em->persist($blog);
                 $em->flush();
 
@@ -159,45 +148,31 @@ class BlogController extends Controller
             $blogRepository = $em->getRepository('BlogBundle:Blog');
 
             $form = $this->createForm(new BlogType(), $b);
-
+            $form->handleRequest($request);
 
             if ($request->isMethod('POST')) {
-                $form = $this->createForm(new BlogType());
-                $form->handleRequest($request);
 
                 $name = $form["name"]->getData();
                 $url_alias = $form["urlAlias"]->getData();
-                $theme = $form["theme"]->getData();
-                $description = $form["description"]->getData();
-
-                $error = false;
 
                 $test_name = $blogRepository->findOneByName($name);
                 // Teste si le nom existe déjà en base
                 if (!empty($test_name) && $test_name != $b ) {
                     $form["name"]->addError(new FormError("Le nom : '$name' est déjà utilisé"));
-                    $error = true;
                 }
 
                 // Teste si l'url contient autre chose que des chiffres des lettres ou des tirets
                 if (!preg_match("/^[a-z-A-Z-0-9]+$/", $url_alias)) {
                     $form["urlAlias"]->addError(new FormError("L'url ne peut contenir que des chiffres, des lettres ou des tirets"));
-                    $error = true;
                 }else{
                     $test_url = $blogRepository->findOneByUrlAlias($url_alias);
                     // Teste si l'url_alias existe déjà en base
                     if (!empty($test_url) && $test_url != $b) {
                         $form["urlAlias"]->addError(new FormError("L'url : '$url_alias' est déjà utilisée"));
-                        $error = true;
                     }
                 }
 
-                if ($form->isValid() && !$error) {
-                    $b->setName($name);
-                    $b->setUrlAlias($url_alias);
-                    $b->setTheme($theme);
-                    $b->setDescription($description);
-                    //$em->persist($blog);
+                if ($form->isValid()) {
                     $em->flush();
 
                     $request->getSession()->getFlashBag()->add('notice', 'Blog modifié');
@@ -265,7 +240,9 @@ class BlogController extends Controller
                 $form->handleRequest($request);
 
                 if ($request->isMethod('POST')) {
-                    if ($form->isValid()) {
+                    $check = $commentRepository->findOneBy(array('user' => $this->getUser(), 'post' => $post, 'content' => $comment->getContent()));
+                    if ($form->isValid() && empty($check)) {
+                        $form = $this->createForm(new CommentType());
                         $comment->setPost($post);
                         $comment->setUser($this->getUser());
                         $comment->setDateCreation(new \DateTime());
@@ -316,36 +293,28 @@ class BlogController extends Controller
             $categoryRepository = $em->getRepository('BlogBundle:Category');
             $category = new Category();
             $form = $this->createForm(new CategoryType(), $category);
+            $form->handleRequest($request);
 
             if ($request->isMethod('POST')) {
-                $form = $this->createForm(new CategoryType());
-                $form->handleRequest($request);
 
                 // Récupère l'url alias entrée pour teste (existance et regex)
                 $nomCategory = $form["nom"]->getData();
 
-                $error = false;
-
                 // Teste si l'url contient autre chose que des chiffres des lettres ou des tirets
                 if (!preg_match("/^[a-z-A-Z-0-9]+$/", $nomCategory)) {
                     $form["nom"]->addError(new FormError("Une categorie ne peut contenir que des chiffres, des lettres ou des tirets"));
-                    $error = true;
                 }else{
 
                     $test_nom = $categoryRepository->findOneBy(array('nom' => $nomCategory, 'blog' => $b));
                     // Teste si l'url_alias existe déjà en base
                     if (!empty($test_nom)) {
                         $form["nom"]->addError(new FormError("la catégorie '$nomCategory' existe déjà sur ce blog"));
-                        $error = true;
                     }
                 }
 
                 // Si le formulaire est valide
-                if ($form->isValid() && !$error) {
-
-                    $category->setNom($nomCategory);
+                if ($form->isValid()) {
                     $category->setBlog($b);
-
                     $em->persist($category);
                     $em->flush();
 
@@ -387,33 +356,26 @@ class BlogController extends Controller
             }
 
             $form = $this->createForm(new CategoryType(), $category);
+            $form->handleRequest($request);
 
             if ($request->isMethod('POST')) {
-                $form = $this->createForm(new CategoryType());
-                $form->handleRequest($request);
-
                 // Récupère l'url alias entrée pour teste (existance et regex)
                 $name = $form["nom"]->getData();
-
-                $error = false;
 
                 // Teste si l'url contient autre chose que des chiffres des lettres ou des tirets
                 if (!preg_match("/^[a-z-A-Z-0-9]+$/", $name)) {
                     $form["nom"]->addError(new FormError("Une categorie ne peut contenir que des chiffres, des lettres ou des tirets"));
-                    $error = true;
                 }else{
 
                     $test_nom = $categoryRepository->findOneBy(array('nom' => $name, 'blog' => $b));
                     // Teste si l'url_alias existe déjà en base
                     if (!empty($test_nom) && $test_nom != $category) {
                         $form["nom"]->addError(new FormError("la catégorie '$name' existe déjà sur ce blog"));
-                        $error = true;
                     }
                 }
 
                 // Si le formulaire est valide
-                if ($form->isValid() && !$error) {
-                    $category->setNom($name);
+                if ($form->isValid()) {
                     $em->flush();
                     // Message de confirmation pour l'utilisateur
                     $request->getSession()->getFlashBag()->add('notice', "catégorie modifiée");

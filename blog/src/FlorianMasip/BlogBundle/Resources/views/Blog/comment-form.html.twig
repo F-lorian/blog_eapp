@@ -1,15 +1,9 @@
-<form id="new-comment-form" method="post" target="{{ path('blog_view_post', {'url_blog': post.blog.urlAlias, 'category_name': post.category.nom, 'url_post': post.urlAlias }) }}" >
+<form id="new-comment-form" method="post" action="{{ path('blog_view_post', {'url_blog': post.blog.urlAlias, 'category_name': post.category.nom, 'url_post': post.urlAlias}) }}" >
     <div id="blog-post" class="panel panel-default blog-post">
         <div class="panel-body">
-            {% for c in form %}
-                {% if c != form._token %}
-                    {{ form_label(c) }}
-                    {{ form_widget(c, { 'attr': {'class': 'form-control', 'placeholder': '...'} }) }}
-                    <span class="label label-danger error">{{ form_errors(c) }}</span>
-                {% else %}
-                    {{ form_row(c) }}
-                {% endif %}
-            {% endfor %}
+            {{ form_widget(form.content, { 'attr': {'class': 'form-control', 'placeholder': 'Poster un commentaire'} }) }}
+            <span class="label label-danger error">{{ form_errors(form.content) }}</span>
+            {{ form_row(form._token) }}
         </div>
         <br/>
         <span class="label label-danger error">{{ form_errors(form) }}</span>

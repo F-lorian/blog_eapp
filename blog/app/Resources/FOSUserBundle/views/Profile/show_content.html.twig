@@ -26,7 +26,12 @@
 					</strong>
 	        	</div>
 	        	<div class="col-sm-10">
-                    {{ user.profilePicturePath }}<br/>
+                    {% if user.profilePicturePath != null %}
+		    		{{ user.profilePicturePath }}
+		    		{% else %}
+		    		indéfini
+		    		{% endif %}
+		    		<br/>
 		        	{{ user.username }}<br/>
 		    		{{ user.email }}<br/>
 

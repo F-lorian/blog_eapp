@@ -15,7 +15,7 @@ class RegistrationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('profilePictureFile',"file", array('label' => 'photo de profil', 'required' => false))
+            ->add('profilePictureFile',"file", array('label' => 'photo de profil (non fonctionnel)', 'required' => false))
             ->add('username', 'text', array('label' => 'Pseudo', 'required' => true))
             ->add('email', 'text', array('label' => 'Mail', 'required' => true))
             ->add('surname', 'text', array('label' => 'Prénom', 'required' => false))

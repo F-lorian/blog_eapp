@@ -13,6 +13,6 @@ services:
             - { name: form.type, alias: app_user_registration }
 
     app.form.profile:
-        class: FlorianMasip\BlogBundle\Form\RegistrationType
+        class: FlorianMasip\BlogBundle\Form\EditProfileType
         tags:
-            - { name: form.type, alias: app_user_registration }
+            - { name: form.type, alias: app_profile_edit }

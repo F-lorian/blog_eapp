@@ -16,10 +16,10 @@
 
 {% if url_blog is defined %}
     <h4 class="page-title">Modifier blog : {{ url_blog }}</h4>
-    <form id="edit-form" method="post" target="{{ path('blog_edit', {'url_blog': url_blog }) }}" >
+    <form id="edit-form" method="post" {{ form_enctype(form) }} action="{{ path('blog_edit', {'url_blog': url_blog }) }}" >
 {% else %}
     <h4 class="page-title">Création d'un blog</h4>
-    <form id="edit-form" method="post" target="{{ path('blog_new') }}" >
+    <form id="edit-form" method="post" {{ form_enctype(form) }} action="{{ path('blog_new') }}" >
 {% endif %}
 		<div id="blog-post" class="panel panel-default blog-post">
 			<div class="panel-body">

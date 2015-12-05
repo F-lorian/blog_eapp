@@ -107,4 +107,4 @@ fos_user:
             type: app_user_registration
     profile:
         form:
-            type: app_user_registration
+            type: app_profile_edit

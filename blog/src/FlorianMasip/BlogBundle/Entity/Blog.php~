@@ -48,6 +48,127 @@ class Blog
      */
     private $pictureFile;
 
+    private $temp;
+
+    public function getAbsolutePath()
+    {
+        return null === $this->picturePath
+            ? null
+            : $this->getUploadRootDir().'/'.$this->picturePath;
+    }
+
+    public function getWebPath()
+    {
+        return null === $this->picturePath
+            ? null
+            : $this->getUploadDir().'/'.$this->picturePath;
+    }
+
+    protected function getUploadRootDir()
+    {
+        // the absolute directory path where uploaded
+        // documents should be saved
+        return __DIR__.'/../Resources/public/img';
+    }
+
+    protected function getUploadDir()
+    {
+        // get rid of the __DIR__ so it doesn't screw up
+        // when displaying uploaded doc/image in the view.
+        return 'images';
+    }
+
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    /*public function setFile(UploadedFile $file = null)
+    {
+        $this->pictureFile = $file;
+        // check if we have an old image path
+        if (isset($this->picturePath)) {
+            // store the old name to delete after the update
+            $this->temp = $this->picturePath;
+            $this->picturePath = null;
+        } else {
+            $this->picturePath = 'initial';
+        }
+    }*/
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    /*public function preUpload()
+    {
+        if (null !== $this->getFile()) {
+            // do whatever you want to generate a unique name
+            $filename = sha1(uniqid(mt_rand(), true));
+            $this->picturePath = $filename.'.'.$this->getFile()->guessExtension();
+        }
+    }*/
+
+    /**
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     */
+    /*public function upload()
+    {
+        if (null === $this->getFile()) {
+            return;
+        }
+
+        // if there is an error when moving the file, an exception will
+        // be automatically thrown by move(). This will properly prevent
+        // the entity from being persisted to the database on error
+        $this->getFile()->move($this->getUploadRootDir(), $this->picturePath);
+
+        // check if we have an old image
+        if (isset($this->temp)) {
+            // delete the old image
+            unlink($this->getUploadRootDir().'/'.$this->temp);
+            // clear the temp image path
+            $this->temp = null;
+        }
+        $this->file = null;
+    }*/
+
+    /**
+     * @ORM\PostRemove()
+     */
+    /*public function removeUpload()
+    {
+        $file = $this->getAbsolutePath();
+        if ($file) {
+            unlink($file);
+        }
+    }*/
+
+    public function upload()
+    {
+        // the file property can be empty if the field is not required
+        if (null === $this->getPictureFile()) {
+            return;
+        }
+
+        // use the original file name here but you should
+        // sanitize it at least to avoid any security issues
+
+        // move takes the target directory and then the
+        // target filename to move to
+        $this->getPictureFile()->move(
+            $this->getUploadRootDir(),
+            $this->getPictureFile()->getClientOriginalName()
+        );
+
+        // set the path property to the filename where you've saved the file
+        $this->picturePath = $this->getPictureFile()->getClientOriginalName();
+
+        // clean up the file property as you won't need it anymore
+        $this->pictureFile = null;
+    }
+
     /**
      * @ORM\OneToMany(targetEntity="Post", mappedBy="blog")
      * @ORM\OrderBy({"dateCreation" = "DESC"})
@@ -431,25 +552,5 @@ class Blog
         return $this->picturePath;
     }
 
-    /**
-     * Set pictureFile
-     *
-     * @param UploadedFile $pictureFile
-     *
-     */
-    public function setPictureFile($pictureFile)
-    {
-        $this->$profilePictureFile = $profilePictureFile;
 
-    }
-
-    /**
-     * Get pictureFile
-     *
-     * @return UploadedFile
-     */
-    public function getPictureFile()
-    {
-        return $this->pictureFile;
-    }
 }

@@ -13,8 +13,8 @@
 	<strong>nombre d'article postés</strong> : {{ nbPosts }}
 </div>
 <div id="last-blogs">
-	<h4 class="page-title">Derniers blogs créés</h4>
-	{% for b in blogs %}
+	<h2 class="page-title">Derniers blogs créés</h2>
+	{% for b in blogs|reverse %}
 	    <article class="panel panel-default blog-post">
 	        <header class="panel-heading">
 	            <a class="label label-primary inset blog-post-type">
@@ -31,9 +31,6 @@
 	            <br/>
 	        </header>
 	        <div class="panel-body">
-	            <a class="btn btn-primary go-to-post" href="{{ path('blog_view', {'url_blog': b.urlAlias}) }}">
-	                voir le blog <i class="glyphicon glyphicon-plus"></i>
-	            </a>
 	            <p>
 	                {% if b.description|length < 350 %}
 	                {{ b.description }}
@@ -41,6 +38,9 @@
 	                {{ b.description[:350] }}...
 	                {% endif %}
 	            </p>
+				<a class="btn btn-primary go-to-post pull-right" href="{{ path('blog_view', {'url_blog': b.urlAlias}) }}">
+	                voir le blog <i class="glyphicon glyphicon-plus"></i>
+	            </a>
 	        </div>
 	    </article>
 
@@ -48,7 +48,7 @@
 </div>
 <div id="last-posts">
 
-	<h4 class="page-title">Derniers posts</h4>
+	<h2 class="page-title">Derniers posts</h2>
 	{% for p in posts %}
 	<article class="panel panel-default blog-post">
 		<header class="panel-heading">
@@ -69,9 +69,6 @@
 		  	<br/>
 		</header>
 		<div class="panel-body">
-			<a class="btn btn-primary go-to-post" href="{{ path('blog_view_post', {'url_blog': p.blog.urlAlias, 'category_name': p.category.nom, 'url_post': p.urlAlias }) }}">
-				voir l'article <i class="glyphicon glyphicon-plus"></i>
-			</a>
 			<p>
 				{% if p.content|length < 150 %}
 				{{ p.content }}
@@ -79,6 +76,9 @@
 				{{ p.content[:150] }}...
 				{% endif %}
 			</p>
+			<a class="btn btn-primary go-to-post pull-right" href="{{ path('blog_view_post', {'url_blog': p.blog.urlAlias, 'category_name': p.category.nom, 'url_post': p.urlAlias }) }}">
+				voir l'article <i class="glyphicon glyphicon-plus"></i>
+			</a>
 		</div>
 	</article>
 

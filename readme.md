@@ -16,6 +16,8 @@ php app/console assetic:dump --env=prod --no-debug
 - décommenter la ligne dans le fichier php.ini de apache (pour l'upload d'images)
 extension=php_fileinfo.dll
 
+- base de données : /blog.sql
+
 # commentaires #
 Le bundle est un créateur de blogs. Une fois le compte utilisateur créé, celui ci peu créer un ou plusieurs blog 
 et y ajouter/éditer des posts et des catégories.

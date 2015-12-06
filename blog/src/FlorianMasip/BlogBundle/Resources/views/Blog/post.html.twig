@@ -25,7 +25,7 @@
 		  	<br/>
 		</header>
 		<div class="panel-body">
-			{% if app.user.id == post.blog.user.id %}
+			{% if app.user.id is defined and app.user.id == post.blog.user.id %}
 			<div class="row">
 				<a class="label label-danger pull-right" href="{{ path('blog_delete_post', {'url_blog': post.blog.urlAlias, 'url_post': post.urlAlias }) }}">
 					Supprimer article

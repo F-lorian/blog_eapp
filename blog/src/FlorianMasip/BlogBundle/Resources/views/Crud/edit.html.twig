@@ -15,10 +15,10 @@
 <div id="blog-content">
 
 {% if id_post is defined %}
-    <h4 class="page-title">modifier article : {{ url_post }}</h4>
+    <h1 class="page-title">modifier article</h1>
     <form id="edit-form" method="post" action="{{ path('blog_edit_post', {'url_blog': url_blog, 'url_post': url_post }) }}" >
 {% else %}
-    <h4 class="page-title">Nouvel article</h4>
+    <h1 class="page-title">Nouvel article</h1>
     <form id="edit-form" method="post" action="{{ path('blog_new_post', {'url_blog': url_blog}) }}" >
 {% endif %}
 

@@ -15,10 +15,10 @@
 <div id="blog-content">
 
 {% if category_name is defined %}
-    <h4 class="page-title">Modifier categorie : {{ category_name }}</h4>
+    <h1 class="page-title">Modifier categorie</h1>
     <form id="edit-category-form" method="post" action="{{ path('blog_edit_category', {'url_blog': url_blog, 'category_name': category_name}) }}" >
 {% else %}
-    <h4 class="page-title">Ajout d'une categorie</h4>
+    <h1 class="page-title">Ajout d'une categorie</h1>
 	<form id="new-category-form" method="post" action="{{ path('blog_new_category', {'url_blog': url_blog}) }}" >
 {% endif %}
 

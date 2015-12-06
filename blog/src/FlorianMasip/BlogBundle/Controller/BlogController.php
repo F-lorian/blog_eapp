@@ -67,14 +67,6 @@ class BlogController extends Controller
         }
 
         return $this->render('BlogBundle:Default:search-results.html.twig', array('keyword' => $s, 'results' => $results));
-
-
-        /*$blogs = $blogRepository->getLastCreatedBlogs(5);
-        $nbBlogs = count($blogRepository->findAll());
-        $posts = $postRepository->getLastPosts(5);
-        $nbPosts = count($postRepository->findAll());*/
-
-
     }
 
     public function blogAction($url_blog, $category_name = null, $page = 1)
@@ -262,26 +254,7 @@ class BlogController extends Controller
             $post = $postRepository->findOneBy(array('category' => $category, 'urlAlias' => $url_post, 'blog' => $blog));
 
             if(!empty($post)){
-                $commentsPerPage = 10;
-                $paginationRoute = "blog_view_post";
-                $paginationRouteParam = array('url_blog' => $url_blog, 'category_name' => $category_name, 'url_post' => $url_post);
-                $comments = $commentRepository->getCommentsList($post, $page-1, $commentsPerPage);
-
-                $nbComments = count($comments);
-                $nbPage = ceil($nbComments / $commentsPerPage);
-
-                if(($nbPage > 0 and $page > $nbPage) or ($nbPage == 0 and $page > 1)){
-                    throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException ();
-                }
-
-                //Paramètre du pagination
-                $pagination = array(
-                    'page' => $page,
-                    'route' => $paginationRoute,
-                    'pages_count' => $nbPage,
-                    'route_params' => $paginationRouteParam
-                );
-
+                
                 $comment = new Comment();
                 $form = $this->createForm(new CommentType(), $comment);
                 $form->handleRequest($request);
@@ -302,6 +275,26 @@ class BlogController extends Controller
                         $request->getSession()->getFlashBag()->add('error', "Erreur lors de l'envoi du commentaire");
                     }
                 }
+
+                $commentsPerPage = 5;
+                $paginationRoute = "blog_view_post";
+                $paginationRouteParam = array('url_blog' => $url_blog, 'category_name' => $category_name, 'url_post' => $url_post);
+                $comments = $commentRepository->getCommentsList($post, $page-1, $commentsPerPage);
+
+                $nbComments = count($comments);
+                $nbPage = ceil($nbComments / $commentsPerPage);
+
+                if(($nbPage > 0 and $page > $nbPage) or ($nbPage == 0 and $page > 1)){
+                    throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException ();
+                }
+
+                //Paramètre du pagination
+                $pagination = array(
+                    'page' => $page,
+                    'route' => $paginationRoute,
+                    'pages_count' => $nbPage,
+                    'route_params' => $paginationRouteParam
+                );
 
                 return $this->render('BlogBundle:Blog:post.html.twig', array('url_blog' => $url_blog, 'post' => $post, 'comments' => $comments, 'pagination' => $pagination, "form" => $form->createView()));
             }

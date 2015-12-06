@@ -23,13 +23,13 @@ class Comment
 
     /**
      * @ORM\ManyToOne(targetEntity="Post", inversedBy="comments")
-     * @ORM\JoinColumn(name="id_post", referencedColumnName="id")
+     * @ORM\JoinColumn(name="id_post", referencedColumnName="id", onDelete="CASCADE")
      */
     private $post;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="comments")
-     * @ORM\JoinColumn(name="id_user", referencedColumnName="id")
+     * @ORM\JoinColumn(name="id_user", referencedColumnName="id", onDelete="CASCADE")
      */
     private $user;
 

@@ -54,12 +54,7 @@ class CrudController extends Controller
               if ($form->isValid() && !$error) {
 
                   $blogRepository = $em->getRepository('BlogBundle:Blog');
-                  //$blog = $blogRepository->findOneByUrlAlias($url_blog);
-                  //$post->setBlog($blog);
                   $post->setBlog($b);
-                  $post->setName($name);
-                  $post->setUrlAlias($url_alias);
-                  $post->setContent($content);
                   // Transforme l'objet "NomCategory" (id,nom) en string (nom) avant l'insertion en BDD
                   if (!empty($category)){
                       $post->setCategory($category);
@@ -104,47 +99,34 @@ class CrudController extends Controller
             $categoryRepository = $em->getRepository('BlogBundle:Category');
             $post = $postRepository->findOneByUrlAlias($url_post);
             $form = $this->createForm(new PostType(array('blog' => $b)), $post);
-
+            $form->handleRequest($request);
+            
             if ($request->isMethod('POST')) {
-                $form = $this->createForm(new PostType(array('blog' => $b)));
-                $form->handleRequest($request);
 
-                // Récupère l'url alias entrée pour teste (existance et regex)
                 $category = $form["category"]->getData();
                 $url_alias = $form["urlAlias"]->getData();
                 $name = $form["name"]->getData();
                 $content = $form["content"]->getData();
 
-                $error = false;
-
                 // Teste si l'url contient autre chose que des chiffres des lettres ou des tirets
                 if (!preg_match("/^[a-z-A-Z-0-9]+$/", $url_alias)) {
                     $form["urlAlias"]->addError(new FormError("L'url ne peut contenir que des chiffres, des lettres ou des tirets"));
-                    $error = true;
                 }else{
                     $test_url = $postRepository->findOneByUrlAlias($url_alias);
                     // Teste si l'url_alias existe déjà en base
                     if (!empty($test_url) && $test_url != $post) {
                         $form["urlAlias"]->addError(new FormError("L'url : '$url_alias' est déjà utilisée"));
-                        $error = true;
                     }
                 }
 
                 // Si le formulaire est valide
-                if ($form->isValid() && !$error) {
+                if ($form->isValid()) {
 
-                    $post->setName($name);
-                    $post->setUrlAlias($url_alias);
-                    $post->setContent($content);
                     // Transforme l'objet "NomCategory" (id,nom) en string (nom) avant l'insertion en BDD
-                    if (!empty($category)){
-                        $post->setCategory($category);
-                    } else {
+                    if (empty($category)){
                         $category = $categoryRepository->findOneByNom("general");
                         $post->setCategory($category);
                     }
-
-                    //$em->persist($post);
                     $em->flush();
 
                     // Message de confirmation pour l'utilisateur

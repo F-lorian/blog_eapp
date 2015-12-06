@@ -22,8 +22,8 @@ class PostType extends AbstractType
     {
         $opts = $this->options;
         $builder
-            ->add('name', 'text', array('label' => 'Titre'))
-            ->add('urlAlias', 'text', array('label' => 'Url du lien'))
+            ->add('name', 'text', array('label' => 'Titre', 'required' => true))
+            ->add('urlAlias', 'text', array('label' => 'Url du post', 'required' => true))
             ->add('category', 'entity', array(
             'class' => 'BlogBundle:Category',
             'query_builder' => function($repository) use (&$opts){
@@ -33,14 +33,13 @@ class PostType extends AbstractType
                                 ->setParameter('blog',$opts['blog'])
                                 ->orderBy('c.nom', 'ASC');
             },
-            /*'choices' => $this->options['blog']->getCategories(),*/
             'property' => 'nom',
             'label' => 'Catégorie',
             'empty_value' => '---',
             'empty_data'  => null,
             'required' => false,
                     ))
-            ->add('content', 'textarea', array('label' => 'Contenu'))
+            ->add('content', 'textarea', array('label' => 'Contenu', 'required' => true))
         ;
     }
 

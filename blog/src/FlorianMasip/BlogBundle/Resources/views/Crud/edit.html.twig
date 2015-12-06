@@ -14,7 +14,7 @@
 
 <div id="blog-content">
 
-{% if id_post is defined %}
+{% if url_post is defined %}
     <h1 class="page-title">modifier article</h1>
     <form id="edit-form" method="post" action="{{ path('blog_edit_post', {'url_blog': url_blog, 'url_post': url_post }) }}" >
 {% else %}

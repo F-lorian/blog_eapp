@@ -7,7 +7,7 @@ namespace FlorianMasip\BlogBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
-use Symfony\Component\HttpFoundation\File\UploaderFile;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -15,6 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="blog")
  * @ORM\Entity(repositoryClass="FlorianMasip\BlogBundle\Entity\BlogRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Blog
 {
@@ -64,18 +65,19 @@ class Blog
             : $this->getUploadDir().'/'.$this->picturePath;
     }
 
+    //pour permettre de récupérer les images dans le dossier web
     protected function getUploadRootDir()
     {
         // the absolute directory path where uploaded
         // documents should be saved
-        return __DIR__.'/../Resources/public/img';
+         return __DIR__.'/../../../../web/bundles/blog/img/'.$this->getUploadDir();
     }
 
     protected function getUploadDir()
     {
         // get rid of the __DIR__ so it doesn't screw up
         // when displaying uploaded doc/image in the view.
-        return 'images';
+        return 'banners';
     }
 
     /**
@@ -83,7 +85,7 @@ class Blog
      *
      * @param UploadedFile $file
      */
-    /*public function setFile(UploadedFile $file = null)
+    public function setPictureFile(UploadedFile $file = null)
     {
         $this->pictureFile = $file;
         // check if we have an old image path
@@ -94,35 +96,36 @@ class Blog
         } else {
             $this->picturePath = 'initial';
         }
-    }*/
+    }
 
     /**
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
      */
-    /*public function preUpload()
+    public function preUpload()
     {
-        if (null !== $this->getFile()) {
+        if (null !== $this->getPictureFile()) {
             // do whatever you want to generate a unique name
             $filename = sha1(uniqid(mt_rand(), true));
-            $this->picturePath = $filename.'.'.$this->getFile()->guessExtension();
+            //$filename = $this->id;
+            $this->picturePath = $filename.'.'.$this->getPictureFile()->guessExtension();
         }
-    }*/
+    }
 
     /**
      * @ORM\PostPersist()
      * @ORM\PostUpdate()
      */
-    /*public function upload()
+    public function upload()
     {
-        if (null === $this->getFile()) {
+        if (null === $this->getPictureFile()) {
             return;
         }
 
         // if there is an error when moving the file, an exception will
         // be automatically thrown by move(). This will properly prevent
         // the entity from being persisted to the database on error
-        $this->getFile()->move($this->getUploadRootDir(), $this->picturePath);
+        $this->getPictureFile()->move($this->getUploadRootDir(), $this->picturePath);
 
         // check if we have an old image
         if (isset($this->temp)) {
@@ -132,20 +135,20 @@ class Blog
             $this->temp = null;
         }
         $this->file = null;
-    }*/
+    }
 
     /**
-     * @ORM\PostRemove()
+     * @ORM\PreRemove()
      */
-    /*public function removeUpload()
+    public function removeUpload()
     {
         $file = $this->getAbsolutePath();
         if ($file) {
             unlink($file);
         }
-    }*/
+    }
 
-    public function upload()
+    /*public function upload()
     {
         // the file property can be empty if the field is not required
         if (null === $this->getPictureFile()) {
@@ -167,7 +170,7 @@ class Blog
 
         // clean up the file property as you won't need it anymore
         $this->pictureFile = null;
-    }
+    }*/
 
     /**
      * @ORM\OneToMany(targetEntity="Post", mappedBy="blog")
@@ -552,5 +555,25 @@ class Blog
         return $this->picturePath;
     }
 
+    /**
+     * Set pictureFile
+     *
+     * @param UploadedFile $pictureFile
+     *
+     */
+    /*public function setPictureFile(UploadedFile $pictureFile = null )
+    {
+        $this->pictureFile = $pictureFile;
 
+    }*/
+
+    /**
+     * Get pictureFile
+     *
+     * @return UploadedFile
+     */
+    public function getPictureFile()
+    {
+        return $this->pictureFile;
+    }
 }

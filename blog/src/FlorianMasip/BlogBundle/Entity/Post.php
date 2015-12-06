@@ -37,7 +37,7 @@ class Post
 
     /**
      * @ORM\ManyToOne(targetEntity="Blog", inversedBy="posts")
-     * @ORM\JoinColumn(name="id_blog", referencedColumnName="id")
+     * @ORM\JoinColumn(name="id_blog", referencedColumnName="id", onDelete="CASCADE")
      */
     private $blog;
 

@@ -2,6 +2,10 @@ blog_homepage:
     path:     /
     defaults: { _controller: BlogBundle:Blog:index }
 
+blog_search:
+    path:     /search/{search}
+    defaults: { _controller: BlogBundle:Blog:search, search: "" }
+
 blog_new_user:
     path:     /register
     defaults: { _controller: BlogBundle:Blog:register }

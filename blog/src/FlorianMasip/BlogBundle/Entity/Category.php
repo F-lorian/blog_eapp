@@ -32,7 +32,7 @@ class Category
 
     /**
      * @ORM\ManyToOne(targetEntity="Blog", inversedBy="categories")
-     * @ORM\JoinColumn(name="id_blog", referencedColumnName="id")
+     * @ORM\JoinColumn(name="id_blog", referencedColumnName="id", onDelete="CASCADE")
      */
     private $blog;
 
@@ -161,4 +161,5 @@ class Category
     {
         return count($this->posts);
     }
+
 }

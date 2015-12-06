@@ -138,7 +138,7 @@ class Blog
     }
 
     /**
-     * @ORM\PostRemove()
+     * @ORM\PreRemove()
      */
     public function removeUpload()
     {
@@ -147,30 +147,6 @@ class Blog
             unlink($file);
         }
     }
-
-    /*public function upload()
-    {
-        // the file property can be empty if the field is not required
-        if (null === $this->getPictureFile()) {
-            return;
-        }
-
-        // use the original file name here but you should
-        // sanitize it at least to avoid any security issues
-
-        // move takes the target directory and then the
-        // target filename to move to
-        $this->getPictureFile()->move(
-            $this->getUploadRootDir(),
-            $this->getPictureFile()->getClientOriginalName()
-        );
-
-        // set the path property to the filename where you've saved the file
-        $this->picturePath = $this->getPictureFile()->getClientOriginalName();
-
-        // clean up the file property as you won't need it anymore
-        $this->pictureFile = null;
-    }*/
 
     /**
      * @ORM\OneToMany(targetEntity="Post", mappedBy="blog")

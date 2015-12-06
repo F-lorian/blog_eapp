@@ -12,7 +12,7 @@
 		{% endif %}
 	</div>
 	<div id="blog-header-content">
-		<a class="label label-primary inset pull-left">
+		<a class="label label-primary inset pull-left" href="{{ path('blog_search', {'search': blog.theme}) }}">
 			{{ blog.theme }}
 		</a>
 		{% if app.user is defined and app.user == blog.user %}

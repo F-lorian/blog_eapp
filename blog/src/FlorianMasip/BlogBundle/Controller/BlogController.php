@@ -30,6 +30,53 @@ class BlogController extends Controller
         return $this->render('BlogBundle:Default:index.html.twig', array('blogs' => $blogs, 'nbBlogs' => $nbBlogs, 'posts' => $posts, 'nbPosts' => $nbPosts));
     }
 
+    public function searchAction(Request $request, $search)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $blogRepository = $em->getRepository('BlogBundle:Blog');
+        $postRepository = $em->getRepository('BlogBundle:Post');
+
+        if ($request->isMethod('POST')) {
+            $input = $request->request->get('search');
+
+            $s = $input;
+            $results = null;
+            if ($input != ' ') {
+                //$input = \Doctrine\Common\Util\Debug::dump($data);
+                if (!preg_match("/^[a-z-A-Z-0-9]+$/", $input)) {
+                }
+                $query = $blogRepository->createQueryBuilder('b')
+                ->where('b.theme LIKE :search OR b.name LIKE :search OR b.description LIKE :search')
+                ->setParameter('search', '%'.$input.'%')
+                ->getQuery();
+
+                $results = $query->getResult();
+            }
+
+        }else if ($search != null and $search != ' '){
+            $query = $blogRepository->createQueryBuilder('b')
+            ->where('b.theme LIKE :search')
+            ->setParameter('search', '%'.$search.'%')
+            ->getQuery();
+            $s = $search;
+            $results = $query->getResult();
+
+        }else{
+            throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException ();
+        }
+
+        return $this->render('BlogBundle:Default:search-results.html.twig', array('keyword' => $s, 'results' => $results));
+
+
+        /*$blogs = $blogRepository->getLastCreatedBlogs(5);
+        $nbBlogs = count($blogRepository->findAll());
+        $posts = $postRepository->getLastPosts(5);
+        $nbPosts = count($postRepository->findAll());*/
+
+
+    }
+
     public function blogAction($url_blog, $category_name = null, $page = 1)
     {
         $em = $this->getDoctrine()->getManager();

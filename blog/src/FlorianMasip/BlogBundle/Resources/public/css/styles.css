@@ -190,14 +190,19 @@ a#new-post{
 .comment .panel-body{
 	padding: 0;
 	height: auto;
+	border-bottom: none;
+	background-color: #E4E4E4;
 }
 
 .comment .date-view{
 	background-color: #3F3F3F;
 	padding: 5px;
-	background-color: #2d2d2d ;
-	color: #bfbfbf;
+	padding-left: 10px;
+	padding-right: 10px;
+	background-color: #184363;
+	color: #3e9ee8;
 	width:100%;
+	text-align: right;
 }
 
 .comment-content{
@@ -638,7 +643,7 @@ textarea:focus ,select:focus,input:focus{
 	color: black !important;
 }
 
-input#search-blog{
+input#search{
 	/*width:90%;
 	margin-left: auto;
 	margin-right: auto;*/
@@ -649,7 +654,7 @@ input#search-blog{
 	margin-top: 20px !important;
 }
 
-button#search-blog-button{
+button#search-button{
 	position: absolute;
 	top : 100px;
 	right : 5px;

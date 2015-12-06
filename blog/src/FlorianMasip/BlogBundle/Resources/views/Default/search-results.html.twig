@@ -1,41 +1,51 @@
-<div id="search-results-panel" class="panel panel-default closed">
-    <div class="panel-heading">
-        <span class="label label-default pull-left" > Resultats </span>
-        <i class="glyphicon glyphicon-remove pull-right" onclick="addClass('#search-results-panel','closed')"></i>
-        <br/>
-    </div>
-    <div class="panel-body">
-        <ul>
-            <li class="search-result">
-                <a class="row" href="{{ path('blog_view', {'url_blog': '10' }) }}">
-                    <span class="col-sm-2 search-result-pic">
-                        <br/>
-                        {% image '@BlogBundle/Resources/public/img/user.png' %}
-                            <img width="40" height="40" src="{{ asset_url }}" alt="" />
-                        {% endimage %}
-                    </span>
-                    <span class="col-sm-9 search-result-preview">
-                        <span class="label label-default search-result-title" > Titre </span><br/>
-                        Aperçu description...
-                    </span>
-                    <br/>
-                </a>
-            </li>
-            <li class="search-result">
-                <span class="row">
-                    <span class="col-sm-2 search-result-pic">
-                        <br/>
-                        {% image '@BlogBundle/Resources/public/img/user.png' %}
-                            <img width="40" height="40" src="{{ asset_url }}" alt="" />
-                        {% endimage %}
-                    </span>
-                    <span class="col-sm-9 search-result-preview">
-                        <span class="label label-default search-result-title" > Titre </span><br/>
-                        Aperçu description...
-                    </span>
-                </span>
-            </li>
+{# src/FlorianMasip/BlogBundle/Resources/views/Default/index.html.twig #}
 
-        </ul>
+{% extends '::base.html.twig' %}
+
+{% block title %} Recherche {% endblock %}
+
+{% block content %}
+
+<h1 class="page-title">Résultats de la recherche : {{ keyword }}</h1>
+
+<div id="results-blogs">
+
+{% if results|length > 0 %}
+{% for b in results %}
+    <div class="panel panel-default blog-post">
+        <header class="panel-heading">
+            <a class="label label-primary inset blog-post-type" href="{{ path('blog_search', {'search': b.theme}) }}">
+                {{ b.theme }}
+            </a>
+            <i class="glyphicon glyphicon-chevron-right separator"></i>
+            <h5 class="blog-post-title">
+                {% if b.name|length < 60 %}
+                {{ b.name }}
+                {% else %}
+                {{ b.name[:60] }}...
+                {% endif %}
+            </h5>
+            <br/>
+        </header>
+        <div class="panel-body">
+            <a class="btn btn-primary go-to-post" href="{{ path('blog_view', {'url_blog': b.urlAlias}) }}">
+                voir le blog <i class="glyphicon glyphicon-plus"></i>
+            </a>
+            <p>
+                {% if b.description|length < 350 %}
+                {{ b.description }}
+                {% else %}
+                {{ b.description[:350] }}...
+                {% endif %}
+            </p>
+        </div>
     </div>
 </div>
+{% endfor %}
+{% else %}
+<div class="panel panel-default blog-post">
+    aucun résultat
+</div>
+{% endif %}
+
+{% endblock %}

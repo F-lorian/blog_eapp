@@ -23,3 +23,11 @@ Le bundle est un créateur de blogs. Une fois le compte utilisateur créé, celu
 et y ajouter/éditer des posts et des catégories.
 
 # Appréciations sur le cours #
+
+- Positif :
+
+Bonne progression dans la partie sur symfony, prof sympa et de bons conseils.
+
+- Negatif :
+
+Première partie du cours sur HTML/CSS/PHP un peu trop longue.

@@ -254,7 +254,7 @@ class BlogController extends Controller
             $post = $postRepository->findOneBy(array('category' => $category, 'urlAlias' => $url_post, 'blog' => $blog));
 
             if(!empty($post)){
-                
+
                 $comment = new Comment();
                 $form = $this->createForm(new CommentType(), $comment);
                 $form->handleRequest($request);
@@ -341,10 +341,10 @@ class BlogController extends Controller
                 $nomCategory = $form["nom"]->getData();
 
                 // Teste si l'url contient autre chose que des chiffres des lettres ou des tirets
-                if (!preg_match("/^[a-z-A-Z-0-9]+$/", $nomCategory)) {
+                if (!preg_match("/^[a-z-A-Z-0-9- ]+$/", $nomCategory)) {
                     $form["nom"]->addError(new FormError("Une categorie ne peut contenir que des chiffres, des lettres ou des tirets"));
                 }else{
-
+                    $nomCategory = preg_replace( "/[ ]+/", " ", $nomCategory );
                     $test_nom = $categoryRepository->findOneBy(array('nom' => $nomCategory, 'blog' => $b));
                     // Teste si l'url_alias existe déjà en base
                     if (!empty($test_nom)) {
@@ -355,6 +355,7 @@ class BlogController extends Controller
                 // Si le formulaire est valide
                 if ($form->isValid()) {
                     $category->setBlog($b);
+                    $category->setNom($nomCategory);
                     $em->persist($category);
                     $em->flush();
 
@@ -403,10 +404,11 @@ class BlogController extends Controller
                 $name = $form["nom"]->getData();
 
                 // Teste si l'url contient autre chose que des chiffres des lettres ou des tirets
-                if (!preg_match("/^[a-z-A-Z-0-9]+$/", $name)) {
-                    $form["nom"]->addError(new FormError("Une categorie ne peut contenir que des chiffres, des lettres ou des tirets"));
+                if (!preg_match("/^[a-z-A-Z-0-9- ]+$/", $name)) {
+                    $form["nom"]->addError(new FormError("Une categorie ne peut contenir que des chiffres, des lettres, des tirets et des espaces"));
                 }else{
 
+                    $name = preg_replace( "/[ ]+/", " ", $name );
                     $test_nom = $categoryRepository->findOneBy(array('nom' => $name, 'blog' => $b));
                     // Teste si l'url_alias existe déjà en base
                     if (!empty($test_nom) && $test_nom != $category) {
@@ -416,6 +418,7 @@ class BlogController extends Controller
 
                 // Si le formulaire est valide
                 if ($form->isValid()) {
+                    $category->setNom($name);
                     $em->flush();
                     // Message de confirmation pour l'utilisateur
                     $request->getSession()->getFlashBag()->add('notice', "catégorie modifiée");

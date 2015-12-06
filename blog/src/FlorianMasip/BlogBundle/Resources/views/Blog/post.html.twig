@@ -43,7 +43,9 @@
 			<br/>
 			{% endif %}
 			<p>
-		    {{ post.content }}
+				{% filter nl2br %}
+					{{ post.content }}
+				{% endfilter %}
 			</p>
 		</div>
 	</article>

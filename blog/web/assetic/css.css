@@ -673,6 +673,11 @@ button#search-button{
 	text-align: center;
 }
 
+
+.comment-count{
+	margin-bottom: -20px;
+	padding-top: 8px;
+}
 a.go-to-post{
 	/*position: absolute;
 	margin-top : 80px;

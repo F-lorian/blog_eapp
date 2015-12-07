@@ -17,6 +17,7 @@
                 <span class="white">le</span> {{ p.dateCreation|date("d/m/Y") }}
                 <span class="white">à</span> {{ p.dateCreation|date("H:i:s") }}
             </span>
+
             <br/>
         </header>
         <div class="panel-body">
@@ -30,6 +31,9 @@
             <a class="btn btn-primary go-to-post pull-right" href="{{ path('blog_view_post', {'url_blog': blog.urlAlias, 'category_name': p.category.nom, 'url_post': p.urlAlias }) }}">
                 voir l'article <i class="glyphicon glyphicon-plus"></i>
             </a>
+            <span class="pull-left comment-count">
+                <i class="glyphicon glyphicon-comment"></i> {{ p.comments|length }}
+            </span>
         </div>
     </article>
 

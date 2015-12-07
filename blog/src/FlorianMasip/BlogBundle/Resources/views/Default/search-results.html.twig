@@ -8,40 +8,37 @@
 
 <h1 class="page-title">Résultats de la recherche : {{ keyword }}</h1>
 
-<div id="results-blogs">
-
 {% if results|length > 0 %}
-{% for b in results %}
-    <div class="panel panel-default blog-post">
-        <header class="panel-heading">
-            <a class="label label-primary inset blog-post-type" href="{{ path('blog_search', {'search': b.theme}) }}">
-                {{ b.theme }}
-            </a>
-            <i class="glyphicon glyphicon-chevron-right separator"></i>
-            <h5 class="blog-post-title">
-                {% if b.name|length < 60 %}
-                {{ b.name }}
-                {% else %}
-                {{ b.name[:60] }}...
-                {% endif %}
-            </h5>
-            <br/>
-        </header>
-        <div class="panel-body">
-            <p>
-                {% if b.description|length < 350 %}
-                {{ b.description }}
-                {% else %}
-                {{ b.description[:350] }}...
-                {% endif %}
-            </p>
-            <a class="btn btn-primary go-to-post pull-right" href="{{ path('blog_view', {'url_blog': b.urlAlias}) }}">
-                voir le blog <i class="glyphicon glyphicon-plus"></i>
-            </a>
+    {% for b in results %}
+        <div class="panel panel-default blog-post">
+            <div class="panel-heading">
+                <a class="label label-primary inset blog-post-type" href="{{ path('blog_search', {'search': b.theme}) }}">
+                    {{ b.theme }}
+                </a>
+                <i class="glyphicon glyphicon-chevron-right separator"></i>
+                <h5 class="blog-post-title">
+                    {% if b.name|length < 60 %}
+                    {{ b.name }}
+                    {% else %}
+                    {{ b.name[:60] }}...
+                    {% endif %}
+                </h5>
+                <br/>
+            </div>
+            <div class="panel-body">
+                <p>
+                    {% if b.description|length < 350 %}
+                    {{ b.description }}
+                    {% else %}
+                    {{ b.description[:350] }}...
+                    {% endif %}
+                </p>
+                <a class="btn btn-primary go-to-post pull-right" href="{{ path('blog_view', {'url_blog': b.urlAlias}) }}">
+                    voir le blog <i class="glyphicon glyphicon-plus"></i>
+                </a>
+            </div>
         </div>
-    </div>
-</div>
-{% endfor %}
+    {% endfor %}
 {% else %}
 <div class="panel panel-default blog-post">
     aucun résultat

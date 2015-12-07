@@ -50,7 +50,7 @@
 		</div>
 	</article>
 	<section id="comments">
-		<h4 class="page-title">Commentaires <small>( {{ comments|length }} )</small></h4>
+		<h4 class="page-title"><i class="glyphicon glyphicon-comment"></i> Commentaires <span class="badge">{{ comments|length }}</span></h4>
 
 		{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 			{% include 'BlogBundle:Blog:comment-form.html.twig' %}

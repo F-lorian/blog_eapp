@@ -1,8 +1,8 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
-{% block fos_user_action %}
-	Profil
-{% endblock fos_user_action %}
+{% block title %}Profil{% endblock %}
+
+{% block fos_user_action %} Profil {% endblock fos_user_action %}
 
 {% block fos_user_content %}
 {% include "FOSUserBundle:Profile:show_content.html.twig" %}

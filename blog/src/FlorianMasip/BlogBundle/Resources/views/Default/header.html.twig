@@ -27,24 +27,7 @@
 		<div class="panel-body">
 		    <a id="new-blog" class="btn btn-primary btn-block" href="{{ path('blog_new_user') }}">Inscription <i class="glyphicon glyphicon-book"></i></a>
 		</div>
-		<!--div class="panel-heading">
-		  	<span class="label label-default pull-left" ><i class="glyphicon glyphicon-user pull-left"></i>Connexion </span>
-		  	<br/>
-		</div>
-		<div class="panel-body">
-		    <form id="connection-form-header" method="post" action="{{ path("fos_user_security_check") }}" >
-
-					<input class="form-control" placeholder="pseudo" type="text" id="username" name="_username" value="" required="required" />
-					<input class="form-control" placeholder="mot de passe" type="password" id="password" name="_password" required="required" />
-					<input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-					<label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
-					<button id="connection-button" class="btn btn-primary wide">valider <i class="glyphicon glyphicon-log-in"></i></button>
-		    </form>
-		</div-->
-
 		{% endif %}
 		{# fin #}
 	</div>
-
-	{# include 'BlogBundle:Default:search-results.html.twig' #}
 </nav>

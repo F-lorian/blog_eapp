@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.1.14
+-- version 4.2.11
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Lun 07 Décembre 2015 à 00:49
--- Version du serveur :  5.6.17
--- Version de PHP :  5.5.12
+-- Généré le :  Lun 07 Décembre 2015 à 01:50
+-- Version du serveur :  5.6.21
+-- Version de PHP :  5.6.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -27,18 +27,14 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `blog` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `id_user` int(11) DEFAULT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `theme` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `url_alias` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `description` text COLLATE utf8_unicode_ci,
-  `picture_path` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `UNIQ_C01551435E237E06` (`name`),
-  UNIQUE KEY `UNIQ_C015514324C804E3` (`url_alias`),
-  KEY `IDX_C01551436B3CA4B` (`id_user`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=22 ;
+  `picture_path` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Contenu de la table `blog`
@@ -46,9 +42,9 @@ CREATE TABLE IF NOT EXISTS `blog` (
 
 INSERT INTO `blog` (`id`, `id_user`, `name`, `theme`, `url_alias`, `description`, `picture_path`) VALUES
 (4, 7, 'Blog de la fac', 'informations', 'master2-info-um2', 'blog d''informations des masters 2 informatique de l''UM2', '32a398575e2e830f8df9af41a35f1517f30bc049.png'),
-(18, 8, 'Musique', 'Blog sur la musique', 'musique', 'Blog concernant tout ce qui concerne la musique. Venez discutez de tout entre passionnés!! =)', NULL),
+(18, 8, 'Musique', 'Blog sur la musique', 'musique', 'Blog concernant tout ce qui concerne la musique. Venez discuter de tout entre passionnés!! =)', NULL),
 (19, 9, 'Tout pour la cuisine', 'La cuisine dans tout ses état!!', 'cuisine', 'Venez découvrir de bons petits plats et épatez vos amis!!', NULL),
-(20, 7, 'Astronomie', 'Tout ce qui concerne l''astronomie', 'astro', 'Découvrez notre univers!!', NULL);
+(20, 7, 'Astronomie', 'Tout ce qui concerne l''astronomie', 'astro', 'Découvrez notre univers!!', 'd4b96916a9ca874818a8b4ae134b2359fe0679d0.jpeg');
 
 -- --------------------------------------------------------
 
@@ -57,12 +53,10 @@ INSERT INTO `blog` (`id`, `id_user`, `name`, `theme`, `url_alias`, `description`
 --
 
 CREATE TABLE IF NOT EXISTS `category` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `nom` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `id_blog` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_64C19C14B354D41` (`id_blog`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=59 ;
+  `id_blog` int(11) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Contenu de la table `category`
@@ -101,15 +95,12 @@ INSERT INTO `category` (`id`, `nom`, `id_blog`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `comment` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `id_post` int(11) DEFAULT NULL,
   `content` text COLLATE utf8_unicode_ci NOT NULL,
   `date_creation` datetime NOT NULL,
-  `id_user` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_9474526CD1AA708F` (`id_post`),
-  KEY `IDX_9474526C6B3CA4B` (`id_user`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=42 ;
+  `id_user` int(11) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Contenu de la table `comment`
@@ -134,7 +125,7 @@ INSERT INTO `comment` (`id`, `id_post`, `content`, `date_creation`, `id_user`) V
 --
 
 CREATE TABLE IF NOT EXISTS `fos_user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `username_canonical` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -154,11 +145,8 @@ CREATE TABLE IF NOT EXISTS `fos_user` (
   `surname` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `lastname` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `age` int(11) DEFAULT NULL,
-  `profile_picture_path` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `UNIQ_957A647992FC23A8` (`username_canonical`),
-  UNIQUE KEY `UNIQ_957A6479A0D96FBF` (`email_canonical`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=10 ;
+  `profile_picture_path` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Contenu de la table `fos_user`
@@ -176,18 +164,14 @@ INSERT INTO `fos_user` (`id`, `username`, `username_canonical`, `email`, `email_
 --
 
 CREATE TABLE IF NOT EXISTS `post` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `name` varchar(200) NOT NULL,
   `url_alias` varchar(200) NOT NULL,
   `content` text NOT NULL,
   `date_creation` datetime NOT NULL,
   `id_blog` int(11) DEFAULT NULL,
-  `id_category` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `UNIQ_5A8A6C8D24C804E3` (`url_alias`),
-  KEY `IDX_5A8A6C8D4B354D41` (`id_blog`),
-  KEY `IDX_5A8A6C8D5697F554` (`id_category`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=88 ;
+  `id_category` int(11) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `post`
@@ -207,8 +191,72 @@ INSERT INTO `post` (`id`, `name`, `url_alias`, `content`, `date_creation`, `id_b
 (84, 'UY Scuti', 'UY-Scuti', 'UY Scuti est une supergéante rouge de la constellation de l''Écu de Sobieski, située à approximativement 2,9 kpc soit 9500 années-lumière de la Terre. C''est actuellement la plus grande étoile connue de l''univers, dépassant VY Canis Majoris. Si elle était placée au centre de notre système solaire, l''étoile engloutirait toutes les planètes jusqu''à Jupiter, son rayon n''est pas connu avec certitude mais il est possible qu''il puisse être plus grand que l''orbite de Saturne.\r\n\r\nCaractéristiques\r\n\r\nL''étoile est classée variable semi-régulière ayant une période de pulsation de 740 jours. Elle a une puissance bolométrique de 340 000 L?, la rendant l''une des étoiles les plus lumineuses de la galaxie.\r\n\r\nMalgré sa taille immense, UY Scuti n''est pas classée comme hypergéante. Il existe une classe de 0 sur la classification spectrale de Morgan-Keenan pour les hypergéantes, mais elle est exceptionnelle. Ces étoiles sont plus communément classées Ia-0, Ia+ ou même Iae, en étant basé uniquement sur les observations spectrales ; quant aux supergéantes rouges, elles reçoivent rarement ce genre de classifications spéciales supplémentaires. Une grande luminosité et/ou une grande taille ne permettent pas de définir une hypergéante. Cela requiert la détection des signatures spectrales de l''instabilité atmosphérique et une importante perte de masse. Dans le cas de UY Scuti, son spectre présente des raies spectrales de carbone, d''oxyde de silicium et d''eau, mais ne montre aucune raies spectrales d''oxygène, de néon ou d''autres éléments plus lourds, indiquant donc une perte de masse insuffisante. D''ailleurs, son emplacement sur le diagramme de Hertzsprung-Russell est en dessous de la région ovale des hypergéantes, ce qui la rend seulement classée comme supergéante rouge lumineuse.\r\nTaille\r\n\r\nEn été 2012, des astronomes du VLT au Chili ont mesuré les paramètres de trois étoiles du centre galactique : UY Scuti, AH Scorpii et KW Sagitarii. Ils ont observé que ces astres sont 1 000 fois plus grands que le Soleil, les rendant étoiles faisant parties des plus grandes connues. Leurs tailles ont été mesurées avec le rayon de Rosseland, l''emplacement où l''épaisseur optique est égale à 1 (quelquefois une valeur différente, par exemple 2/3).\r\n\r\nUY Scuti était la plus grande étoile des trois, avec un rayon de 1 708 ± 192 R?. Le rayon de cette étoile est donc le rayon stellaire le plus grand jamais observé, environ 2 fois la taille de la célèbre Bételgeuse. UY Scuti est si gigantesque que si la Terre avait le diamètre d''un ballon de plage de 20 cm, le Soleil mesurerait 22 m (la hauteur de la statue d''El Cristo de las Noas au Mexique) et UY Scuti aurait un diamètre d''environ 40 km (environ 48 fois la hauteur de la Burj Khalifa).', '2015-12-07 00:21:34', 20, 56),
 (85, 'Jupiter', 'Jupiter', 'Jupiter est une planète géante gazeuse. Il s''agit de la plus grosse planète du Système solaire, plus volumineuse et massive que toutes les autres planètes réunies, et la cinquième planète par sa distance au Soleil (après Mercure, Vénus, la Terre et Mars).\r\n\r\nJupiter est ainsi officiellement désignée1, en français comme en anglais2, d''après le dieu romain Jupiter3, assimilé au dieu grec Zeus.\r\n\r\nLe symbole astronomique de la planète était « ? » qui serait une représentation stylisée du foudre de Jupiter ou bien serait dérivé d''un hiéroglyphe4 ou, comme cela ressortirait de certains papyrus d''Oxyrhynque5, de la lettre grecque zêta, initiale du grec ancien ???? (Zeús). L''Union astronomique internationale recommande de substituer au symbole astronomique « ? » l''abréviation « J », correspondant à la lettre capitale J de l''alphabet latin, initiale de l''anglais Jupiter6.\r\n\r\nVisible à l''œil nu dans le ciel nocturne, Jupiter est habituellement le quatrième objet le plus brillant de la voûte céleste, après le Soleil, la Lune et Vénus7. Parfois, Mars apparaît plus lumineuse que Jupiter et de temps en temps Jupiter apparaît plus lumineuse que Vénus8. Jupiter était au périhélie le 17 mars 20119 et sera à l''aphélie le 17 février 201710.\r\n\r\nComme sur les autres planètes gazeuses, des vents violents, de près de 600 km/h, parcourent les couches supérieures de la planète. La Grande Tache rouge, un anticyclone qui fait trois fois la taille de la Terre, est une zone de surpression qui est observée au moins depuis le XVIIe siècle.\r\n\r\nRegroupant Jupiter et les objets se trouvant dans sa sphère d''influence, le système jovien est une composante majeure du Système solaire externe. Il comprend notamment les nombreuses lunes de Jupiter dont les quatre lunes galiléennes — Io, Europe, Ganymède et Callisto — qui, observés pour la première fois, en 1610, par Galilée au moyen d''une lunette astronomique de son invention, sont les premiers objets découverts par l''astronomie télescopique. Il comprend aussi les anneaux de Jupiter, un système d''anneaux planétaires observés pour la première fois, en 1979, par la sonde spatiale américaine Voyager 1.\r\n\r\nL''influence de Jupiter s''étend, au-delà du système jovien, à de nombreux objets dont les astéroïdes troyens de Jupiter.\r\n\r\nLa masse jovienne est une unité de masse utilisée pour exprimer la masse d''objets substellaires tels que les naines brunes.', '2015-12-07 00:23:14', 20, 57),
 (86, 'Document', 'doc', 'Bonjour,\r\n\r\nVous trouverez à l''extrémité de ce lien :\r\n\r\nhttps://www.dropbox.com/sh/5cbvugqe3oz1fwk/AACR2m1TsuY8pY7aq__5YAQpa?dl=0\r\n\r\nles documents de cours et TP du cours d''aujourd''hui sur les lignes de produits.\r\n\r\nLa suite du TP donnera lieu à l''un des projets personnels pour l''évaluation du module pour ceux qui seront intéressés.\r\n\r\nBien cordialement,\r\nMarianne Huchard', '2015-12-07 00:24:16', 4, 6),
-(87, 'Cephei', 'cephei', 'VV Cephei est une étoile binaire à éclipses située dans la constellation de Céphée à environ 3 000 années-lumière de la Terre. Elle contient une hypergéante rouge, VV Cephei A, qui est l''une des étoiles les plus grandes actuellement connues\r\n\r\nVV Cephei A\r\n\r\nVV Cephei A, l''hypergéante rouge, est de type spectral M2 et son diamètre est environ 1 900 fois plus important que celui du Soleil[réf. nécessaire], ce qui fait environ 2 650 000 000 km de diamètre ; si elle était située à la place du Soleil dans le système solaire, elle s''étendrait jusqu''à l''orbite de Saturne. Sa luminosité est comprise entre 275 000 et 575 000 luminosité solaire. Sa masse est inconnue : estimée à partir de ses caractéristiques orbitales, elle serait de 100 masses solaires ; à partir de sa luminosité, entre 25 et 40 masses solaires.\r\n\r\nLorsque VV Cephei A est au plus proche de son compagnon, elle remplit totalement son lobe de Roche et perd de la matière au profit de VV Cephei B.\r\n\r\n\r\nVV Cephei B\r\n\r\nVV Cephei B est une étoile bleue de la séquence principale, de type spectral B0. Elle est environ 10 fois plus grande que le Soleil et 100 000 fois plus lumineuse.', '2015-12-07 00:29:38', 20, 56);
+(87, 'Cephei', 'cephei', 'VV Cephei est une étoile binaire à éclipses située dans la constellation de Céphée à environ 3 000 années-lumière de la Terre. Elle contient une hypergéante rouge, VV Cephei A, qui est l''une des étoiles les plus grandes actuellement connues\r\n\r\nVV Cephei A\r\n\r\nVV Cephei A, l''hypergéante rouge, est de type spectral M2 et son diamètre est environ 1 900 fois plus important que celui du Soleil[réf. nécessaire], ce qui fait environ 2 650 000 000 km de diamètre ; si elle était située à la place du Soleil dans le système solaire, elle s''étendrait jusqu''à l''orbite de Saturne. Sa luminosité est comprise entre 275 000 et 575 000 luminosité solaire. Sa masse est inconnue : estimée à partir de ses caractéristiques orbitales, elle serait de 100 masses solaires ; à partir de sa luminosité, entre 25 et 40 masses solaires.\r\n\r\nLorsque VV Cephei A est au plus proche de son compagnon, elle remplit totalement son lobe de Roche et perd de la matière au profit de VV Cephei B.\r\n\r\n\r\nVV Cephei B\r\n\r\nVV Cephei B est une étoile bleue de la séquence principale, de type spectral B0. Elle est environ 10 fois plus grande que le Soleil et 100 000 fois plus lumineuse.', '2015-12-07 00:29:38', 20, 56),
+(88, 'pagination savior', 'ps', 'Pour ne pas passer à coter de la pagination, c''est quand même assez sexy', '2011-11-11 11:11:11', 4, 10);
 
+--
+-- Index pour les tables exportées
+--
+
+--
+-- Index pour la table `blog`
+--
+ALTER TABLE `blog`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `UNIQ_C01551435E237E06` (`name`), ADD UNIQUE KEY `UNIQ_C015514324C804E3` (`url_alias`), ADD KEY `IDX_C01551436B3CA4B` (`id_user`);
+
+--
+-- Index pour la table `category`
+--
+ALTER TABLE `category`
+ ADD PRIMARY KEY (`id`), ADD KEY `IDX_64C19C14B354D41` (`id_blog`);
+
+--
+-- Index pour la table `comment`
+--
+ALTER TABLE `comment`
+ ADD PRIMARY KEY (`id`), ADD KEY `IDX_9474526CD1AA708F` (`id_post`), ADD KEY `IDX_9474526C6B3CA4B` (`id_user`);
+
+--
+-- Index pour la table `fos_user`
+--
+ALTER TABLE `fos_user`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `UNIQ_957A647992FC23A8` (`username_canonical`), ADD UNIQUE KEY `UNIQ_957A6479A0D96FBF` (`email_canonical`);
+
+--
+-- Index pour la table `post`
+--
+ALTER TABLE `post`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `UNIQ_5A8A6C8D24C804E3` (`url_alias`), ADD KEY `IDX_5A8A6C8D4B354D41` (`id_blog`), ADD KEY `IDX_5A8A6C8D5697F554` (`id_category`);
+
+--
+-- AUTO_INCREMENT pour les tables exportées
+--
+
+--
+-- AUTO_INCREMENT pour la table `blog`
+--
+ALTER TABLE `blog`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=22;
+--
+-- AUTO_INCREMENT pour la table `category`
+--
+ALTER TABLE `category`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=59;
+--
+-- AUTO_INCREMENT pour la table `comment`
+--
+ALTER TABLE `comment`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=42;
+--
+-- AUTO_INCREMENT pour la table `fos_user`
+--
+ALTER TABLE `fos_user`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+--
+-- AUTO_INCREMENT pour la table `post`
+--
+ALTER TABLE `post`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=89;
 --
 -- Contraintes pour les tables exportées
 --
@@ -217,27 +265,27 @@ INSERT INTO `post` (`id`, `name`, `url_alias`, `content`, `date_creation`, `id_b
 -- Contraintes pour la table `blog`
 --
 ALTER TABLE `blog`
-  ADD CONSTRAINT `FK_C01551436B3CA4B` FOREIGN KEY (`id_user`) REFERENCES `fos_user` (`id`);
+ADD CONSTRAINT `FK_C01551436B3CA4B` FOREIGN KEY (`id_user`) REFERENCES `fos_user` (`id`);
 
 --
 -- Contraintes pour la table `category`
 --
 ALTER TABLE `category`
-  ADD CONSTRAINT `FK_64C19C14B354D41` FOREIGN KEY (`id_blog`) REFERENCES `blog` (`id`) ON DELETE CASCADE;
+ADD CONSTRAINT `FK_64C19C14B354D41` FOREIGN KEY (`id_blog`) REFERENCES `blog` (`id`) ON DELETE CASCADE;
 
 --
 -- Contraintes pour la table `comment`
 --
 ALTER TABLE `comment`
-  ADD CONSTRAINT `FK_9474526CD1AA708F` FOREIGN KEY (`id_post`) REFERENCES `post` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `FK_9474526C6B3CA4B` FOREIGN KEY (`id_user`) REFERENCES `fos_user` (`id`) ON DELETE CASCADE;
+ADD CONSTRAINT `FK_9474526C6B3CA4B` FOREIGN KEY (`id_user`) REFERENCES `fos_user` (`id`) ON DELETE CASCADE,
+ADD CONSTRAINT `FK_9474526CD1AA708F` FOREIGN KEY (`id_post`) REFERENCES `post` (`id`) ON DELETE CASCADE;
 
 --
 -- Contraintes pour la table `post`
 --
 ALTER TABLE `post`
-  ADD CONSTRAINT `FK_5A8A6C8D4B354D41` FOREIGN KEY (`id_blog`) REFERENCES `blog` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `FK_5A8A6C8D5697F554` FOREIGN KEY (`id_category`) REFERENCES `category` (`id`);
+ADD CONSTRAINT `FK_5A8A6C8D4B354D41` FOREIGN KEY (`id_blog`) REFERENCES `blog` (`id`) ON DELETE CASCADE,
+ADD CONSTRAINT `FK_5A8A6C8D5697F554` FOREIGN KEY (`id_category`) REFERENCES `category` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

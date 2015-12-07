@@ -20,7 +20,7 @@ extension=php_fileinfo.dll
 
 # commentaires #
 Le bundle est un créateur de blogs. Une fois le compte utilisateur créé, celui ci peu créer un ou plusieurs blog 
-et y ajouter/éditer des posts et des catégories.
+et y ajouter/éditer des posts et des catégories. La page d'accueil présente les derniers blog créés.
 
 # Appréciations sur le cours #
 

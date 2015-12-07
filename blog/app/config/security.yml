@@ -34,6 +34,9 @@ security:
         - { path: /edit/, role: IS_AUTHENTICATED_REMEMBERED }
         - { path: /delete/, role: IS_AUTHENTICATED_REMEMBERED }
         - { path: /new, role: IS_AUTHENTICATED_REMEMBERED }
+        - { path: /new-category, role: IS_AUTHENTICATED_REMEMBERED }
+        - { path: /edit-category, role: IS_AUTHENTICATED_REMEMBERED }
+        - { path: /delete-category, role: IS_AUTHENTICATED_REMEMBERED }
             # activate different ways to authenticate
 
             # http_basic: ~

@@ -1,5 +1,5 @@
 <form id="new-comment-form" method="post" action="{{ path('blog_view_post', {'url_blog': post.blog.urlAlias, 'category_name': post.category.nom, 'url_post': post.urlAlias}) }}" >
-    <div id="blog-post" class="panel panel-default blog-post">
+    <div class="panel panel-default blog-post">
         <div class="panel-body">
             {{ form_widget(form.content, { 'attr': {'class': 'form-control', 'placeholder': 'Poster un commentaire'} }) }}
             <span class="label label-danger error">{{ form_errors(form.content) }}</span>

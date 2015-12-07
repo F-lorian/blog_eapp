@@ -1,9 +1,0 @@
-<div id="liste-category">
-        {# Liste des catégories #}
-    <h3>Cours : </h3>
-    <ul>
-        {% for category in liste_category %}
-            <li><a href="{{ path('blog_view_by_category', {'url_blog': url_blog, 'category_name': category.nom, 'page': 1}) }}" title="voir la catégory : {{category.nom}}">{{category.nom}}</a></li>
-        {% endfor %}
-    </ul>
-</div>
